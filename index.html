@@ -90,6 +90,8 @@ p { margin: .5em 0; }
 .read-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
 .center-row { justify-content: center; }
 .row-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.row-btns.left { justify-content: flex-start; margin-top: 4px; }
+select.text-input { font-size: 17px; appearance: auto; }
 .chip { min-height: 44px; padding: 8px 16px; border-radius: 999px; border: 2px solid rgba(255,255,255,.22); background: transparent; color: var(--on-desk); font-weight: 700; font-size: 16px; cursor: pointer; }
 .chip.on { background: var(--brass); color: var(--ink); border-color: var(--brass); }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
@@ -532,6 +534,7 @@ const SUSPECT_IDS = ['barnaby', 'penelope', 'viktor', 'maxima'];
 
 const FELIX = { e: '🦊', name: 'Inspector Felix', voice: { pitch: 1.15, rate: 1 } };
 const REMAINDER = { e: '🦝', name: 'Professor Remainder', voice: { pitch: 0.75, rate: 1.05 } };
+const NARRATOR = { role: 'narrator', pitch: 1, rate: 0.98 };
 
 const THEMES = {
   museum:      { sky: ['#2b2140', '#463a5c'], floor: '#5b4a3a', props: ['🏺', '🗿', '🦴', '🖼️', '🪔', '🏛️'] },
@@ -948,6 +951,11 @@ const ANIMALS = ['🐶', '🐱', '🐰', '🐼', '🐯', '🐨', '🐵', '🐻']
 const OP_SYMBOL = { add: '+', sub: '−', mul: '×', div: '÷' };
 const OP_NAME = { add: 'Adding', sub: 'Subtracting', mul: 'Multiplying', div: 'Dividing' };
 
+/* voice roles (each character gets its own device voice when one is available) */
+SUSPECT_IDS.forEach(id => { SUSPECTS[id].voice.role = id; });
+FELIX.voice.role = 'felix'; REMAINDER.voice.role = 'remainder';
+CASES.forEach(c => c.scenes.forEach(s => { s.witness.voice.role = 'w:' + s.witness.name; }));
+
 /* ============================================================
    Problem generator, decoys, mistake diagnosis (pure functions)
    ============================================================ */
@@ -1183,7 +1191,7 @@ function defaultState() {
     v: 2,
     profile: { name: '', animal: '🐶', setupDone: false },
     starsBalance: 0, starsEarned: 0, tokens: 3,
-    settings: { level: 'auto', autoRead: false, sound: true, voiceRate: 0.95, unlockAll: false },
+    settings: { level: 'auto', autoRead: false, sound: true, voiceRate: 1, voiceName: '', unlockAll: false },
     owned: { hats: ['none', 'cap'], coats: ['trench'], lenses: ['brass'], decor: [] },
     equipped: { hat: 'cap', coat: 'trench', lens: 'brass' },
     cases: CASES.map((_, i) => newCaseState(i)),
@@ -1203,6 +1211,7 @@ function loadState() {
     if (!s || s.v !== 2) return base;
     const merged = Object.assign(base, s);
     for (const k of ['profile', 'settings', 'owned', 'equipped', 'stats', 'lab']) merged[k] = Object.assign(defaultState()[k], s[k] || {});
+    if (merged.settings.voiceRate === 0.95) merged.settings.voiceRate = 1; // old default was a little slow
     merged.cases = CASES.map((_, i) => Object.assign(newCaseState(i), (s.cases || [])[i] || {}));
     if (merged.screen === 'case' && merged.caseIdx == null) merged.screen = 'map';
     return merged;
@@ -1261,31 +1270,77 @@ function speechText(t) {
     .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}️‍]/gu, '')
     .replace(/÷/g, ' divided by ').replace(/×/g, ' times ').replace(/−/g, ' minus ')
     .replace(/(\d)\s*\+\s*(\d)/g, '$1 plus $2').replace(/=/g, ' equals ').replace(/—\s*R\b/g, ', signed R.')
+    .replace(/\b([A-Z]{2,})\b/g, (m) => m.toLowerCase())
     .replace(/\s+/g, ' ').trim();
 }
-let VOICE = null;
-function pickVoice() {
-  try {
-    const vs = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang));
-    if (!vs.length) return null;
-    const prefer = ['Samantha', 'Karen', 'Daniel', 'Moira', 'Tessa', 'Google US English', 'Microsoft Aria', 'Microsoft Jenny'];
-    VOICE = prefer.map(n => vs.find(v => v.name.startsWith(n))).find(Boolean)
-      || vs.find(v => /en[-_]US/i.test(v.lang) && v.localService) || vs.find(v => /en[-_]US/i.test(v.lang)) || vs[0];
-  } catch (e) { VOICE = null; }
-  return VOICE;
+/* Voices: rank what this device has, read stories with the best one, and give the
+   characters their own voices instead of stretching one voice's pitch (that sounds robotic). */
+const NOVELTY_VOICE = /^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Ralph|Kathy|Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley)\b/i;
+const FEMALE_VOICE = /^(Samantha|Ava|Allison|Susan|Zoe|Nicky|Karen|Moira|Tessa|Kate|Serena|Martha|Fiona|Veena|Victoria|Catherine|Joelle|Noelle|Isha|Stephanie|Google US English|Google UK English Female|Microsoft (Aria|Jenny|Sara|Michelle|Sonia|Libby|Natasha|Clara|Emily|Zira|Hazel|Susan|Ana|Ava|Emma))/i;
+const MALE_VOICE = /^(Alex|Daniel|Tom|Evan|Nathan|Aaron|Rishi|Oliver|Arthur|Gordon|Lee|Malcolm|Google UK English Male|Microsoft (Guy|Davis|Tony|Jason|Ryan|Christopher|Eric|Brian|William|Mark|David|George|James|Andrew))/i;
+function voiceScore(v) {
+  let s = 0;
+  if (/premium|natural|neural/i.test(v.name)) s += 100;
+  else if (/enhanced/i.test(v.name)) s += 70;
+  else if (/^Google /.test(v.name)) s += 45;
+  if (/en[-_]US/i.test(v.lang)) s += 8; else if (/en[-_](GB|AU|IE|CA|NZ)/i.test(v.lang)) s += 5;
+  if (/^(Ava|Zoe|Samantha|Allison|Evan|Nathan|Susan|Joelle|Noelle|Tom|Alex)\b/i.test(v.name)) s += 10;
+  if (v.localService) s += 2;
+  return s;
 }
-if (CAN_SPEAK) { pickVoice(); try { speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (e) {} }
-function speak(text, voice = FELIX.voice) {
-  if (!CAN_SPEAK) return;
+const voiceBase = (v) => v.name.replace(/\s*\(.*\)\s*$/, '').trim();
+const voiceGender = (v) => FEMALE_VOICE.test(v.name) ? 'f' : MALE_VOICE.test(v.name) ? 'm' : '';
+function englishVoices() {
+  if (!CAN_SPEAK) return [];
+  try { return speechSynthesis.getVoices().filter(v => /^en([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name)).sort((a, b) => voiceScore(b) - voiceScore(a)); }
+  catch (e) { return []; }
+}
+const CAST_ROLES = [['felix', 'm', null], ['barnaby', 'm', null], ['penelope', 'f', /GB|IE|AU|NZ|ZA/i], ['viktor', 'm', null], ['maxima', 'f', /GB|IE|AU|NZ|ZA/i], ['remainder', 'm', /GB|AU|IE/i]];
+let CAST = null;
+function castVoices(list) {
+  const ranked = list || englishVoices();
+  if (!ranked.length) return { narrator: null, map: {}, pool: [] };
+  const picked = S.settings.voiceName && ranked.find(v => v.name === S.settings.voiceName);
+  const narrator = picked || ranked[0];
+  const used = new Set([voiceBase(narrator)]);
+  const take = (g, accent) => {
+    let c = ranked.filter(v => !used.has(voiceBase(v)) && (!g || voiceGender(v) === g));
+    let v = c[0] || null;
+    if (v && accent) { const a = c.find(x => accent.test(x.lang) && voiceScore(x) >= voiceScore(v) - 30); if (a) v = a; } // accent only if it costs little quality
+    if (v) used.add(voiceBase(v)); return v;
+  };
+  const map = { narrator };
+  for (const [role, g, accent] of CAST_ROLES) map[role] = take(g, accent) || take(g, null) || ranked.find(v => voiceGender(v) === g && voiceBase(v) !== voiceBase(narrator)) || null;
+  const seen = new Set(); const pool = ranked.filter(v => { const b = voiceBase(v); if (seen.has(b)) return false; seen.add(b); return true; });
+  return { narrator, map, pool };
+}
+function cast() { if (!CAST || !CAST.narrator) CAST = castVoices(); return CAST; }
+if (CAN_SPEAK) { try { speechSynthesis.addEventListener('voiceschanged', () => { CAST = null; }); } catch (e) {} }
+function voiceFor(spec) {
+  const c = cast(); const role = spec.role || 'narrator';
+  let v = c.map[role] || null;
+  if (!v && role.startsWith('w:') && c.pool.length) v = c.pool[hashStr(role) % c.pool.length];
+  return v || c.narrator;
+}
+function utterance(text, spec = NARRATOR) {
+  const u = new SpeechSynthesisUtterance(speechText(text));
+  const v = voiceFor(spec), c = cast();
+  const own = v && c.narrator && voiceBase(v) !== voiceBase(c.narrator);
+  // gentle pitch shifts only: a different voice carries the character, pitch just colors it
+  const k = (spec.role || 'narrator') === 'narrator' ? 0 : own ? 0.3 : 0.5;
+  u.pitch = Math.max(0.8, Math.min(1.3, 1 + ((spec.pitch ?? 1) - 1) * k));
+  u.rate = Math.max(0.7, Math.min(1.35, (spec.rate ?? 1) * (S.settings.voiceRate || 1)));
+  if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+  return u;
+}
+function speak(text, spec = FELIX.voice) { speakAll([[text, spec]]); }
+function speakAll(lines) {
+  if (!CAN_SPEAK || !lines.length) return;
   try {
-    const u = new SpeechSynthesisUtterance(speechText(text));
-    u.pitch = Math.max(0, Math.min(2, voice.pitch ?? 1));
-    u.rate = Math.max(0.5, Math.min(1.6, (voice.rate ?? 1) * (S.settings.voiceRate || 0.95)));
-    const v = VOICE || pickVoice();
-    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+    const us = lines.map(([t, sp]) => utterance(t, sp));
     const ss = speechSynthesis;
-    if (ss.speaking || ss.pending) { ss.cancel(); setTimeout(() => ss.speak(u), 80); }
-    else ss.speak(u);
+    const go = () => us.forEach(u => ss.speak(u));
+    if (ss.speaking || ss.pending) { ss.cancel(); setTimeout(go, 80); } else go();
   } catch (e) { /* speech not available */ }
 }
 function stopSpeech() { if (CAN_SPEAK) try { speechSynthesis.cancel(); } catch (e) {} }
@@ -2059,16 +2114,16 @@ function renderStage() {
   const st = $('#stage'); if (!st) return;
   const s = run.scene, sc = c.scenes[s];
   if (run.stage === 'story') {
-    const intro = s === 0 ? `<div class="case-intro"><div class="eyebrow">Case file #${i + 1}</div><p class="story-text">${esc(c.intro)}</p><div class="read-row">${sayBtn(c.intro, FELIX.voice, 'Read the case file')}<span class="muted tiny">Read it to me</span></div></div><hr class="torn">` : '';
+    const intro = s === 0 ? `<div class="case-intro"><div class="eyebrow">Case file #${i + 1}</div><p class="story-text">${esc(c.intro)}</p><div class="read-row">${sayBtn(c.intro, NARRATOR, 'Read the case file')}<span class="muted tiny">Read it to me</span></div></div><hr class="torn">` : '';
     st.innerHTML = `<article class="paper story-card">${intro}
       <div class="eyebrow">Scene ${s + 1} of 4 · ${esc(sc.place)}</div>
       <h2 class="scene-title">${esc(sc.title)}</h2>
       <p class="story-text">${esc(sc.story)}</p>
-      <div class="read-row">${sayBtn(sc.story, FELIX.voice, 'Read the story')}<span class="muted tiny">Read it to me</span></div>
+      <div class="read-row">${sayBtn(sc.story, NARRATOR, 'Read the story')}<span class="muted tiny">Read it to me</span></div>
       <figure class="witness"><span class="witness-e">${sc.witness.e}</span><blockquote><p>“${esc(sc.witness.quote)}”</p><figcaption>${esc(sc.witness.name)}, witness</figcaption></blockquote>${sayBtn(sc.witness.quote, sc.witness.voice, 'Hear the witness')}</figure>
       <div class="stage-actions"><button type="button" class="btn primary big" data-action="toStage" data-arg="search">Search for clues 🔦</button></div>
     </article>`;
-    if (S.settings.autoRead) speak((s === 0 ? c.intro + ' ' : '') + sc.story);
+    if (S.settings.autoRead) speak((s === 0 ? c.intro + ' ' : '') + sc.story, NARRATOR);
     return;
   }
   if (run.stage === 'search') {
@@ -2109,9 +2164,9 @@ function renderStage() {
   if (run.stage === 'cipher') {
     const p = ensureProblem(i, s);
     const text = fillText(sc.problem, p);
-    st.innerHTML = `<div class="paper clue-card"><div class="eyebrow">The clue · ${sc.cat.e} ${esc(sc.cat.label)}</div><p class="problem">${esc(text)}</p><div class="read-row">${sayBtn(text, FELIX.voice, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
+    st.innerHTML = `<div class="paper clue-card"><div class="eyebrow">The clue · ${sc.cat.e} ${esc(sc.cat.label)}</div><p class="problem">${esc(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
       <div id="cipherRoot"></div><div id="afterSolve"></div>`;
-    if (S.settings.autoRead) speak(text);
+    if (S.settings.autoRead) speak(text, NARRATOR);
     if (run.solved[s]) {
       $('#cipherRoot').innerHTML = `<div class="safe open"><div class="safe-inside"><div class="stamp cracked">CRACKED!</div><div class="cracked-ans">${equationText(p)} = <b>${fmt(p.ans)}</b></div><div class="stars-pop">+${run.sceneStars[s]} ⭐</div></div></div>`;
       $('#afterSolve').innerHTML = afterSolveHTML(0);
@@ -2145,7 +2200,7 @@ function foundPanelHTML() {
   const { i, c, run } = curCase(); const sc = c.scenes[run.scene];
   const p = ensureProblem(i, run.scene); const text = fillText(sc.problem, p);
   return `<div class="found paper"><div class="found-e" aria-hidden="true">${sc.evidence.e}</div>
-    <div class="found-body"><div class="eyebrow">Evidence found</div><p>You found ${esc(sc.evidence.label)}! There's a clue on it:</p><p class="problem">${esc(text)}</p><div class="read-row">${sayBtn(text, FELIX.voice, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
+    <div class="found-body"><div class="eyebrow">Evidence found</div><p>You found ${esc(sc.evidence.label)}! There's a clue on it:</p><p class="problem">${esc(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
     <button type="button" class="btn primary big" data-action="toStage" data-arg="cipher">Crack the safe 🔐</button></div>`;
 }
 function afterSolveHTML(misses) {
@@ -2168,7 +2223,7 @@ function checkHTML() {
   return `<section class="paper check-card">
     <div class="eyebrow">Suspect check · Scene ${s + 1}</div>
     <h2>${sc.cat.e} ${esc(sc.cat.label)}: <span class="ans-chip">${fmt(p.ans)}</span></h2>
-    <p>The thief's number is <b>${fmt(p.ans)}</b>. Tap every suspect whose number does <b>not</b> match. If they all match, just tap <b>Done</b>. ${sayBtn(instr, FELIX.voice, 'Read the instructions')}</p>
+    <p>The thief's number is <b>${fmt(p.ans)}</b>. Tap every suspect whose number does <b>not</b> match. If they all match, just tap <b>Done</b>. ${sayBtn(instr, NARRATOR, 'Read the instructions')}</p>
     <div class="check-grid">${cards}</div>
     <div id="checkCoach"></div>
     <div class="stage-actions"><button type="button" class="btn primary big" data-action="checkDone">Done checking ✔</button></div>
@@ -2223,9 +2278,9 @@ function doArrest(_, btn) {
   setTimeout(() => {
     if (c.finale) {
       earnBadge('r_unmasked'); SFX.fanfare();
-      openModal(`<div class="center unmask"><div class="eyebrow">Wait a minute...</div><div class="big-art">${c.unmask.art}</div><h2>It's a disguise!</h2><p>${esc(c.unmask.line)}</p><p class="muted">${esc(c.unmask.note)}</p>${sayBtn(c.unmask.line + ' ' + c.unmask.note, FELIX.voice)}
+      openModal(`<div class="center unmask"><div class="eyebrow">Wait a minute...</div><div class="big-art">${c.unmask.art}</div><h2>It's a disguise!</h2><p>${esc(c.unmask.line)}</p><p class="muted">${esc(c.unmask.note)}</p>${sayBtn(c.unmask.line + ' ' + c.unmask.note, NARRATOR)}
         <div class="row-btns"><button type="button" class="btn primary" data-action="confess" data-arg="0" data-focus>Hear the confession ▶</button></div></div>`, { closable: false, cls: 'wide' });
-      if (S.settings.autoRead) speak(c.unmask.line);
+      if (S.settings.autoRead) speak(c.unmask.line, NARRATOR);
     } else confess(0);
   }, REDUCED() ? 300 : 1400);
 }
@@ -2244,7 +2299,7 @@ function confess(k) {
     speak(panel.line, speaker.voice);
     return;
   }
-  openModal(`<div class="ending"><div class="eyebrow">Case solved</div><p class="story-text">${esc(c.ending)}</p><div class="read-row">${sayBtn(c.ending + ' The note says: ' + c.rNote, FELIX.voice)}<span class="muted tiny">Read it to me</span></div>
+  openModal(`<div class="ending"><div class="eyebrow">Case solved</div><p class="story-text">${esc(c.ending)}</p><div class="read-row">${sayBtn(c.ending + ' The note says: ' + c.rNote, NARRATOR)}<span class="muted tiny">Read it to me</span></div>
     <div class="note big-note"><span class="pin" aria-hidden="true"></span><p class="note-text">${esc(c.rNote)}</p><p class="note-clue">🗂️ For the corkboard: ${esc(c.rClue)}</p></div>
     <div class="row-btns"><button type="button" class="btn primary big" data-action="closeCase" data-focus>Close the case 📁</button></div></div>`, { closable: false, cls: 'wide' });
 }
@@ -2312,7 +2367,7 @@ function labHTML() {
   return `<section class="lab-head"><div><div class="eyebrow on-desk">Agency training lab</div><h1 class="display">Training Lab 🧪</h1><p class="on-desk-muted">Practice any skill. Every safe you crack earns stars. Hints are free in the Lab.</p></div></section>
     <div class="chip-row" role="group" aria-label="Operation">${ops.map(([id, l]) => `<button type="button" class="chip ${S.lab.op === id ? 'on' : ''}" data-action="labOp" data-arg="${id}" aria-pressed="${S.lab.op === id}">${l}</button>`).join('')}</div>
     <div class="chip-row" role="group" aria-label="Level">${[1, 2, 3].map(l => `<button type="button" class="chip ${S.lab.level === l ? 'on' : ''}" data-action="labLevel" data-arg="${l}" aria-pressed="${S.lab.level === l}">Level ${l}</button>`).join('')}</div>
-    <div class="lab-grid"><div><div class="paper clue-card"><div class="eyebrow">Training puzzle · ${OP_NAME[p.op]}</div><p class="problem">${tpl.e} ${esc(text)}</p><div class="read-row">${sayBtn(text, FELIX.voice, 'Read the puzzle')}<span class="muted tiny">Read it to me</span></div></div>
+    <div class="lab-grid"><div><div class="paper clue-card"><div class="eyebrow">Training puzzle · ${OP_NAME[p.op]}</div><p class="problem">${tpl.e} ${esc(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the puzzle')}<span class="muted tiny">Read it to me</span></div></div>
     <div id="cipherRoot"></div><div id="afterSolve"></div></div></div>`;
 }
 function mountLab() {
@@ -2414,7 +2469,10 @@ function parentHTML() {
       <label class="chk"><input type="checkbox" id="pAuto" ${S.settings.autoRead ? 'checked' : ''}><span>Read stories aloud automatically</span></label>
       <label class="field-label" for="pRate">Speech speed <span id="pRateVal">${Number(S.settings.voiceRate).toFixed(2)}×</span></label>
       <input type="range" id="pRate" min="0.7" max="1.2" step="0.05" value="${S.settings.voiceRate}">
-      ${CAN_SPEAK ? '<button type="button" class="btn small ghost" data-action="testVoice">Test the voice 🔊</button>' : '<p class="muted tiny">This browser can\'t read aloud.</p>'}
+      ${CAN_SPEAK ? `<label class="field-label" for="pVoice">Story voice</label>
+      <select id="pVoice" class="text-input">${voiceOptionsHTML()}</select>
+      <div class="row-btns left"><button type="button" class="btn small ghost" data-action="testVoice">Hear the story voice 🔊</button><button type="button" class="btn small ghost" data-action="testCast">Hear the cast 🎭</button></div>
+      <p class="muted tiny">The nicest voices are free downloads. On iPad: Settings → Accessibility → Spoken Content → Voices → English, then download one marked <b>Enhanced</b> or <b>Premium</b> (Ava, Zoe and Evan sound great). Come back here and pick it. Characters automatically get other voices from the same list.</p>` : '<p class="muted tiny">This browser can\'t read aloud.</p>'}
       <label class="chk"><input type="checkbox" id="pSound" ${S.settings.sound ? 'checked' : ''}><span>Sound effects</span></label></fieldset>
     <fieldset><legend>Cases</legend><label class="chk"><input type="checkbox" id="pUnlock" ${S.settings.unlockAll ? 'checked' : ''}><span>Unlock all cases</span></label></fieldset>
     <div class="danger"><button type="button" class="btn small danger-btn" data-action="resetAsk">Erase all progress…</button>
@@ -2422,7 +2480,14 @@ function parentHTML() {
     <p class="muted tiny">Progress is saved in this browser on this device only.</p>
     <div class="row-btns"><button type="button" class="btn primary" data-action="closeModal">Done</button></div></div>`;
 }
+function voiceOptionsHTML() {
+  const vs = englishVoices();
+  const tier = (v) => /premium|natural|neural/i.test(v.name) ? ' ★★' : /enhanced/i.test(v.name) ? ' ★' : '';
+  const auto = `<option value="">Automatic: ${vs[0] ? esc(vs[0].name) : 'best on this device'}</option>`;
+  return auto + vs.map(v => `<option value="${esc(v.name)}" ${S.settings.voiceName === v.name ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})${tier(v)}</option>`).join('');
+}
 function openParent() { SFX.chime(); openModal(parentHTML(), { cls: 'wide', onClose: () => render() }); }
+if (CAN_SPEAK) { try { speechSynthesis.addEventListener('voiceschanged', () => { const sel = $('#pVoice'); if (sel) sel.innerHTML = voiceOptionsHTML(); }); } catch (e) {} }
 
 function setLevel(v) {
   S.settings.level = v === 'auto' ? 'auto' : Number(v);
@@ -2469,7 +2534,8 @@ const ACTIONS = {
   buy: (a) => buy(a),
   equip: (a) => equip(a),
   gearTap: () => { if (ui.holdDone) { ui.holdDone = false; return; } toast('Grown-ups: press and hold ⚙️ for 2 seconds.'); },
-  testVoice: () => speak('Hello, Detective! I am Inspector Felix. Let\'s crack this case together.'),
+  testVoice: () => speak('Behind the museum is a quiet garden with a lily pond. A path of flat stepping stones crosses the water. Somebody ran across them last night, in a big hurry!', NARRATOR),
+  testCast: () => speakAll([["Hello, Detective! I'm Inspector Felix.", FELIX.voice], ...SUSPECT_IDS.map(id => [SUSPECTS[id].catch, SUSPECTS[id].voice])]),
   resetAsk: () => { $('#resetConfirm').hidden = false; },
   resetCancel: () => { $('#resetConfirm').hidden = true; },
   resetDo: () => {
@@ -2496,6 +2562,7 @@ document.addEventListener('change', (e) => {
   else if (t.id === 'pAuto') { S.settings.autoRead = t.checked; save(); }
   else if (t.id === 'pSound') { S.settings.sound = t.checked; save(); if (t.checked) SFX.chime(); }
   else if (t.id === 'pUnlock') { S.settings.unlockAll = t.checked; save(); }
+  else if (t.id === 'pVoice') { S.settings.voiceName = t.value; CAST = null; save(); speak('This is how the stories will sound.', NARRATOR); }
 });
 document.addEventListener('input', (e) => {
   const t = e.target;
