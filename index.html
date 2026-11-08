@@ -133,6 +133,20 @@ select.text-input { font-size: 17px; appearance: auto; }
 .paper h2 small { font-family: var(--f-body); font-size: 15px; letter-spacing: 0; }
 .paper .btn.ghost { color: var(--ink); }
 
+/* the player's detective */
+.char { overflow: visible; }
+.char .ch-body { animation: bob 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+.char .ch-eyes { animation: blink 5s infinite; transform-box: fill-box; transform-origin: center; }
+.char .ch-spark { animation: twinkle 1.6s ease-in-out infinite; }
+.cheer .char .ch-body { animation: hop .7s ease-in-out infinite; }
+.cheer { margin-bottom: -6px; }
+@keyframes bob { 50% { transform: translateY(-1.5%) scaleY(1.01); } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes twinkle { 50% { opacity: .2; } }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-9%); } }
+.pick-wrap { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.welcome-preview { flex: none; background: radial-gradient(circle at 50% 60%, #fff4d6, transparent 70%); border-radius: 16px; padding: 4px 8px; }
+.pick-wrap .animal-pick { flex: 1; min-width: 0; }
 /* avatar */
 .avatar { position: relative; width: var(--s); height: var(--s); display: inline-grid; place-items: center; flex: none; }
 .av-ring { position: absolute; inset: 0; border-radius: 50%; background: var(--coat); box-shadow: 0 4px 10px rgba(0,0,0,.35); }
@@ -149,9 +163,10 @@ select.text-input { font-size: 17px; appearance: auto; }
 .text-input { font: inherit; font-size: 20px; min-height: 52px; padding: 10px 14px; border-radius: 12px; border: 3px solid var(--manila-2); background: #fff; color: var(--ink); width: 100%; }
 .text-input:focus { border-color: var(--brass); outline: none; box-shadow: 0 0 0 3px rgba(127, 211, 255, .6); }
 .animal-pick { display: flex; flex-wrap: wrap; gap: 8px; }
-.animal { width: 56px; height: 56px; font-size: 32px; border-radius: 14px; border: 3px solid rgba(31,42,68,.12); background: #fff; cursor: pointer; display: grid; place-items: center; }
+.animal { width: 68px; height: 68px; font-size: 32px; border-radius: 16px; border: 3px solid rgba(31,42,68,.12); background: #fff; cursor: pointer; display: grid; place-items: center; padding: 0; }
+.animal .char .ch-body, .animal .char .ch-eyes { animation: none; }
 .animal.on { border-color: var(--brass); background: #fff1cf; transform: scale(1.06); }
-.animal-pick.small .animal { width: 48px; height: 48px; font-size: 26px; }
+.animal-pick.small .animal { width: 56px; height: 56px; font-size: 26px; }
 .howto { text-align: left; display: grid; gap: 8px; padding: 0; margin: 14px 0; list-style: none; font-size: 18px; }
 .howto li { display: flex; gap: 12px; align-items: center; background: var(--paper-2); border-radius: 10px; padding: 8px 12px; }
 .howto span { font-size: 28px; }
@@ -160,7 +175,8 @@ select.text-input { font-size: 17px; appearance: auto; }
 .hero { display: flex; gap: 20px; align-items: center; background: linear-gradient(135deg, var(--manila), #f4e2b5); color: var(--ink); border-radius: 16px; padding: 22px 20px 18px; box-shadow: var(--shadow); border-left: 10px solid var(--brass); }
 .hero-info { min-width: 0; flex: 1; }
 .hero-name { font-size: clamp(28px, 5vw, 42px); color: var(--ink); }
-.hero-av { padding-top: 14px; }
+.hero-av { flex: none; margin: -6px 0 -10px; }
+.hero-av .char { display: block; }
 .rank { display: grid; gap: 4px; max-width: 420px; }
 .rank-name { font-weight: 700; font-size: 18px; }
 .bar { height: 12px; border-radius: 999px; background: rgba(31,42,68,.15); overflow: hidden; }
@@ -194,6 +210,13 @@ select.text-input { font-size: 17px; appearance: auto; }
 .note-text { font-family: var(--f-type); font-size: 16px; margin: 0 0 6px; }
 .note-clue { font-size: 14px; color: var(--clue-ink); font-weight: 700; margin: 0; }
 .note-from { font-size: 12px; color: var(--muted-ink); display: block; margin-top: 6px; }
+.season { margin-top: 34px; }
+.season-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-bottom: 12px; }
+.season-head .section-title { margin: 0; }
+.season-badge { font-family: var(--f-type); text-transform: uppercase; letter-spacing: .1em; font-size: 13px; background: var(--brass); color: var(--ink); border-radius: 6px; padding: 3px 9px; }
+.season-done { font-weight: 700; color: var(--clue-bright); }
+.season .cork { margin-top: 24px; }
+.cork-head .section-title.dark { font-size: clamp(22px, 3.2vw, 28px); }
 .quick { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 14px; margin-top: 30px; }
 .quick-card { background: var(--desk-2); color: var(--on-desk); border-radius: 16px; padding: 16px; display: grid; gap: 2px; text-align: left; border: 1px solid rgba(255,255,255,.08); cursor: pointer; min-height: 44px; }
 .quick-card span { font-size: 32px; }
@@ -419,7 +442,8 @@ select.text-input { font-size: 17px; appearance: auto; }
 .lab-grid > div { display: grid; gap: 14px; }
 .shop-head { display: flex; gap: 22px; align-items: center; margin-bottom: 16px; }
 .shop-head h1 { color: var(--manila); font-size: clamp(30px, 5vw, 44px); }
-.shop-preview { background: var(--desk-2); border-radius: 50%; padding: 30px 18px 14px; flex: none; }
+.shop-preview { background: radial-gradient(circle at 50% 60%, var(--desk-3), var(--desk-2) 70%); border-radius: 24px; padding: 6px 14px 0; flex: none; }
+.shop-preview .char { display: block; }
 .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .tab { min-height: 44px; padding: 8px 14px; border-radius: 12px; border: 2px solid rgba(255,255,255,.18); background: transparent; color: var(--on-desk); font-weight: 700; cursor: pointer; }
 .tab.on { background: var(--manila); color: var(--ink); border-color: var(--manila); }
@@ -429,13 +453,29 @@ select.text-input { font-size: 17px; appearance: auto; }
 .item-e { font-size: 46px; line-height: 1.1; }
 .swatch { width: 54px; height: 54px; border-radius: 50%; box-shadow: inset 0 0 0 3px rgba(0,0,0,.15); }
 .lens-swatch { width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle, #d8eeff 0 54%, transparent 55%), var(--rim); display: grid; place-items: center; font-size: 16px; }
-.treehouse { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 280px; border-radius: 18px; overflow: hidden; border: 8px solid var(--wood); box-shadow: var(--shadow);
-  background: linear-gradient(#6e4a29, #5b3d22) bottom / 100% 24% no-repeat, repeating-linear-gradient(90deg, #a77c4f 0 46px, #94703f 46px 48px); }
-.th-window { position: absolute; left: 52%; top: 9%; width: 17%; aspect-ratio: 1; border-radius: 50%; border: 6px solid var(--wood);
-  background: radial-gradient(circle at 30% 30%, #fff 0 2px, transparent 3px), radial-gradient(circle at 70% 60%, #fff 0 1.5px, transparent 2.5px), radial-gradient(circle at 55% 25%, #ffe9a8 0 1.5px, transparent 2.5px), linear-gradient(#0b1026, #24204a); }
-.decor { position: absolute; transform: translate(-50%, -50%); font-size: clamp(28px, 6vw, 54px); line-height: 1; filter: drop-shadow(0 4px 3px rgba(0,0,0,.35)); }
-.th-avatar { position: absolute; left: 50%; bottom: 9%; transform: translateX(-50%); }
-.th-empty { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); background: rgba(251,245,230,.94); color: var(--ink); padding: 10px 14px; border-radius: 12px; text-align: center; width: min(80%, 360px); margin: 0; }
+/* treehouse room: everything is sized as a share of the room width (cqw), so items stay in proportion on any screen */
+.treehouse { position: relative; width: 100%; max-width: 980px; margin: 0 auto; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden; border: 10px solid var(--wood); box-shadow: var(--shadow);
+  container-type: inline-size; background: repeating-linear-gradient(90deg, #a77c4f 0 7.5%, #94703f 7.5% 7.8%); }
+@media (min-width: 900px) { .treehouse { aspect-ratio: 16 / 10; } }
+.th-beam { position: absolute; left: 0; right: 0; top: 0; height: 5%; background: linear-gradient(#6e4a29, #5b3d22); box-shadow: 0 4px 8px rgba(0,0,0,.25); }
+.th-window { position: absolute; left: 52%; top: 12%; width: 15%; aspect-ratio: 1; border-radius: 50%; border: 1.2cqw solid var(--wood); box-shadow: inset 0 0 0 .6cqw #4a301a;
+  background: radial-gradient(circle at 30% 30%, #fff 0 2px, transparent 3px), radial-gradient(circle at 70% 60%, #fff 0 1.5px, transparent 2.5px), radial-gradient(circle at 55% 25%, #ffe9a8 0 1.5px, transparent 2.5px), radial-gradient(circle at 72% 30%, #fff6c9 0 9%, transparent 10%), linear-gradient(#0b1026, #24204a); }
+.th-floor { position: absolute; left: 0; right: 0; bottom: 0; height: 30%; background: repeating-linear-gradient(90deg, #6e4a29 0 12%, #5f3f22 12% 12.4%), #6e4a29; box-shadow: inset 0 6px 10px rgba(0,0,0,.3); }
+.th-rug { position: absolute; left: 50%; bottom: 4%; width: 46%; height: 13%; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(ellipse, #c8323c 0 40%, #e9cf94 41% 52%, #c8323c 53% 70%, #9c2630 71%); opacity: .9; }
+.th-shelf { position: absolute; left: var(--x); bottom: 57%; width: 18%; height: 2.2%; transform: translateX(-50%); background: #5b3d22; border-radius: 3px; box-shadow: 0 6px 8px rgba(0,0,0,.3); }
+.decor { position: absolute; left: var(--x); bottom: var(--y); transform: translateX(-50%); line-height: 1; font-size: calc(var(--sz) * 0.9vw); filter: drop-shadow(0 .6cqw .5cqw rgba(0,0,0,.35)); }
+@supports (width: 1cqw) { .decor { font-size: calc(var(--sz) * 1cqw); } }
+.decor-e { display: block; }
+.decor.lean .decor-e { transform: rotate(-16deg); }
+.decor.hang::before { content: ""; position: absolute; left: 50%; bottom: 90%; width: 2px; height: 40cqw; background: rgba(40,25,10,.7); }
+.decor.float .decor-e { animation: floaty 4s ease-in-out infinite; }
+.decor.tank { padding: .12em .2em .08em; background: linear-gradient(rgba(150,220,255,.45), rgba(60,150,210,.6)); border: .5cqw solid rgba(220,240,255,.85); border-radius: .5cqw; }
+.decor.tank .decor-e { font-size: .7em; animation: swim 5s ease-in-out infinite; }
+.th-avatar { position: absolute; left: 50%; bottom: 3%; width: 22%; transform: translateX(-50%); }
+.th-avatar .char { width: 100%; height: auto; }
+.th-empty { position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); background: rgba(251,245,230,.95); color: var(--ink); padding: 12px 16px; border-radius: 14px; text-align: center; width: min(82%, 380px); display: grid; gap: 8px; justify-items: center; box-shadow: var(--shadow); }
+@keyframes floaty { 50% { transform: translateY(-6%); } }
+@keyframes swim { 0%, 100% { transform: translateX(-18%) scaleX(1); } 49% { transform: translateX(18%) scaleX(1); } 50% { transform: translateX(18%) scaleX(-1); } 99% { transform: translateX(-18%) scaleX(-1); } }
 .certificate { margin: 22px 0; background: radial-gradient(circle at 50% 0, #fff8de, var(--paper) 70%); border: 10px double var(--brass); border-radius: 14px; padding: 26px 22px; text-align: center; color: var(--ink); box-shadow: var(--shadow); }
 .certificate h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(26px, 5vw, 38px); margin: .2em 0; letter-spacing: .02em; }
 .certificate p { max-width: 52ch; margin: .5em auto; font-size: 18px; }
@@ -500,7 +540,10 @@ select.text-input { font-size: 17px; appearance: auto; }
   .btn.big { font-size: 20px; padding: 12px 18px; }
   .stage-actions .btn.big, .found .btn { width: 100%; }
   .shop-head { gap: 14px; }
-  .shop-preview { padding: 24px 12px 10px; }
+  .shop-preview { padding: 4px 8px 0; }
+  .shop-preview .char { width: 110px; height: auto; }
+  .hero-av .char { width: 92px; height: auto; }
+  .welcome-preview .char { width: 110px; height: auto; }
 }
 </style>
 </head>
@@ -951,9 +994,374 @@ const ANIMALS = ['🐶', '🐱', '🐰', '🐼', '🐯', '🐨', '🐵', '🐻']
 const OP_SYMBOL = { add: '+', sub: '−', mul: '×', div: '÷' };
 const OP_NAME = { add: 'Adding', sub: 'Subtracting', mul: 'Multiplying', div: 'Dividing' };
 
+
+/* ============================================================
+   SEASON 2: THE FEATHER FILES
+   New suspects, a new mastermind (Mister Mimic), six new cases.
+   Stories never contain numerals; problems use {a} {b} {N} {d}.
+   ============================================================ */
+
+Object.assign(SUSPECTS, {
+  florence: { e: '🦩', name: 'Florence Flamingo', short: 'Florence', desc: 'Dramatic ballet teacher',
+    catch: 'Oh, my pirouettes! I would NEVER!', cleared: 'Thank you, darlings! Now, back to my twirls.',
+    voice: { pitch: 1.35, rate: 1.05 } },
+  gus: { e: '🐊', name: 'Gus Gator', short: 'Gus', desc: 'Sleepy riverboat captain',
+    catch: 'Mmm... huh? I was napping. I am always napping.', cleared: 'Mmm... good. Can I go back to sleep now?',
+    voice: { pitch: 0.6, rate: 0.82 } },
+  bertie: { e: '🦫', name: 'Bertie Beaver', short: 'Bertie', desc: 'Speedy builder in a hurry',
+    catch: 'No time, no time! I have dams to build!', cleared: 'Great! Thanks! Busy! Gotta go!',
+    voice: { pitch: 1.15, rate: 1.25 } },
+  sasha: { e: '🦨', name: 'Sasha Skunk', short: 'Sasha', desc: 'Polite perfume maker',
+    catch: 'Excuse me! I only make LOVELY smells now.', cleared: 'How kind. Please, take a free sample of Rose Breeze.',
+    voice: { pitch: 1.1, rate: 0.95 } },
+});
+const MIMIC = { e: '🦜', name: 'Mister Mimic', voice: { pitch: 1.25, rate: 1.08 } };
+const MASTERMINDS = { remainder: REMAINDER, mimic: MIMIC };
+
+Object.assign(THEMES, {
+  fair:       { sky: ['#241a3a', '#4b2a52'], floor: '#5a3b2e', props: ['🎠', '🎡', '🎈', '🎪', '🎯', '🎟️'] },
+  library:    { sky: ['#2b2118', '#4a3826'], floor: '#6b4a2e', props: ['📚', '🕯️', '🪑', '🖋️', '🗺️', '📜'] },
+  greenhouse: { sky: ['#16302a', '#2a5544'], floor: '#5a4630', props: ['🌻', '🌷', '🌵', '🍄', '🪴', '🌿'] },
+  icerink:    { sky: ['#1a2b45', '#3c6280'], floor: '#cfe6f2', props: ['⛄', '🧤', '🏒', '❄️', '⛸️', '🎿'] },
+  circus:     { sky: ['#3a1420', '#6a2232'], floor: '#7a5530', props: ['🎪', '🤡', '🎩', '🎈', '🥁', '🎺'] },
+  lighthouse: { sky: ['#0d1a2e', '#243a5a'], floor: '#4a4a52', props: ['⚓', '🛟', '🦪', '🐚', '🌊', '⛵'] },
+});
+
+CASES.forEach(c => { c.season = c.season || 1; });
+CASES[5].mastermind = 'remainder';
+CASES[5].finaleBadge = 'r_unmasked';
+
+CASES.push(
+  /* ---------------- CASE 7 ---------------- */
+  {
+    id: 'fair', season: 2, title: 'The Ferris Wheel Fiasco', icon: '🎡', theme: 'fair',
+    treasure: 'the Sunshine Bell', culprit: 'bertie',
+    intro: `Summer has come to Starlight Town, and so has the Starlight Summer Fair! There are cotton candy carts, a twirling carousel, and a giant Ferris wheel that sparkles at night. Every year, the fair opens when the mayor rings the golden Sunshine Bell. But this morning, the bell was gone! Professor Remainder, now the town's Recycling Champion, hurries over holding something he found by the bell tower: a bright green feather. "It isn't mine," he says. "I'm a raccoon!" Felix twirls the feather. "Detective, four fair-goers were near that tower last night. I think a brand new mystery has begun."`,
+    scenes: [
+      { op: 'add', title: 'Cotton Candy Clues', place: 'The Candy Cart',
+        witness: { e: '🦛', name: 'Hattie the Hippo', voice: { pitch: 0.9, rate: 0.95 },
+          quote: `Oh, my! That was the biggest cone I ever spun! It was taller than my ears!` },
+        story: `Hattie the Hippo spins cotton candy at the fair. Her cart has a fluffy pink cloud machine and a big bag of sugar. Last night, someone bought a giant cone of cotton candy before climbing the bell tower, and now there is sticky pink fluff on every step! Hattie's machine remembers how much sugar it spun. All four suspects bought cotton candy this week, and Hattie wrote down every order. "Add up the sugar," Felix says, licking his lips, "and we'll find out whose sweet tooth gave them away."`,
+        evidence: { e: '🍭', label: 'sticky candy fluff' }, token: '🍬',
+        problem: 'The machine spun {a} grams of sugar, then {b} more grams for the same giant cone. How many grams is that altogether?',
+        cat: { e: '🍭', label: 'Cotton candy (grams)' }, out: ['gus'] },
+      { op: 'mul', title: 'The Prize Shelves', place: 'The Ring Toss Game',
+        witness: { e: '🦓', name: 'Ziggy the Zebra', voice: { pitch: 1.1, rate: 1.1 },
+          quote: `Stripes don't lie! Somebody cleaned out my prize shelves, and they didn't toss a single ring.` },
+        story: `At the ring toss game, rows of shelves hold fluffy plush toys for the winners. Ziggy the Zebra runs the game, and this morning he found several shelves empty, with the same number of toys missing from each one. Ziggy thinks the thief wrapped the Sunshine Bell in soft toys, so it wouldn't ring while they carried it away. Clever! Each suspect has won plush toys at the fair this week. "Count the missing toys," says Felix, "and see whose prize pile matches."`,
+        evidence: { e: '🧸', label: 'an empty prize shelf' }, token: '🧸',
+        problem: 'The thief emptied {a} shelves. Each shelf held {b} plush toys. How many toys did the thief take?',
+        cat: { e: '🧸', label: 'Plush toys won' }, out: [] },
+      { op: 'sub', title: 'The Soggy Ticket Book', place: 'The Duck Pond',
+        witness: { e: '🦆', name: 'Dabble the Duck', voice: { pitch: 1.4, rate: 1.15 },
+          quote: `Quack! It landed right on my head! Then it floated. Then it sank a little. Then I rescued it!` },
+        story: `Every visitor gets a book of ride tickets, and they tear out a ticket for each ride. Last night, someone dropped a ticket book into the duck pond while running past. Dabble the Duck fished it out, but the water washed the name away! Luckily, the cover still shows how many tickets the book started with, and how many were torn out. Felix checked every suspect's ticket book this morning. "Work out how many tickets should be left," he says, "and we'll know whose book this is."`,
+        evidence: { e: '📒', label: 'a soggy ticket book' }, token: '🎟️',
+        problem: 'The ticket book started with {a} tickets, and {b} were torn out. How many tickets are left?',
+        cat: { e: '🎟️', label: 'Tickets left' }, out: ['sasha'] },
+      { op: 'div', title: 'The Ferris Wheel Bolts', place: 'The Ferris Wheel',
+        witness: { e: '🦅', name: 'Ellie the Eagle', voice: { pitch: 1.0, rate: 1.0 },
+          quote: `From up high, I see everything. Someone was clanking around in those cars all night!` },
+        story: `Ellie the Eagle circles the Ferris wheel every night, keeping watch. Last night she heard clanking and tapping. Someone climbed into the Ferris wheel cars to hide from the guards, and while they waited, they tightened shiny new bolts on every car, the same number on each one! Only a real builder fixes things while hiding. Each suspect has a different habit when they fix things. "Find out how many bolts went on each car," says Felix, "and our handy helper will be found."`,
+        evidence: { e: '🔩', label: 'shiny new bolts' }, token: '🔩',
+        problem: 'The thief used {N} shiny new bolts on {d} Ferris wheel cars, the same number on each car. How many bolts went on each car?',
+        cat: { e: '🔩', label: 'Bolts per car' }, out: ['florence'] },
+    ],
+    alibis: {
+      florence: `Darling, I was teaching a moonlight ballet class. We twirled until midnight!`,
+      gus: `Mmm... I was napping on my riverboat. Snoring, probably. Ask the fish.`,
+      bertie: `No time to talk! I was... building! Somewhere! Very busy! Bye!`,
+      sasha: `Excuse me, I was at home mixing a new perfume. It's called Fairground Fresh.`,
+    },
+    confession: [
+      { art: '🦫📢', line: `No time, no time! My building crew can never hear me shout LUNCH TIME over all the hammering.` },
+      { art: '🔔🎡', line: `Then a note appeared on my toolbox. It said the Sunshine Bell is the loudest bell in town. So I borrowed it! I even fixed the Ferris wheel while I was hiding up there.` },
+      { art: '🦫😳', line: `But without the bell, the whole fair couldn't start. I'm sorry! I'll make my crew a lunch whistle instead.` },
+    ],
+    ending: `Bertie returns the Sunshine Bell, and the mayor rings it so loudly that the cotton candy wobbles. The Summer Fair is open! But who left that note on Bertie's toolbox? Tucked inside the bell, where nobody would think to look, is another note. And stuck to it is a bright green feather.`,
+    rNote: 'Nice try, Detective. The fun is just beginning. — M', rClue: 'M leaves bright green feathers behind.',
+  },
+
+  /* ---------------- CASE 8 ---------------- */
+  {
+    id: 'library', season: 2, title: 'The Library of Whispers', icon: '📖', theme: 'library',
+    treasure: 'the Very First Storybook', culprit: 'florence',
+    intro: `The Starlight Library is so quiet you can hear a page turn. Its greatest treasure is the Very First Storybook, the oldest book ever written in Starlight Town. Every night it rests on a velvet stand under a glass dome. But this morning, the dome was empty! The librarian says she heard a sleepy voice in the dark last night, whispering, "Shh, shh, I'm napping." Felix lowers his voice, so he won't break the library rules. "Detective," he whispers, "let's find that book. Softly."`,
+    scenes: [
+      { op: 'div', title: 'The Bookmark Trail', place: 'The Reading Room',
+        witness: { e: '🐁', name: 'Mabel the Mouse', voice: { pitch: 1.7, rate: 1.15 },
+          quote: `Eek! I read under the tables at night. Someone was flipping through books, fast, fast, fast!` },
+        story: `Mabel the Mouse lives under the reading room tables and reads the books that fall on the floor. Last night, she watched a shadowy figure pull books off the shelves, searching for the storybook. Every time they checked a book, they slipped bookmarks inside, the same number in each one. Now the room is full of fancy bookmarks! Each suspect marks their books in their own special way. "Find out how many bookmarks went in each book," Felix whispers, "and we'll know whose habit this is."`,
+        evidence: { e: '🔖', label: 'a trail of bookmarks' }, token: '🔖',
+        problem: 'The thief left {N} bookmarks, spread evenly through {d} books. How many bookmarks are in each book?',
+        cat: { e: '🔖', label: 'Bookmarks per book' }, out: [] },
+      { op: 'sub', title: 'The Open Book', place: 'The Big Armchair',
+        witness: { e: '🐛', name: 'Inchy the Bookworm', voice: { pitch: 1.3, rate: 0.95 },
+          quote: `I'm a real bookworm! I was reading that very book when the thief sat on it. Squish!` },
+        story: `In the corner is a big armchair, and on it sits a giant book, left wide open. Inchy the Bookworm was reading it when the thief plopped down for a rest and started reading too! Inchy saw exactly where the thief stopped. Every suspect is reading a different book this week, and the librarian knows which page each one has bookmarked. "Work out which page the thief stopped on," says Felix, "and we'll match it to a bookmark."`,
+        evidence: { e: '📕', label: 'a book left open' }, token: '🔢',
+        problem: `The thief's book has {a} pages. Inchy saw them stop reading {b} pages before the end. On which page did they stop?`,
+        cat: { e: '📖', label: 'Bookmark page' }, out: ['bertie'] },
+      { op: 'add', title: 'The Reading Rewards Card', place: 'The Whispering Hallway',
+        witness: { e: '🦎', name: 'Lizzie the Lizard', voice: { pitch: 1.2, rate: 1.0 },
+          quote: `I heard Gus's sleepy voice in this hallway! But when I peeked... nobody was there. Spooky!` },
+        story: `Lizzie the Lizard naps by the warm hallway window. Last night she heard Gus Gator's sleepy voice whisper, "Shh, I'm napping." But Felix already checked: Gus was snoring on his riverboat, far away! "Someone is copying voices," Felix says, frowning. Under the radiator, Lizzie found a reading rewards card. Every reader earns points, and each suspect has a different total. The thief's card shows points from two months. "Add them up," says Felix, "and see whose total matches."`,
+        evidence: { e: '🪪', label: 'a reading rewards card' }, token: '⭐',
+        problem: 'The card shows {a} reading points from last month and {b} points from this month. How many points is that altogether?',
+        cat: { e: '⭐', label: 'Reading points' }, out: ['gus'] },
+      { op: 'mul', title: 'The Pink Ribbons', place: 'The Story Corner',
+        witness: { e: '🦥', name: 'Sloane the Sloth', voice: { pitch: 0.9, rate: 0.75 },
+          quote: `I... saw... pink... ribbons. Lots... of... them. Then... I... took... a... nap.` },
+        story: `In the story corner, the thief tied up the Very First Storybook with pink ribbon, to carry it like a present. Sloane the Sloth hangs from the story corner lamp, and she watched the whole thing, very, very slowly. Every ribbon spool was exactly the same length. This week, each suspect bought pink ribbon at the craft store, and the store keeps every receipt. "Count up the ribbon," says Felix, "and the right receipt will point to our thief."`,
+        evidence: { e: '🎀', label: 'pink ribbon' }, token: '🎀',
+        problem: 'The thief used {a} spools of pink ribbon. Each spool had {b} centimeters of ribbon. How many centimeters is that?',
+        cat: { e: '🎀', label: 'Ribbon bought (cm)' }, out: ['sasha'] },
+    ],
+    alibis: {
+      florence: `Me? Darling, I was... rehearsing. A brand-new ballet. It's a secret. A very secret secret.`,
+      gus: `Mmm... napping. On my boat. I didn't say ANYTHING. I was asleep, I promise.`,
+      bertie: `Library? No time to read! I was fixing the town bridge. Bye!`,
+      sasha: `Excuse me, I was testing my new perfume. It's called Old Book Smell. Some people love it!`,
+    },
+    confession: [
+      { art: '🦩📖', line: `Oh, my pirouettes! A voice in the dark told me the Very First Storybook has a story about a dancing flamingo queen.` },
+      { art: '🩰✨', line: `I simply HAD to turn it into a ballet! I took it home to read by candlelight and practice every leap. It was magnificent.` },
+      { art: '🦩😳', line: `But books belong to everyone. I should have asked the librarian. I'm sorry, darlings.` },
+    ],
+    ending: `Florence returns the Very First Storybook, and the librarian gives her a library card with a gold star, so she can borrow books the right way. Next month, the whole town comes to see The Flamingo Queen Ballet. But whose voice told Florence about the book? And who whispered in Gus's voice? Behind the velvet stand is a note in curly writing, with another green feather.`,
+    rNote: 'Did you hear me? I can sound like anyone! — M', rClue: `M can copy anyone's voice.`,
+  },
+
+  /* ---------------- CASE 9 ---------------- */
+  {
+    id: 'greenhouse', season: 2, title: 'The Rainbow Greenhouse', icon: '🌸', theme: 'greenhouse',
+    treasure: 'the Moonflower', culprit: 'gus',
+    intro: `On top of Starlight Hill stands the Rainbow Greenhouse, a glass house full of flowers in every color. Its most famous plant is the Moonflower, which blooms only once a year, glowing silver under the full moon. Tonight is the night it will bloom! But this morning, its flowerpot was empty, and there were salty cracker crumbs all over the floor. Felix sniffs a crumb. "Our thief likes snacks," he says. "Let's find that flower before moonrise!"`,
+    scenes: [
+      { op: 'mul', title: 'The Seed Trays', place: 'The Potting Bench',
+        witness: { e: '🪲', name: 'Digby the Beetle', voice: { pitch: 1.1, rate: 1.05 },
+          quote: `I dig in these trays every day. Last night, somebody dug faster than me. Rude!` },
+        story: `At the potting bench, rows of trays hold tiny pots with baby plants inside. Digby the Beetle loves to dig in the soft soil. This morning, he found some trays completely empty! The thief must have taken baby plants to hide the Moonflower among them. Every tray held the same number of tiny pots. Each suspect has a garden at home, and Felix counted all their pots yesterday. "Count up the missing pots," says Felix, "and see whose garden suddenly grew."`,
+        evidence: { e: '🌱', label: 'empty seed trays' }, token: '🌱',
+        problem: 'The thief took {a} trays of seedlings. Each tray had {b} tiny pots. How many pots did the thief take?',
+        cat: { e: '🪴', label: 'Pots in garden' }, out: ['sasha'] },
+      { op: 'add', title: 'The Plant Food Spill', place: 'The Water Barrel',
+        witness: { e: '🐌', name: 'Sid the Snail', voice: { pitch: 0.95, rate: 0.85 },
+          quote: `I was here the whole time. I'm still here. I'll probably be here tomorrow, too.` },
+        story: `Sid the Snail was slowly crossing the floor by the water barrel when the thief rushed past. The thief poured plant food on the Moonflower, so its roots would slide out of the pot easily. They poured once, then poured again, and emptied their whole bag! This week, each suspect bought a bag of plant food at the garden shop, and every bag was a different size. "Add up both pours," says Felix, "and we'll know whose bag was used."`,
+        evidence: { e: '🪣', label: 'a spilled bucket of plant food' }, token: '🌱',
+        problem: 'The thief poured {a} grams of plant food, then {b} more grams. That emptied their whole bag! How many grams were in the bag?',
+        cat: { e: '🌱', label: 'Plant food bag (grams)' }, out: ['florence'] },
+      { op: 'div', title: 'The Cracker Crumbs', place: 'The Orchid Corner',
+        witness: { e: '🦢', name: 'Swanson the Swan', voice: { pitch: 1.0, rate: 0.9 },
+          quote: `How untidy! Crumbs, crumbs, crumbs. The thief stopped for a snack at every single orchid.` },
+        story: `Swanson the Swan glides around the greenhouse pond, and he is very tidy. This morning he found cracker wrappers in the orchid corner. The thief stopped for a snack at each orchid, and ate the same number of crackers every time! Each suspect has their own snacking habit, and Felix wrote them all down. "Find out how many crackers the thief ate at each stop," says Felix, "and that habit will give them away. Also, where did all these crackers come from?"`,
+        evidence: { e: '🍘', label: 'cracker wrappers' }, token: '🍘',
+        problem: 'The thief ate {N} crackers at {d} orchids, the same number at each one. How many crackers did they eat at each stop?',
+        cat: { e: '🍘', label: 'Crackers per snack' }, out: [] },
+      { op: 'sub', title: 'The Muddy Wheelbarrow', place: 'The Back Door',
+        witness: { e: '🐖', name: 'Petunia the Pig', voice: { pitch: 1.1, rate: 1.05 },
+          quote: `Oink! Mud is my favorite thing. But that wheelbarrow made a REALLY big mess, even for me!` },
+        story: `By the back door, Petunia the Pig found muddy wheelbarrow tracks leading out into the night. The thief rolled the Moonflower away in a wheelbarrow! Each suspect rented a wheelbarrow from the garden shop this week, and every wheelbarrow has its own number painted on the side. Petunia saw the number, but mud splashed over it, so she only remembers a clue. "Work out Petunia's clue," says Felix, "and we'll know whose wheelbarrow it was."`,
+        evidence: { e: '🛞', label: 'muddy wheelbarrow tracks' }, token: '🔢',
+        problem: 'Petunia says: "The wheelbarrow number was {b} less than {a}." What is the wheelbarrow number?',
+        cat: { e: '🛞', label: 'Wheelbarrow number' }, out: ['bertie'] },
+    ],
+    alibis: {
+      florence: `Darling, I was dancing in the moonlight. Flamingos and moonlight simply go together!`,
+      gus: `Mmm... boat. Sleeping. Crackers? What crackers? Mmm...`,
+      bertie: `No time! I was building a new bench for the park! Bye!`,
+      sasha: `Excuse me, I was picking roses for my perfume. With permission, of course.`,
+    },
+    confession: [
+      { art: '🐊🍘', line: `Mmm... somebody left a box of crackers on my boat, with a note: "The Moonflower is the most beautiful flower in town."` },
+      { art: '🌸🎂', line: `Tomorrow is my Granny Gator's birthday. She loves flowers more than anything. I wanted to give her the best one.` },
+      { art: '🐊🙏', line: `But taking it was wrong. I'm sorry. Can Granny and I come watch it bloom with everyone instead?` },
+    ],
+    ending: `Gus brings back the Moonflower just in time. At midnight, the whole town gathers in the greenhouse as it opens, glowing silver, and Granny Gator gets the best seat. Gus even stays awake for the whole thing! But the cracker box from Gus's boat has a note glued inside the lid, and a green feather.`,
+    rNote: 'Crackers make friends! — M', rClue: 'M loves crackers.',
+  },
+
+  /* ---------------- CASE 10 ---------------- */
+  {
+    id: 'icerink', season: 2, title: 'The Ice Rink Riddle', icon: '⛸️', theme: 'icerink',
+    treasure: 'the Crystal Skates', culprit: 'sasha',
+    intro: `Winter has come to Starlight Town, and the pond has frozen into a shiny ice rink. Tonight is the Snowflake Show, and the star prize is the Crystal Skates, which sparkle like a thousand tiny stars. But the prize box is empty! Next to it, Felix finds a pink feather. When he rubs it, the pink paint smears right off, and underneath, the feather is bright green. "Someone painted this feather," Felix says. "Our feathered friend is up to something. Lace up, Detective!"`,
+    scenes: [
+      { op: 'sub', title: 'The Snack Card', place: 'The Cocoa Stand',
+        witness: { e: '🦬', name: 'Bruno the Bison', voice: { pitch: 0.6, rate: 0.9 },
+          quote: `Hot cocoa! Get your hot cocoa! Oh, and someone dropped this card right in my marshmallows.` },
+        story: `Bruno the Bison runs the cocoa stand at the rink. Skaters pay for snacks with a snack card that holds money. Last night, someone bought a big cup of cocoa and then dropped their card in the marshmallow jar while running off! The name has rubbed off, but Bruno's computer remembers how much was on the card and how much the cocoa cost. Each suspect has a snack card, and each card has a different amount left. "Work out what's left," says Felix.`,
+        evidence: { e: '💳', label: 'a sticky snack card' }, token: '🪙',
+        problem: `The snack card had {a} cents on it. The thief spent {b} cents on cocoa. How many cents are left on the card?`,
+        cat: { e: '🪙', label: 'Snack card (cents left)' }, out: ['bertie'] },
+      { op: 'div', title: 'The Snowflake Cookies', place: 'The Warm-Up Hut',
+        witness: { e: '🐓', name: 'Rocky the Rooster', voice: { pitch: 1.3, rate: 1.2 },
+          quote: `Cock-a-doodle-WHAT? While everyone was eating cookies, the prize box got snatched!` },
+        story: `Rocky the Rooster is the announcer for the Snowflake Show. Right before the show, someone handed out plates of snowflake cookies in the warm-up hut, the same number on every plate. Everyone ran over to eat them, and that's when the Crystal Skates disappeared! It was a trick to get everyone looking the other way. Each suspect brought cookies to the show, and each one fills their plates their own way. "Find the cookies on each plate," says Felix, "and we'll see whose trick it was."`,
+        evidence: { e: '🍪', label: 'plates of cookies' }, token: '🍪',
+        problem: 'The thief shared {N} snowflake cookies onto {d} plates, with the same number on each plate. How many cookies were on each plate?',
+        cat: { e: '🍪', label: 'Cookies per plate' }, out: [] },
+      { op: 'mul', title: 'The Striped Scarf', place: 'The Skate Benches',
+        witness: { e: '🐑', name: 'Woolly the Sheep', voice: { pitch: 1.2, rate: 0.95 },
+          quote: `Baa! I'd know that knitting anywhere. Every stripe has exactly the same number of stitches.` },
+        story: `Under the skate benches, Woolly the Sheep found a striped scarf. The thief must have dropped it while sneaking away! Woolly teaches the knitting class at the rink, and every suspect knitted a scarf in her class this winter. She counted every stitch in every scarf, because sheep are very serious about knitting. "Count the stitches in this scarf," says Felix, "and Woolly will tell us who made it."`,
+        evidence: { e: '🧣', label: 'a striped scarf' }, token: '🧶',
+        problem: 'The scarf has {a} stripes. Each stripe has {b} stitches. How many stitches are in the scarf?',
+        cat: { e: '🧶', label: 'Stitches in scarf' }, out: ['florence'] },
+      { op: 'add', title: 'The Sled Getaway', place: 'Snowball Hill',
+        witness: { e: '🦣', name: 'Mo the Mammoth', voice: { pitch: 0.55, rate: 0.85 },
+          quote: `I run the sled hill. Big, furry, and I notice everything. That sled went FAST!` },
+        story: `Behind the rink is Snowball Hill, where Mo the Mammoth runs the sled rides. Last night, someone grabbed a sled and zoomed away with the prize box! The sled tracks are still in the snow. Every suspect rode a sled at rehearsal yesterday, and Mo wrote down how far each one went. Mo has measured the thief's tracks too: one part down the hill and one part across the frozen pond. "Add them together," says Felix, "and we'll know whose ride matches."`,
+        evidence: { e: '🛷', label: 'sled tracks' }, token: '❄️',
+        problem: 'The sled went {a} centimeters down the hill and {b} centimeters across the pond. How far did it go altogether?',
+        cat: { e: '🛷', label: 'Sled ride (cm)' }, out: ['gus'] },
+    ],
+    alibis: {
+      florence: `Darling, I was practicing my ice ballet. I only fell down a few times. Very gracefully.`,
+      gus: `Mmm... too cold. Gators don't like ice. I was under a big pile of blankets.`,
+      bertie: `No time! I was building snow forts for the kids! Bye!`,
+      sasha: `Excuse me, I was... at the rink. Sniffing... the snow. For science!`,
+    },
+    confession: [
+      { art: '🦨❄️', line: `Excuse me... a note said the Crystal Skates smell like fresh snow. I wanted that smell for my new perfume, Winter Wonder.` },
+      { art: '⛸️👃', line: `So I borrowed them for my perfume lab. I gave them one tiny sniff, and they smelled like... nothing. Just skates!` },
+      { art: '🦨😳', line: `I'm so sorry. I'll give the champion a free bottle of perfume. A nice one, I promise.` },
+    ],
+    ending: `Sasha returns the Crystal Skates, and the Snowflake Show goes on. Waddles the Penguin, the conductor from the Emerald Express, wins first prize and spins so fast he gets dizzy. But inside the empty prize box, someone left a note, and a feather painted pink, with green showing underneath.`,
+    rNote: 'Pink, green, purple... I can be any color! — M', rClue: 'M paints feathers to hide.',
+  },
+
+  /* ---------------- CASE 11 ---------------- */
+  {
+    id: 'circus', season: 2, title: 'The Big Top Bandit', icon: '🎪', theme: 'circus',
+    treasure: 'the Silver Whistle', culprit: 'bertie',
+    intro: `The circus has come to Starlight Town! A giant striped tent called the Big Top stands in the park. Every show starts when the Ringmaster blows the Silver Whistle, and the acrobats, jugglers and dancing ponies leap into action. But tonight the whistle is missing! There is a hole torn in the very top of the tent, and a long green feather floats down from it. "Someone flew out through the roof," Felix says, looking up. "Or wants us to think so. Let's get to work!"`,
+    scenes: [
+      { op: 'mul', title: 'The Popcorn Buckets', place: 'The Snack Stand',
+        witness: { e: '🦏', name: 'Rhonda the Rhino', voice: { pitch: 0.8, rate: 0.95 },
+          quote: `I'm the strongest in the circus, but even I can't carry THAT much popcorn!` },
+        story: `Rhonda the Rhino sells popcorn at the circus. Before the show, someone bought bucket after bucket of popcorn, and every bucket was full to the top. Then they tossed it all into the ring, so everyone would be busy munching while they grabbed the whistle! Each suspect bought popcorn at the circus this week, and Rhonda keeps a careful list. "Count up all that popcorn," says Felix, "and we'll see whose order matches."`,
+        evidence: { e: '🍿', label: 'spilled popcorn' }, token: '🍿',
+        problem: 'The thief bought {a} buckets of popcorn. Each bucket held {b} pieces. How many pieces of popcorn did the thief buy?',
+        cat: { e: '🍿', label: 'Popcorn bought' }, out: ['florence'] },
+      { op: 'div', title: 'The Juggling Hoops', place: 'Behind the Curtain',
+        witness: { e: '🐆', name: 'Spots the Leopard', voice: { pitch: 1.1, rate: 1.15 },
+          quote: `I'm the juggler! Someone took my juggling balls and stuffed them into my hoops. Not funny!` },
+        story: `Spots the Leopard is the circus juggler. Behind the curtain, she found her juggling balls stuffed into hoops, the same number in each hoop. The thief must have been practicing, because each person can juggle a different number of balls at once. This week, every suspect took a juggling lesson from Spots, and she remembers how many balls each one could juggle. "Find out how many balls went into each hoop," says Felix, "and we'll know whose juggling habit this is."`,
+        evidence: { e: '🤹', label: 'scattered juggling balls' }, token: '🟡',
+        problem: 'The thief dropped {N} juggling balls evenly into {d} hoops. How many balls went into each hoop?',
+        cat: { e: '🤹', label: 'Balls per hoop' }, out: ['gus'] },
+      { op: 'add', title: 'The Tightrope', place: 'High in the Tent',
+        witness: { e: '🐎', name: 'Dash the Pony', voice: { pitch: 1.2, rate: 1.1 },
+          quote: `Neigh! I saw someone walking across the tightropes in the dark. Wobble, wobble, wobble!` },
+        story: `High in the tent, two tightropes stretch from pole to pole. The thief walked across them to reach the top of the tent! Dash the Pony runs the tightrope lessons, and every suspect took a lesson this week. Dash wrote down how far each one walked before wobbling off. Chalk marks show how far the thief walked on each rope. "Add up both ropes," says Felix, "and we'll match it to Dash's notes."`,
+        evidence: { e: '🎪', label: 'chalk marks on the tightrope' }, token: '🎪',
+        problem: 'The thief walked {a} centimeters across the first rope and {b} centimeters across the second rope. How far is that altogether?',
+        cat: { e: '🎪', label: 'Tightrope walk (cm)' }, out: [] },
+      { op: 'sub', title: `The Ringmaster's Trunks`, place: 'The Dressing Room',
+        witness: { e: '🦁', name: 'Leo the Lion', voice: { pitch: 0.7, rate: 0.95 },
+          quote: `I am the Ringmaster! And someone has been hiding things in our trunks. ROAR... I mean, how rude.` },
+        story: `In the dressing room, every performer and visitor gets a trunk with a number on it. Leo the Lion, the Ringmaster, saw someone hide a small box inside one of the trunks, but they slammed the lid before he could read the number. Leo is very good at riddles, though, and he turned what he saw into one. "Solve Leo's riddle," says Felix, "and we'll open the right trunk."`,
+        evidence: { e: '🧳', label: 'an open trunk' }, token: '🔢',
+        problem: 'Leo says: "Begin at {a}. Count back {b}. That is the number of the thief\'s trunk!" What is the trunk number?',
+        cat: { e: '🧳', label: 'Trunk number' }, out: ['sasha'] },
+    ],
+    alibis: {
+      florence: `Darling, I was IN the circus! I was the dancing flamingo in the second act!`,
+      gus: `Mmm... I was asleep in the front row. The lions roared. I didn't wake up.`,
+      bertie: `No time! I was... fixing the tent! The top! Not the hole, I mean! Bye!`,
+      sasha: `Excuse me, I was selling my perfume, Circus Sparkle, at the front gate.`,
+    },
+    confession: [
+      { art: '🦫❄️', line: `No time, no time! Winter is here, and I need ALL my beaver cousins to help build the biggest dam ever.` },
+      { art: '📯🦫', line: `A note said the Silver Whistle can call animals from far, far away. So I borrowed it! But it just goes "tweet."` },
+      { art: '🦫🙇', line: `I'm sorry, Ringmaster. Next time, I'll just write my cousins letters. Even if letters take time.` },
+    ],
+    ending: `Bertie returns the Silver Whistle, and the circus begins with a mighty TWEET. The acrobats flip, the ponies dance, and Bertie's cousins come to help anyway, because he finally invited them nicely. But caught on the torn roof, high above the ring, is one more note, tied to a long green tail feather.`,
+    rNote: 'Up, up and away! — M', rClue: 'M can fly.',
+  },
+
+  /* ---------------- CASE 12 ---------------- */
+  {
+    id: 'lighthouse', season: 2, title: 'The Lighthouse Finale', icon: '🔮', theme: 'lighthouse',
+    treasure: 'the Star Crystal', culprit: 'florence', finale: true, mastermind: 'mimic', finaleBadge: 'm_unmasked',
+    intro: `On the rocky edge of Starlight Bay stands the old lighthouse. Every night, its Star Crystal shines a beam across the water, so boats can find their way home. But tonight the lighthouse is dark! The Star Crystal is gone, and little boats are bobbing in the fog. On the lighthouse door is a note: "Find me if you can. I'll be the one in pink. — M". Felix's ears go up. "This is it, Detective. Every feather leads here. Let's catch M once and for all!"`,
+    scenes: [
+      { op: 'div', title: 'The Cracker Nests', place: 'The Seagull Cliffs',
+        witness: { e: '🐳', name: 'Wendell the Whale', voice: { pitch: 0.5, rate: 0.85 },
+          quote: `Whoooosh! I saw it from the water. Someone fed every seagull so they wouldn't squawk.` },
+        story: `Below the lighthouse, seagulls nest on the cliffs, and they squawk at anyone who comes near. But last night they were completely quiet! Wendell the Whale saw why: someone climbed the cliff and put crackers in every nest, the same number in each one. Crackers again! Each of our suspects fed the seagulls this week, and each one always puts the same number of crackers in a nest. "Find the thief's number," says Felix, "and keep an eye out for green feathers."`,
+        evidence: { e: '🍘', label: 'cracker crumbs in the nests' }, token: '🍘',
+        problem: 'The thief put {N} crackers into {d} seagull nests, the same number in each nest. How many crackers went in each nest?',
+        cat: { e: '🍘', label: 'Crackers per nest' }, out: ['gus'] },
+      { op: 'add', title: 'The Knotted Rope', place: 'The Lighthouse Balcony',
+        witness: { e: '🦞', name: 'Larry the Lobster', voice: { pitch: 0.9, rate: 1.1 },
+          quote: `Snap snap! I saw a rope dangling from the balcony, all the way down to the rocks!` },
+        story: `The thief lowered the Star Crystal from the lighthouse balcony on a rope, down to a little boat waiting below. Larry the Lobster saw the rope swinging in the wind. The thief tied two ropes together to make it long enough. This week, each suspect bought rope at the harbor shop, and the shopkeeper wrote down exactly how much. "Add up both ropes," says Felix, "and we'll match it to a receipt."`,
+        evidence: { e: '🪢', label: 'a knotted rope' }, token: '🪢',
+        problem: 'The thief tied together two ropes: one was {a} centimeters long and the other was {b} centimeters long. How long was the whole rope?',
+        cat: { e: '🪢', label: 'Rope bought (cm)' }, out: ['sasha'] },
+      { op: 'sub', title: 'The Pink Paint Can', place: 'The Lighthouse Door',
+        witness: { e: '🦤', name: 'Doris the Dodo', voice: { pitch: 1.15, rate: 0.95 },
+          quote: `I'm the lighthouse keeper! I may be a little forgetful, but I never forget a paint can.` },
+        story: `The lighthouse door has been painted bright pink! Doris the Dodo, the lighthouse keeper, saw the thief's paint can and read its label. She knows how much paint was in it, and how much the thief used on the door. Every suspect bought a can of pink paint this month, and this morning Felix collected all their cans to see how much is left in each one. "Work out how much should be left," says Felix, "and the matching can will point to M."`,
+        evidence: { e: '🎨', label: 'fresh pink paint' }, token: '🎨',
+        problem: `The thief's can held {a} milliliters of pink paint. They used {b} milliliters on the door. How much paint is left in the can?`,
+        cat: { e: '🎨', label: 'Paint left (ml)' }, out: [] },
+      { op: 'mul', title: 'The Feather Boxes', place: 'The Getaway Boat',
+        witness: { e: '🐡', name: 'Puff the Pufferfish', voice: { pitch: 1.5, rate: 1.1 },
+          quote: `I puffed up so big when I saw them! Boxes and boxes of pink feathers, right in that boat!` },
+        story: `Down in the little getaway boat, Puff the Pufferfish found boxes of pink feathers, the kind you glue onto a costume. Every box held the same number of feathers. Each suspect bought costume feathers for the town costume party, and the costume shop keeps a list. "Someone is dressing up as somebody else," Felix says slowly. "Count the feathers, Detective. I think we're about to meet M."`,
+        evidence: { e: '🪶', label: 'boxes of pink feathers' }, token: '🪶',
+        problem: 'The boat held {a} boxes of feathers. Each box had {b} feathers. How many feathers is that?',
+        cat: { e: '🪶', label: 'Costume feathers' }, out: ['bertie'] },
+    ],
+    alibis: {
+      florence: `Darling... yes... I am Florence. Pink. Very pink. Squawk! I mean... hello!`,
+      gus: `Mmm... I was asleep on my boat. In the fog. Very cozy.`,
+      bertie: `No time! I was fixing the harbor dock! Bye!`,
+      sasha: `Excuse me, I was at the harbor selling Sea Breeze perfume. It smells like... the sea.`,
+    },
+    unmask: {
+      art: '🦩➡️🦜',
+      line: `Felix gives a gentle tug on Florence's long pink neck... and the whole costume slides right off! It's not Florence at all. It's a green parrot, covered in pink paint!`,
+      note: `The real Florence was at her ballet studio all evening, teaching a class of little ducklings. She is VERY offended.`,
+    },
+    confession: [
+      { art: '🦜🎭', line: `Squawk! You caught me! I am Mister Mimic. I can copy any voice in Starlight Town. Listen: "Mmm, I'm napping!"` },
+      { art: '🦜📝', line: `But nobody ever wanted to hear MY voice. So I sent notes, whispers and crackers, and got everyone else to do my mischief.` },
+      { art: '🦜💡', line: `I took the Star Crystal so the whole town would come looking for me. I just wanted somebody to notice me. Squawk... I'm sorry.` },
+    ],
+    ending: `Mister Mimic puts the Star Crystal back, and the lighthouse beam sweeps across the bay. Every boat comes safely home. Then Felix has an idea. Starlight Town Radio needs a storyteller who can do a hundred different voices! Now every Friday night, the whole town listens to The Mimic Hour, and at the very end, Mister Mimic says good night in his very own voice. And you, Detective, receive the Platinum Feather of Starlight Town.`,
+    rNote: 'Thanks for listening to me. Tune in on Friday! — M', rClue: 'M is Mister Mimic, a parrot!',
+  },
+);
+
+const SEASONS = [
+  { n: 1, title: 'The Remainder Mysteries', who: 'R', suspects: ['barnaby', 'penelope', 'viktor', 'maxima'], finale: 5,
+    boardIntro: 'Strange notes signed <b>R</b> keep turning up. Close cases to pin them here and figure out who R is.',
+    boardSolved: '🦝 Mystery solved! R is <b>Professor Remainder</b>, now Starlight Town\'s Recycling Champion.',
+    award: 'Golden Badge of Starlight Town', seal: '🏅', villain: 'Professor Remainder' },
+  { n: 2, title: 'The Feather Files', who: 'M', suspects: ['florence', 'gus', 'bertie', 'sasha'], finale: 11,
+    boardIntro: 'Bright green feathers and notes signed <b>M</b> keep turning up. Close cases to pin them here and figure out who M is.',
+    boardSolved: '🦜 Mystery solved! M is <b>Mister Mimic</b>, host of The Mimic Hour on Starlight Town Radio.',
+    award: 'Platinum Feather of Starlight Town', seal: '🪶', villain: 'Mister Mimic' },
+];
+function caseSuspects(c) { return SEASONS[(c.season || 1) - 1].suspects; }
+
+BADGES.push(
+  { id: 'm_unmasked', e: '🦜', name: 'Mimic Catcher', desc: 'Reveal who M really is.' },
+  { id: 'all_cases', e: '🌟', name: 'Super Sleuth', desc: 'Close all twelve cases.' },
+);
+RANKS.push(
+  { min: 1000, name: 'Mystery Master', e: '🗝️' },
+  { min: 1400, name: 'Hall of Fame Detective', e: '🏛️' },
+);
+
 /* voice roles (each character gets its own device voice when one is available) */
-SUSPECT_IDS.forEach(id => { SUSPECTS[id].voice.role = id; });
-FELIX.voice.role = 'felix'; REMAINDER.voice.role = 'remainder';
+Object.keys(SUSPECTS).forEach(id => { SUSPECTS[id].voice.role = id; });
+FELIX.voice.role = 'felix'; REMAINDER.voice.role = 'remainder'; MIMIC.voice.role = 'mimic';
 CASES.forEach(c => c.scenes.forEach(s => { s.witness.voice.role = 'w:' + s.witness.name; }));
 
 /* ============================================================
@@ -1160,7 +1568,7 @@ function starsFor(misses, capped, lab) {
 
 /* which value each suspect shows for a scene (null = unknown yet) */
 function caseLevel(caseIdx, settings) {
-  return settings.level === 'auto' ? [1, 1, 2, 2, 3, 3][caseIdx] : Number(settings.level);
+  return settings.level === 'auto' ? [1, 1, 2, 2, 3, 3, 2, 2, 3, 3, 3, 3][caseIdx] ?? 3 : Number(settings.level);
 }
 function outScene(caseData, sid) {
   for (let j = 0; j < caseData.scenes.length; j++) if (caseData.scenes[j].out.includes(sid)) return j;
@@ -1168,12 +1576,159 @@ function outScene(caseData, sid) {
 }
 function suspectValue(caseData, problem, sceneIdx, sid) {
   if (!problem) return null;
-  const order = SUSPECT_IDS
+  const order = caseSuspects(caseData)
     .map(id => ({ id, o: outScene(caseData, id) }))
     .filter(x => x.o >= 0 && x.o <= sceneIdx)
     .sort((x, y) => (x.o === sceneIdx ? -1 : 0) - (y.o === sceneIdx ? -1 : 0) || y.o - x.o);
   const idx = order.findIndex(x => x.id === sid);
   return idx < 0 ? problem.ans : problem.decoys[idx];
+}
+
+/* ============================================================
+   The player's detective: a full-body SVG animal wearing the
+   hat, coat and magnifier bought in the shop.
+   viewBox 0 -24 200 262 (full) · head crop for small pickers
+   ============================================================ */
+const CHAR_ANIMALS = {
+  '🐶': { kind: 'dog', fur: '#d9a066', dark: '#8a5a2b', muzzle: '#fff3e0', nose: '#3a2a1e', patch: '#c08345' },
+  '🐱': { kind: 'cat', fur: '#f2a65a', dark: '#c9772a', muzzle: '#fff3e0', nose: '#e46d7c', inner: '#ffb7c4' },
+  '🐰': { kind: 'rabbit', fur: '#f1ede6', dark: '#cfc6ba', muzzle: '#ffffff', nose: '#f08a9c', inner: '#ffc2cf' },
+  '🐼': { kind: 'panda', fur: '#fbfbfb', dark: '#2a2930', muzzle: '#ffffff', nose: '#2a2930', limb: '#2a2930' },
+  '🐯': { kind: 'tiger', fur: '#f39c32', dark: '#2b2320', muzzle: '#fff6e8', nose: '#d9667a', inner: '#fff6e8' },
+  '🐨': { kind: 'koala', fur: '#a3adb7', dark: '#3d3f45', muzzle: '#e3e7eb', nose: '#3d3f45', inner: '#f1f3f5' },
+  '🐵': { kind: 'monkey', fur: '#8b5a3c', dark: '#5e3b26', muzzle: '#f2c9a0', nose: '#5e3b26', inner: '#f2c9a0' },
+  '🐻': { kind: 'bear', fur: '#9b6a43', dark: '#6b4528', muzzle: '#e8c9a0', nose: '#3a2618', inner: '#e8c9a0' },
+};
+let charN = 0;
+
+function coatPaint(coatId, uid) {
+  const solid = { trench: '#9a7148', midnight: '#2f4e9a', mint: '#4fbf98', pink: '#ee79ad' };
+  if (solid[coatId]) return { fill: solid[coatId], defs: '' };
+  if (coatId === 'rainbow') return { fill: `url(#${uid}co)`, defs: `<linearGradient id="${uid}co" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".25" stop-color="#ffd93d"/><stop offset=".5" stop-color="#6bcb77"/><stop offset=".75" stop-color="#4d96ff"/><stop offset="1" stop-color="#c77dff"/></linearGradient>` };
+  if (coatId === 'gold') return { fill: `url(#${uid}co)`, defs: `<linearGradient id="${uid}co" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1a8"/><stop offset=".45" stop-color="#e2a91f"/><stop offset=".6" stop-color="#fff1a8"/><stop offset="1" stop-color="#b9800f"/></linearGradient>` };
+  if (coatId === 'starry') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#1b2457"/><circle cx="5" cy="6" r="1.6" fill="#fff"/><circle cx="16" cy="14" r="1.3" fill="#ffe9a8"/><circle cx="9" cy="18" r="1" fill="#fff"/></pattern>` };
+  return { fill: '#9a7148', defs: '' };
+}
+function lensPaint(lensId, uid) {
+  const l = SHOP.lenses.find(x => x.id === lensId) || SHOP.lenses[0];
+  if (l.rim === 'rainbow') return { fill: `url(#${uid}le)`, defs: `<linearGradient id="${uid}le" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".33" stop-color="#ffd93d"/><stop offset=".66" stop-color="#4d96ff"/><stop offset="1" stop-color="#c77dff"/></linearGradient>`, sparkle: false };
+  return { fill: `url(#${uid}le)`, defs: `<linearGradient id="${uid}le" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${l.rim[0]}"/><stop offset="1" stop-color="${l.rim[1]}"/></linearGradient>`, sparkle: !!l.sparkle };
+}
+
+function hatSVG(id, uid) {
+  switch (id) {
+    case 'cap': return `<path d="M50 50 Q52 6 100 4 Q148 6 150 50 Z" fill="url(#${uid}pl)"/><path d="M52 48 Q100 64 148 48 Q144 60 100 66 Q56 60 52 48 Z" fill="#6e5233"/><circle cx="100" cy="6" r="5" fill="#6e5233"/>`;
+    case 'tophat': return `<ellipse cx="100" cy="46" rx="54" ry="9" fill="#26262b"/><path d="M70 46 L74 0 Q100 -6 126 0 L130 46 Z" fill="#2f2f36"/><path d="M72 30 L128 30 L129 41 L71 41 Z" fill="#c8323c"/><ellipse cx="100" cy="0" rx="26" ry="5" fill="#3d3d46"/>`;
+    case 'garden': return `<ellipse cx="100" cy="44" rx="72" ry="15" fill="#f2d38a" stroke="#c9a858" stroke-width="2"/><path d="M64 44 Q64 8 100 8 Q136 8 136 44 Z" fill="#f6dd9c"/><path d="M65 33 Q100 40 135 33 L136 42 Q100 49 64 42 Z" fill="#ee79ad"/><circle cx="130" cy="34" r="8" fill="#fff"/><circle cx="130" cy="34" r="3.5" fill="#ffcf3d"/>`;
+    case 'brainy': return `<path d="M64 48 Q64 26 100 24 Q136 26 136 48 Q100 41 64 48 Z" fill="#26262b"/><polygon points="100,4 162,22 100,40 38,22" fill="#2f2f36" stroke="#1d1d22" stroke-width="2"/><path d="M100 22 L148 26 L150 54" stroke="#f1c232" stroke-width="3" fill="none"/><circle cx="150" cy="56" r="4.5" fill="#f1c232"/><circle cx="100" cy="22" r="4" fill="#f1c232"/>`;
+    case 'rescue': return `<path d="M48 52 Q50 2 100 2 Q150 2 152 52 Z" fill="#f4f4f6" stroke="#cfd3d8" stroke-width="2"/><path d="M42 52 Q100 60 158 52 Q156 61 100 65 Q44 61 42 52 Z" fill="#dfe3e8"/><path d="M94 14 h12 v10 h10 v12 h-10 v10 h-12 v-10 h-10 v-12 h10 Z" fill="#d6303a"/>`;
+    case 'explorer': return `<ellipse cx="100" cy="48" rx="68" ry="12" fill="#b49a62"/><path d="M58 48 Q58 2 100 2 Q142 2 142 48 Z" fill="#c9b27c"/><path d="M59 37 Q100 43 141 37 L142 46 Q100 52 58 46 Z" fill="#7d6638"/><circle cx="100" cy="3" r="5" fill="#b49a62"/>`;
+    case 'crown': return `<path d="M60 48 L54 12 L78 30 L100 4 L122 30 L146 12 L140 48 Z" fill="#f1c232" stroke="#b9860f" stroke-width="3" stroke-linejoin="round"/><circle cx="54" cy="11" r="4.5" fill="#f1c232"/><circle cx="100" cy="3" r="4.5" fill="#f1c232"/><circle cx="146" cy="11" r="4.5" fill="#f1c232"/><circle cx="100" cy="34" r="5.5" fill="#d6303a"/><circle cx="76" cy="39" r="3.8" fill="#3a7bd5"/><circle cx="124" cy="39" r="3.8" fill="#3a7bd5"/>`;
+    default: return '';
+  }
+}
+
+function earsBehind(A) {
+  const f = A.fur, i = A.inner || A.muzzle;
+  switch (A.kind) {
+    case 'cat': return `<path d="M46 64 L52 14 L90 42 Z" fill="${f}"/><path d="M55 54 L58 26 L80 44 Z" fill="${i}"/><path d="M154 64 L148 14 L110 42 Z" fill="${f}"/><path d="M145 54 L142 26 L120 44 Z" fill="${i}"/>`;
+    case 'rabbit': return `<ellipse cx="78" cy="14" rx="14" ry="40" transform="rotate(-10 78 14)" fill="${f}"/><ellipse cx="78" cy="17" rx="7" ry="29" transform="rotate(-10 78 17)" fill="${i}"/><ellipse cx="122" cy="14" rx="14" ry="40" transform="rotate(10 122 14)" fill="${f}"/><ellipse cx="122" cy="17" rx="7" ry="29" transform="rotate(10 122 17)" fill="${i}"/>`;
+    case 'panda': return `<circle cx="52" cy="40" r="19" fill="${A.dark}"/><circle cx="148" cy="40" r="19" fill="${A.dark}"/>`;
+    case 'tiger': case 'bear': return `<circle cx="55" cy="40" r="17" fill="${f}"/><circle cx="55" cy="42" r="9" fill="${i}"/><circle cx="145" cy="40" r="17" fill="${f}"/><circle cx="145" cy="42" r="9" fill="${i}"/>`;
+    case 'koala': return `<circle cx="44" cy="56" r="28" fill="${f}"/><circle cx="46" cy="58" r="16" fill="${i}"/><circle cx="156" cy="56" r="28" fill="${f}"/><circle cx="154" cy="58" r="16" fill="${i}"/>`;
+    default: return '';
+  }
+}
+function earsFront(A) {
+  if (A.kind === 'dog') return `<path d="M50 56 Q28 62 32 104 Q38 120 52 108 Q56 84 64 64 Z" fill="${A.dark}"/><path d="M150 56 Q172 62 168 104 Q162 120 148 108 Q144 84 136 64 Z" fill="${A.dark}"/>`;
+  if (A.kind === 'monkey') return `<circle cx="40" cy="86" r="17" fill="${A.fur}"/><circle cx="40" cy="86" r="9" fill="${A.inner}"/><circle cx="160" cy="86" r="17" fill="${A.fur}"/><circle cx="160" cy="86" r="9" fill="${A.inner}"/>`;
+  return '';
+}
+function tailSVG(A) {
+  const f = A.fur;
+  switch (A.kind) {
+    case 'dog': return `<path d="M140 190 Q168 182 162 150" stroke="${f}" stroke-width="11" stroke-linecap="round" fill="none"/>`;
+    case 'cat': return `<path d="M142 198 Q178 198 170 162 Q166 148 178 140" stroke="${f}" stroke-width="10" stroke-linecap="round" fill="none"/>`;
+    case 'tiger': return `<path d="M142 198 Q178 198 170 162 Q166 148 178 140" stroke="${f}" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M142 198 Q178 198 170 162 Q166 148 178 140" stroke="${A.dark}" stroke-width="10" stroke-dasharray="3 9" fill="none"/>`;
+    case 'monkey': return `<path d="M142 198 Q184 202 178 168 Q174 148 158 156 Q150 166 162 170" stroke="${f}" stroke-width="8" stroke-linecap="round" fill="none"/>`;
+    case 'rabbit': return `<circle cx="142" cy="198" r="12" fill="#fff"/>`;
+    case 'bear': case 'panda': return `<circle cx="140" cy="200" r="8" fill="${A.kind === 'panda' ? A.dark : f}"/>`;
+    default: return '';
+  }
+}
+function faceSVG(A) {
+  const d = A.dark;
+  let marks = '', muzzle = `<ellipse cx="100" cy="104" rx="25" ry="17" fill="${A.muzzle}"/>`, nose, mouthY = 104;
+  let eyes = `<g class="ch-eyes"><ellipse cx="80" cy="84" rx="7.5" ry="9.5" fill="#1f1a17"/><ellipse cx="120" cy="84" rx="7.5" ry="9.5" fill="#1f1a17"/><circle cx="83" cy="80" r="2.8" fill="#fff"/><circle cx="123" cy="80" r="2.8" fill="#fff"/></g>`;
+  nose = `<path d="M92 95 Q100 90 108 95 Q104 103 100 104 Q96 103 92 95 Z" fill="${A.nose}"/>`;
+  const whiskers = `<g stroke="#5a4a40" stroke-width="1.6" stroke-linecap="round" opacity=".7"><path d="M76 104 L52 98 M76 109 L52 111 M124 104 L148 98 M124 109 L148 111"/></g>`;
+  switch (A.kind) {
+    case 'dog': marks = `<ellipse cx="121" cy="82" rx="15" ry="17" fill="${A.patch}"/>`; break;
+    case 'cat': marks = `<path d="M100 32 L100 46 M88 36 L91 47 M112 36 L109 47" stroke="${d}" stroke-width="4" stroke-linecap="round"/>`; muzzle += whiskers; break;
+    case 'tiger': marks = `<path d="M100 30 L100 45 M86 33 L90 45 M114 33 L110 45 M42 80 L57 84 M42 93 L56 93 M158 80 L143 84 M158 93 L144 93" stroke="${d}" stroke-width="4.5" stroke-linecap="round"/>`; muzzle += whiskers; break;
+    case 'panda':
+      marks = `<ellipse cx="80" cy="86" rx="15" ry="18" transform="rotate(-25 80 86)" fill="${d}"/><ellipse cx="120" cy="86" rx="15" ry="18" transform="rotate(25 120 86)" fill="${d}"/>`;
+      eyes = `<g class="ch-eyes"><circle cx="81" cy="85" r="7" fill="#fff"/><circle cx="119" cy="85" r="7" fill="#fff"/><circle cx="82" cy="86" r="4.5" fill="#111"/><circle cx="118" cy="86" r="4.5" fill="#111"/><circle cx="83.5" cy="84" r="1.6" fill="#fff"/><circle cx="119.5" cy="84" r="1.6" fill="#fff"/></g>`;
+      break;
+    case 'koala':
+      muzzle = `<ellipse cx="100" cy="120" rx="18" ry="9" fill="${A.muzzle}"/>`;
+      nose = `<ellipse cx="100" cy="99" rx="12" ry="15" fill="${A.nose}"/><ellipse cx="96" cy="93" rx="3" ry="4" fill="#fff" opacity=".35"/>`; mouthY = 114;
+      break;
+    case 'monkey':
+      muzzle = `<circle cx="82" cy="84" r="21" fill="${A.muzzle}"/><circle cx="118" cy="84" r="21" fill="${A.muzzle}"/><ellipse cx="100" cy="106" rx="30" ry="21" fill="${A.muzzle}"/>`;
+      nose = `<circle cx="96" cy="98" r="2.2" fill="${A.nose}"/><circle cx="104" cy="98" r="2.2" fill="${A.nose}"/>`;
+      break;
+    case 'rabbit': break;
+    default: break;
+  }
+  const mouth = `<path d="M100 ${mouthY} L100 ${mouthY + 5} M92 ${mouthY + 4} Q96 ${mouthY + 9} 100 ${mouthY + 5} Q104 ${mouthY + 9} 108 ${mouthY + 4}" stroke="#3a2a1e" stroke-width="2.4" stroke-linecap="round" fill="none"/>`;
+  const teeth = A.kind === 'rabbit' ? `<rect x="95.5" y="${mouthY + 6}" width="9" height="7" rx="2" fill="#fff" stroke="#d8d2c8"/>` : '';
+  const cheeks = `<circle cx="66" cy="104" r="8" fill="#ff8fa3" opacity=".42"/><circle cx="134" cy="104" r="8" fill="#ff8fa3" opacity=".42"/>`;
+  return marks + muzzle + eyes + nose + mouth + teeth + cheeks;
+}
+
+/* opts: { animal, hat, coat, lens, size (px width), crop: 'full'|'head', cls } */
+function characterSVG(opts = {}) {
+  const A = CHAR_ANIMALS[opts.animal || S.profile.animal] || CHAR_ANIMALS['🐶'];
+  const uid = 'ch' + (++charN);
+  const hatId = opts.hat ?? S.equipped.hat, coatId = opts.coat || S.equipped.coat, lensId = opts.lens || S.equipped.lens;
+  const coat = coatPaint(coatId, uid), lens = lensPaint(lensId, uid);
+  const limb = A.limb || A.fur;
+  const head = opts.crop === 'head';
+  const vb = head ? '22 -34 156 176' : '0 -24 200 262';
+  const w = opts.size || 120, h = Math.round(w * (head ? 176 / 156 : 262 / 200));
+  const hatDrawn = !(head && !opts.showHat) && hatId && hatId !== 'none';
+  const earsOnTop = hatDrawn && (A.kind === 'cat' || A.kind === 'rabbit'); // tall ears poke through the hat
+  const defs = `<defs>${coat.defs}${lens.defs}<pattern id="${uid}pl" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#8c6a43"/><path d="M0 6 H12 M6 0 V12" stroke="#6e5233" stroke-width="2"/><path d="M0 2 H12" stroke="#a88456" stroke-width="1"/></pattern></defs>`;
+  const body = head ? '' : `
+    <ellipse cx="100" cy="228" rx="52" ry="8" fill="rgba(0,0,0,.28)"/>
+    ${tailSVG(A)}
+    <rect x="77" y="188" width="19" height="28" rx="8" fill="${limb}"/><rect x="104" y="188" width="19" height="28" rx="8" fill="${limb}"/>
+    <ellipse cx="85" cy="218" rx="15" ry="7" fill="#3b2b20"/><ellipse cx="115" cy="218" rx="15" ry="7" fill="#3b2b20"/>
+    <path d="M64 134 Q100 122 136 134 L149 200 Q100 213 51 200 Z" fill="${coat.fill}" stroke="rgba(0,0,0,.2)" stroke-width="2"/>
+    <path d="M87 130 L100 160 L113 130 Z" fill="#fff8ea"/>
+    <path d="M86 128 L100 162 L93 132 Z M114 128 L100 162 L107 132 Z" fill="rgba(0,0,0,.18)"/>
+    <path d="M92 131 L100 136 L92 141 Z M108 131 L100 136 L108 141 Z" fill="#c8323c"/><circle cx="100" cy="136" r="2.6" fill="#a3242c"/>
+    <rect x="55" y="170" width="90" height="9" rx="3" fill="rgba(0,0,0,.28)"/><rect x="94" y="168" width="12" height="13" rx="2" fill="none" stroke="#d9a441" stroke-width="3"/>
+    <circle cx="92" cy="188" r="3" fill="rgba(0,0,0,.3)"/><circle cx="108" cy="188" r="3" fill="rgba(0,0,0,.3)"/>
+    <path d="M68 142 Q55 160 58 182" stroke="${coat.fill}" stroke-width="17" stroke-linecap="round" fill="none"/>
+    <circle cx="58" cy="187" r="9.5" fill="${limb}"/>`;
+  const arm = head ? '' : `
+    <path d="M132 142 Q152 152 157 133" stroke="${coat.fill}" stroke-width="17" stroke-linecap="round" fill="none"/>
+    <line x1="160" y1="121" x2="168" y2="104" stroke="#6b4a2a" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="158" cy="127" r="9.5" fill="${limb}"/>
+    <circle cx="177" cy="88" r="18" fill="rgba(210,235,255,.55)" stroke="${lens.fill}" stroke-width="6.5"/>
+    <path d="M167 82 Q170 74 178 73" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".8"/>
+    ${lens.sparkle ? '<g class="ch-spark" fill="#fff"><circle cx="196" cy="70" r="2.2"/><circle cx="160" cy="66" r="1.6"/><circle cx="194" cy="104" r="1.8"/></g>' : ''}`;
+  const svg = `<svg class="char ${opts.cls || ''}" viewBox="${vb}" width="${w}" height="${h}" role="img" aria-label="Your detective" xmlns="http://www.w3.org/2000/svg">${defs}
+    <g class="ch-body">${body}
+    ${earsOnTop ? '' : earsBehind(A)}
+    <ellipse cx="100" cy="82" rx="60" ry="54" fill="${A.fur}"/>
+    ${earsFront(A)}${faceSVG(A)}
+    ${hatDrawn ? hatSVG(hatId, uid) : ''}
+    ${earsOnTop ? earsBehind(A) : ''}
+    ${arm}</g></svg>`;
+  return svg;
 }
 
 /* ============================================================
@@ -1214,6 +1769,8 @@ function loadState() {
     if (merged.settings.voiceRate === 0.95) merged.settings.voiceRate = 1; // old default was a little slow
     merged.cases = CASES.map((_, i) => Object.assign(newCaseState(i), (s.cases || [])[i] || {}));
     if (merged.screen === 'case' && merged.caseIdx == null) merged.screen = 'map';
+    // new cases unlock after the one before them (players who finished before an update included)
+    for (let i = 1; i < merged.cases.length; i++) if (merged.cases[i - 1].status === 'closed' && merged.cases[i].status === 'locked') merged.cases[i].status = 'open';
     return merged;
   } catch (e) { return base; }
 }
@@ -1269,7 +1826,7 @@ function speechText(t) {
   return String(t)
     .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}️‍]/gu, '')
     .replace(/÷/g, ' divided by ').replace(/×/g, ' times ').replace(/−/g, ' minus ')
-    .replace(/(\d)\s*\+\s*(\d)/g, '$1 plus $2').replace(/=/g, ' equals ').replace(/—\s*R\b/g, ', signed R.')
+    .replace(/(\d)\s*\+\s*(\d)/g, '$1 plus $2').replace(/=/g, ' equals ').replace(/—\s*([A-Z])\b/g, ', signed $1.')
     .replace(/\b([A-Z]{2,})\b/g, (m) => m.toLowerCase())
     .replace(/\s+/g, ' ').trim();
 }
@@ -1295,7 +1852,8 @@ function englishVoices() {
   try { return speechSynthesis.getVoices().filter(v => /^en([-_]|$)/i.test(v.lang) && !NOVELTY_VOICE.test(v.name)).sort((a, b) => voiceScore(b) - voiceScore(a)); }
   catch (e) { return []; }
 }
-const CAST_ROLES = [['felix', 'm', null], ['barnaby', 'm', null], ['penelope', 'f', /GB|IE|AU|NZ|ZA/i], ['viktor', 'm', null], ['maxima', 'f', /GB|IE|AU|NZ|ZA/i], ['remainder', 'm', /GB|AU|IE/i]];
+const CAST_ROLES = [['felix', 'm', null], ['barnaby', 'm', null], ['penelope', 'f', /GB|IE|AU|NZ|ZA/i], ['viktor', 'm', null], ['maxima', 'f', /GB|IE|AU|NZ|ZA/i], ['remainder', 'm', /GB|AU|IE/i],
+  ['florence', 'f', /GB|IE|AU|NZ|ZA/i], ['gus', 'm', /AU|US/i], ['bertie', 'm', null], ['sasha', 'f', null], ['mimic', 'm', /GB|AU|IE/i]];
 let CAST = null;
 function castVoices(list) {
   const ranked = list || englishVoices();
@@ -1430,16 +1988,12 @@ function checkStatBadges() {
   if (st.casesClosed >= 1) earnBadge('case_closer');
   if (st.casesClosed >= 3) earnBadge('triple');
   if (st.purchases >= 3) earnBadge('shopper');
+  if (S.cases.every(c => c.status === 'closed')) earnBadge('all_cases');
   if (st.labSolved >= 20) earnBadge('lab_20');
 }
 
-/* avatar: animal in a coat-colored ring, hat on top */
-function avatarHTML(size = 64, opts = {}) {
-  const coat = SHOP.coats.find(c => c.id === (opts.coat || S.equipped.coat)) || SHOP.coats[0];
-  const hat = SHOP.hats.find(h => h.id === (opts.hat ?? S.equipped.hat));
-  const animal = opts.animal || S.profile.animal || '🐶';
-  return `<span class="avatar" style="--s:${size}px;--coat:${coat.css}" aria-hidden="true"><span class="av-ring"></span><span class="av-face">${animal}</span>${hat && hat.e ? `<span class="av-hat">${hat.e}</span>` : ''}</span>`;
-}
+/* avatar: the player's drawn detective (see character.js) */
+function avatarHTML(size = 64, opts = {}) { return characterSVG({ ...opts, size }); }
 
 /* ============================================================
    The safe (cipher). Column wheels for + and −, free wheels for × and ÷,
@@ -1822,7 +2376,8 @@ function createScanner(canvas, cfg) {
   }
   place(cfg.evidence.e, 'evidence', 0.07);
   (cfg.bonus || ['🔎', '🔎']).forEach((e, i) => place(e, 'bonus', 0.055, i));
-  shuffle(rng, theme.props).forEach(e => place(e, 'decoy', 0.085));
+  const avoid = new Set([cfg.evidence.e, ...(cfg.bonus || [])]);
+  shuffle(rng, theme.props.filter(e => !avoid.has(e))).forEach(e => place(e, 'decoy', 0.085));
   // decorations (not interactive)
   const decor = Array.from({ length: 28 }, () => ({ x: rng(), y: rng() * 0.7, r: rng() * 1.6 + 0.4 }));
 
@@ -2032,7 +2587,8 @@ function welcomeHTML() {
     <label class="field-label" for="nameInput">What's your detective name?</label>
     <input id="nameInput" class="text-input" maxlength="16" autocomplete="off" placeholder="Type your name" value="${esc(S.profile.name)}">
     <div class="field-label" id="animalLabel">Pick your detective animal</div>
-    <div class="animal-pick" role="radiogroup" aria-labelledby="animalLabel">${ANIMALS.map(a => `<button type="button" class="animal ${S.profile.animal === a ? 'on' : ''}" role="radio" aria-checked="${S.profile.animal === a}" data-action="pickAnimal" data-arg="${a}">${a}</button>`).join('')}</div>
+    <div class="pick-wrap"><div class="welcome-preview" id="welcomePreview">${characterSVG({ size: 140 })}</div>
+    <div class="animal-pick" role="radiogroup" aria-labelledby="animalLabel">${ANIMALS.map(a => `<button type="button" class="animal ${S.profile.animal === a ? 'on' : ''}" role="radio" aria-checked="${S.profile.animal === a}" aria-label="${ANIMAL_NAMES[a]}" data-action="pickAnimal" data-arg="${a}">${characterSVG({ animal: a, crop: 'head', size: 54 })}</button>`).join('')}</div></div>
     <button type="button" class="btn primary big" data-action="finishSetup">Join the Agency 🔦</button>
     <p class="muted tiny">Grown-ups: once you join, settings live behind the ⚙️ button (press and hold).</p>
   </article></main>`;
@@ -2046,35 +2602,45 @@ function rankBlockHTML() {
     <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progress to next rank"><span style="width:${pct}%"></span></div>
     <div class="muted tiny">${nr ? `${nr.min - S.starsEarned} more ⭐ to ${esc(nr.name)}` : 'Top rank reached!'}</div></div>`;
 }
+const ANIMAL_NAMES = { '🐶': 'Puppy', '🐱': 'Kitten', '🐰': 'Bunny', '🐼': 'Panda', '🐯': 'Tiger', '🐨': 'Koala', '🐵': 'Monkey', '🐻': 'Bear' };
+function seasonDone(n) { return S.cases[SEASONS[n - 1].finale].timesClosed > 0 || (n === 1 && S.finished); }
+function folderHTML(c, i) {
+  const cs = S.cases[i], locked = cs.status === 'locked' && !S.settings.unlockAll;
+  const lvl = caseLevel(i, S.settings);
+  let status;
+  if (locked) status = `🔒 Close Case ${i} to unlock`;
+  else if (cs.run && cs.run.stage !== 'closed') status = `Scene ${cs.run.scene + 1} of 4`;
+  else if (cs.status === 'closed') status = `Solved${cs.timesClosed > 1 ? ' ×' + cs.timesClosed : ''} · Play again`;
+  else status = 'New case!';
+  return `<button type="button" class="folder ${locked ? 'locked' : ''} ${cs.status === 'closed' ? 'closed' : ''}" data-action="openCase" data-arg="${i}" ${locked ? 'aria-disabled="true"' : ''}>
+    <span class="folder-tab">Case ${i + 1}</span>
+    <span class="folder-body"><span class="folder-icon">${locked ? '🔒' : c.icon}</span>
+    <span class="folder-title">${esc(c.title)}</span>
+    <span class="folder-meta"><span class="lvl">Level ${lvl}</span><span>${status}</span></span></span>
+    ${cs.status === 'closed' ? '<span class="stamp folder-stamp">Closed</span>' : ''}</button>`;
+}
+function seasonHTML(se) {
+  const idx = CASES.map((c, i) => i).filter(i => CASES[i].season === se.n);
+  const rot = [-3, 2, -1.5, 3, -2, 1.5];
+  const notes = idx.map((i, k) => S.rNotes.includes(i)
+    ? `<div class="note" style="--r:${rot[k % 6]}deg"><span class="pin" aria-hidden="true"></span><p class="note-text">${esc(CASES[i].rNote)}</p><p class="note-clue">${esc(CASES[i].rClue)}</p><span class="note-from">from Case ${i + 1}</span></div>`
+    : `<div class="note empty" style="--r:${rot[k % 6]}deg"><span class="pin" aria-hidden="true"></span><span class="q">?</span></div>`).join('');
+  const done = seasonDone(se.n);
+  return `<section class="season season-${se.n}">
+    <div class="season-head"><span class="season-badge">Season ${se.n}</span><h2 class="section-title">${esc(se.title)}</h2>${done ? `<span class="season-done">${se.seal} Complete</span>` : ''}</div>
+    <div class="folders">${idx.map(i => folderHTML(CASES[i], i)).join('')}</div>
+    <section class="cork">
+      <div class="cork-head"><h3 class="section-title dark">Who is ${se.who}?</h3><p>${done ? se.boardSolved : se.boardIntro}</p></div>
+      <div class="notes">${notes}</div>
+    </section></section>`;
+}
 function mapHTML() {
-  const folders = CASES.map((c, i) => {
-    const cs = S.cases[i], locked = cs.status === 'locked' && !S.settings.unlockAll;
-    const lvl = caseLevel(i, S.settings);
-    let status;
-    if (locked) status = `🔒 Close Case ${i} to unlock`;
-    else if (cs.run && cs.run.stage !== 'closed') status = `Scene ${cs.run.scene + 1} of 4`;
-    else if (cs.status === 'closed') status = `Solved${cs.timesClosed > 1 ? ' ×' + cs.timesClosed : ''} · Play again`;
-    else status = 'New case!';
-    return `<button type="button" class="folder ${locked ? 'locked' : ''} ${cs.status === 'closed' ? 'closed' : ''}" data-action="openCase" data-arg="${i}" ${locked ? 'aria-disabled="true"' : ''}>
-      <span class="folder-tab">Case ${i + 1}</span>
-      <span class="folder-body"><span class="folder-icon">${locked ? '🔒' : c.icon}</span>
-      <span class="folder-title">${esc(c.title)}</span>
-      <span class="folder-meta"><span class="lvl">Level ${lvl}</span><span>${status}</span></span></span>
-      ${cs.status === 'closed' ? '<span class="stamp folder-stamp">Closed</span>' : ''}</button>`;
-  }).join('');
-  const notes = CASES.map((c, i) => S.rNotes.includes(i)
-    ? `<div class="note" style="--r:${[-3, 2, -1.5, 3, -2, 1.5][i]}deg"><span class="pin" aria-hidden="true"></span><p class="note-text">${esc(c.rNote)}</p><p class="note-clue">${esc(c.rClue)}</p><span class="note-from">from Case ${i + 1}</span></div>`
-    : `<div class="note empty" style="--r:${[-3, 2, -1.5, 3, -2, 1.5][i]}deg"><span class="pin" aria-hidden="true"></span><span class="q">?</span></div>`).join('');
+  const order = seasonDone(1) ? [SEASONS[1], SEASONS[0]] : SEASONS; // the season in progress comes first
   return `<section class="hero">
-      <div class="hero-av">${avatarHTML(84)}</div>
+      <div class="hero-av">${characterSVG({ size: 118 })}</div>
       <div class="hero-info"><div class="eyebrow">Agency ID card</div><h1 class="display hero-name">Detective ${esc(S.profile.name)}</h1>${rankBlockHTML()}</div>
     </section>
-    <h2 class="section-title">Case files</h2>
-    <div class="folders">${folders}</div>
-    <section class="cork">
-      <div class="cork-head"><h2 class="section-title dark">Who is R?</h2><p>${S.finished ? '🦝 Mystery solved! R is <b>Professor Remainder</b>, now Starlight Town\'s Recycling Champion.' : 'Strange notes signed <b>R</b> keep turning up. Close cases to pin them here and figure out who R is.'}</p></div>
-      <div class="notes">${notes}</div>
-    </section>
+    ${order.map(seasonHTML).join('')}
     <section class="quick">
       <button type="button" class="quick-card" data-action="go" data-arg="lab"><span>🧪</span><b>Training Lab</b><small>Practice any skill, any time</small></button>
       <button type="button" class="quick-card" data-action="go" data-arg="shop"><span>🛍️</span><b>Gadget Shop</b><small>Spend your stars</small></button>
@@ -2212,7 +2778,7 @@ function afterSolveHTML(misses) {
 function checkHTML() {
   const { i, c, run } = curCase(); const s = run.scene, sc = c.scenes[s];
   const p = ensureProblem(i, s);
-  const cards = SUSPECT_IDS.map((id, k) => {
+  const cards = caseSuspects(c).map((id, k) => {
     const su = SUSPECTS[id], wasOut = run.ruledOut.includes(id), v = suspectValue(c, p, s, id), marked = ui.checkMarks.has(id);
     return `<button type="button" class="suspect-card check ${wasOut ? 'out' : ''} ${marked ? 'marked' : ''}" data-action="checkTap" data-arg="${id}" ${wasOut ? 'disabled' : ''} style="--d:${k * 140}ms" aria-pressed="${marked}">
       <span class="sc-top"><span class="sc-e">${su.e}</span><b>${esc(su.short)}</b></span>
@@ -2277,7 +2843,7 @@ function doArrest(_, btn) {
   $('#culprit').classList.add('jailed');
   setTimeout(() => {
     if (c.finale) {
-      earnBadge('r_unmasked'); SFX.fanfare();
+      earnBadge(c.finaleBadge || 'r_unmasked'); SFX.fanfare();
       openModal(`<div class="center unmask"><div class="eyebrow">Wait a minute...</div><div class="big-art">${c.unmask.art}</div><h2>It's a disguise!</h2><p>${esc(c.unmask.line)}</p><p class="muted">${esc(c.unmask.note)}</p>${sayBtn(c.unmask.line + ' ' + c.unmask.note, NARRATOR)}
         <div class="row-btns"><button type="button" class="btn primary" data-action="confess" data-arg="0" data-focus>Hear the confession ▶</button></div></div>`, { closable: false, cls: 'wide' });
       if (S.settings.autoRead) speak(c.unmask.line, NARRATOR);
@@ -2287,7 +2853,7 @@ function doArrest(_, btn) {
 function confess(k) {
   k = Number(k);
   const { c } = curCase();
-  const speaker = c.finale ? REMAINDER : { ...SUSPECTS[c.culprit] };
+  const speaker = c.finale ? MASTERMINDS[c.mastermind || 'remainder'] : { ...SUSPECTS[c.culprit] };
   if (k < 3) {
     const panel = c.confession[k];
     openModal(`<div class="confession"><div class="eyebrow">Confession · ${k + 1} of 3</div>
@@ -2310,14 +2876,16 @@ function closeCaseFlow() {
   cs.status = 'closed'; cs.timesClosed++; run.stage = 'closed';
   let unlocked = null;
   if (i + 1 < CASES.length && S.cases[i + 1].status === 'locked') { S.cases[i + 1].status = 'open'; unlocked = i + 1; }
-  if (c.finale) { S.finished = true; earnBadge('r_unmasked'); }
+  if (c.finale) { if (c.season === 1) S.finished = true; earnBadge(c.finaleBadge || 'r_unmasked'); }
   S.stats.casesClosed = distinctClosed(); checkStatBadges(); save();
   SFX.fanfare(); confetti();
-  openModal(`<div class="center closed-modal"><div class="stamp huge">Case closed</div><h2>${esc(c.title)}</h2>
+  const se = SEASONS[c.season - 1];
+  openModal(`<div class="center closed-modal"><div class="cheer">${characterSVG({ size: 104 })}</div><div class="stamp huge">Case closed</div><h2>${esc(c.title)}</h2>
     <p>You earned <b>${run.caseStars} ⭐</b> on this case (including a 20 ⭐ case bonus).</p>${rankBlockHTML()}
-    <p>📌 A new note is pinned to the <b>Who is R?</b> board.</p>
+    <p>📌 A new note is pinned to the <b>Who is ${se.who}?</b> board.</p>
     ${unlocked != null ? `<p>📂 <b>Case ${unlocked + 1}</b> is open: ${esc(CASES[unlocked].title)}</p>` : ''}
-    ${c.finale ? `<p class="gold">🏅 You earned the <b>Golden Badge of Starlight Town</b>! Your certificate is waiting in the Treehouse.</p>` : ''}
+    ${c.finale ? `<p class="gold">${se.seal} You earned the <b>${esc(se.award)}</b>! Your certificate is waiting in the Treehouse.</p>` : ''}
+    ${unlocked != null && CASES[unlocked].season !== c.season ? `<p class="gold">🎉 <b>Season ${CASES[unlocked].season}: ${esc(SEASONS[CASES[unlocked].season - 1].title)}</b> is open! New suspects are waiting.</p>` : ''}
     <div class="row-btns"><button type="button" class="btn primary" data-action="go" data-arg="${c.finale ? 'treehouse' : 'map'}" data-focus>${c.finale ? 'See my certificate 🌳' : 'Back to the case map'}</button></div></div>`, { closable: false, cls: 'wide' });
 }
 
@@ -2325,7 +2893,7 @@ function closeCaseFlow() {
 function renderBoard() {
   const b = $('#board'); if (!b) return;
   const { i, c, cs, run } = curCase();
-  const cards = SUSPECT_IDS.map(id => {
+  const cards = caseSuspects(c).map(id => {
     const su = SUSPECTS[id], out = run.ruledOut.includes(id);
     const rows = c.scenes.map((sc, s) => {
       const v = run.solved[s] ? suspectValue(c, run.problems[s], s, id) : null;
@@ -2347,7 +2915,7 @@ function interview(id) {
   speak(su.catch + ' ' + alibi, su.voice);
   if (!cs.interrogated.includes(id)) {
     cs.interrogated.push(id); S.stats.interrogated++;
-    if (SUSPECT_IDS.every(x => cs.interrogated.includes(x))) earnBadge('usual_suspects');
+    if (caseSuspects(c).every(x => cs.interrogated.includes(x))) earnBadge('usual_suspects');
     save(); renderBoard();
   }
 }
@@ -2403,7 +2971,7 @@ function shopHTML() {
     return `<div class="item ${owned ? 'owned' : ''} ${worn ? 'worn' : ''}">${shopVisual(tab, it)}<b>${esc(it.name)}</b>${btn}</div>`;
   }).join('');
   return `<section class="shop-head">
-      <div class="shop-preview">${avatarHTML(96)}</div>
+      <div class="shop-preview">${characterSVG({ size: 150 })}</div>
       <div><div class="eyebrow on-desk">Gadget shop</div><h1 class="display">Spend your stars</h1><p class="on-desk-muted">You have <b class="brass">⭐ ${S.starsBalance}</b> to spend. Magnifiers change your flashlight lens!</p></div>
     </section>
     <div class="tabs" role="tablist">${SHOP_TABS.map(([id, e, l]) => `<button type="button" role="tab" class="tab ${tab === id ? 'on' : ''}" aria-selected="${tab === id}" data-action="shopTab" data-arg="${id}">${e} ${l}</button>`).join('')}</div>
@@ -2431,22 +2999,36 @@ function equip(arg) {
 }
 
 /* ---------------- treehouse ---------------- */
-const DECOR_SLOTS = { plant: [7, 76], balloon: [88, 14], puzzle: [30, 90], couch: [70, 82], books: [10, 40], dino: [88, 86], fish: [88, 52], guitar: [28, 60], scope: [62, 26], disco: [46, 10], ufo: [22, 14], trophy: [40, 38] };
+/* x = center (% of room width), y = bottom (% of room height), sz = size (% of room width) */
+const DECOR_SLOTS = {
+  plant:   { x: 7,  y: 5,  sz: 12 }, fish:   { x: 20, y: 5, sz: 8, cls: 'tank' }, puzzle: { x: 31, y: 2, sz: 7 },
+  guitar:  { x: 30, y: 36, sz: 11, cls: 'lean' }, books: { x: 13, y: 58, sz: 11 }, trophy: { x: 87, y: 58, sz: 9 },
+  scope:   { x: 67, y: 6,  sz: 10 }, couch:  { x: 83, y: 3,  sz: 21 }, dino:   { x: 96, y: 3,  sz: 8 },
+  disco:   { x: 41, y: 76, sz: 9, cls: 'hang' }, ufo: { x: 22, y: 74, sz: 10, cls: 'hang float' }, balloon: { x: 76, y: 68, sz: 8, cls: 'float' },
+};
 function treehouseHTML() {
-  const decor = S.owned.decor.map(id => { const d = SHOP.decor.find(x => x.id === id); const [x, y] = DECOR_SLOTS[id] || [50, 50]; return `<span class="decor" style="left:${x}%;top:${y}%" title="${esc(d.name)}">${d.e}</span>`; }).join('');
+  const decor = S.owned.decor.map(id => {
+    const d = SHOP.decor.find(x => x.id === id), p = DECOR_SLOTS[id] || { x: 50, y: 30, sz: 9 };
+    return `<span class="decor ${p.cls || ''}" style="--x:${p.x}%;--y:${p.y}%;--sz:${p.sz}" title="${esc(d.name)}"><span class="decor-e">${d.e}</span></span>`;
+  }).join('');
+  const shelfL = S.owned.decor.includes('books'), shelfR = S.owned.decor.includes('trophy');
   const badges = BADGES.map(b => { const got = S.badges.includes(b.id); return `<div class="badge ${got ? 'got' : ''}"><span class="badge-e">${got ? b.e : '🔒'}</span><b>${esc(b.name)}</b><small>${esc(b.desc)}</small></div>`; }).join('');
   const cur = rankFor(S.starsEarned);
   const ladder = RANKS.map(r => `<li class="${r === cur ? 'cur' : S.starsEarned >= r.min ? 'past' : ''}"><span>${r.e}</span><b>${esc(r.name)}</b><small>${r.min} ⭐</small></li>`).join('');
   const st = S.stats;
   const stats = [['Safes cracked', st.ciphersSolved], ['Cases closed', distinctClosed()], ['Best first-try streak', st.bestFirstTryStreak], ['Carry gears placed', st.carries], ['Borrows made', st.borrows], ['Crate models built', st.arrays], ['Fair shares dealt', st.deals], ['Bonus clues found', st.tokensFound], ['Lab puzzles solved', st.labSolved], ['Stars earned (all time)', S.starsEarned]];
+  const certs = SEASONS.filter(se => seasonDone(se.n)).map(se => `<div class="certificate"><div class="eyebrow">Starlight Town · Official · Season ${se.n}</div><div class="seal" aria-hidden="true">${se.seal}</div><h2>${esc(se.award)}</h2><p>This certifies that <b>Detective ${esc(S.profile.name)}</b> solved all six mysteries of <b>${esc(se.title)}</b>, cracked every safe, and unmasked the sneaky <b>${esc(se.villain)}</b>.</p><p class="sig">Inspector Felix 🦊<br><small>Chief of the Starlight Detective Agency</small></p></div>`).join('');
   return `<section class="lab-head"><div><div class="eyebrow on-desk">Headquarters</div><h1 class="display">${esc(S.profile.name)}'s Treehouse</h1></div></section>
     <div class="treehouse" aria-label="Your treehouse room">
+      <span class="th-beam" aria-hidden="true"></span>
       <span class="th-window" aria-hidden="true"></span>
+      ${shelfL ? '<span class="th-shelf" style="--x:13%" aria-hidden="true"></span>' : ''}${shelfR ? '<span class="th-shelf" style="--x:87%" aria-hidden="true"></span>' : ''}
+      <span class="th-floor" aria-hidden="true"></span><span class="th-rug" aria-hidden="true"></span>
       ${decor}
-      <span class="th-avatar">${avatarHTML(96)}</span>
-      ${S.owned.decor.length ? '' : '<p class="th-empty">Your treehouse is empty! Buy decorations in the Gadget Shop.</p>'}
+      <span class="th-avatar">${characterSVG({ size: 200 })}</span>
+      ${S.owned.decor.length ? '' : '<div class="th-empty">Your treehouse is empty! <button type="button" class="btn small primary" data-action="go" data-arg="shop">Visit the Gadget Shop 🛍️</button></div>'}
     </div>
-    ${S.finished ? `<div class="certificate"><div class="eyebrow">Starlight Town · Official</div><div class="seal" aria-hidden="true">🏅</div><h2>Golden Badge of Starlight Town</h2><p>This certifies that <b>Detective ${esc(S.profile.name)}</b> solved all six mysteries, cracked every safe, and unmasked the sneaky <b>Professor Remainder</b>.</p><p class="sig">Inspector Felix 🦊<br><small>Chief of the Starlight Detective Agency</small></p></div>` : ''}
+    ${certs}
     <div class="hq-grid">
       <section class="paper"><h2>Badges <small class="muted">${S.badges.length} of ${BADGES.length}</small></h2><div class="badges">${badges}</div></section>
       <div class="hq-side">
@@ -2462,7 +3044,7 @@ function parentHTML() {
   const levels = [['auto', 'Auto (recommended)', 'Cases 1–2 use Level 1, Cases 3–4 Level 2, Cases 5–6 Level 3.'], ['1', 'Level 1', '3-digit + and − with regrouping · times tables to 9 × 9 · sharing facts'], ['2', 'Level 2', '4-digit + and − · × and ÷ with tens, like 6 × 40 or 280 ÷ 7'], ['3', 'Level 3', '4-digit, borrowing across zeros · × and ÷ with hundreds, like 7 × 300']];
   return `<div class="parent"><h2>Grown-up settings</h2>
     <fieldset><legend>Detective</legend><label class="field-label" for="pName">Name</label><input id="pName" class="text-input" maxlength="16" value="${esc(S.profile.name)}">
-      <div class="animal-pick small">${ANIMALS.map(a => `<button type="button" class="animal ${S.profile.animal === a ? 'on' : ''}" data-action="pickAnimal" data-arg="${a}" aria-pressed="${S.profile.animal === a}">${a}</button>`).join('')}</div></fieldset>
+      <div class="animal-pick small">${ANIMALS.map(a => `<button type="button" class="animal ${S.profile.animal === a ? 'on' : ''}" data-action="pickAnimal" data-arg="${a}" aria-pressed="${S.profile.animal === a}" aria-label="${ANIMAL_NAMES[a]}">${characterSVG({ animal: a, crop: 'head', size: 44 })}</button>`).join('')}</div></fieldset>
     <fieldset><legend>Math level</legend>${levels.map(([v, l, d]) => `<label class="radio"><input type="radio" name="pLevel" value="${v}" ${String(lv) === v ? 'checked' : ''}><span><b>${l}</b><small>${d}</small></span></label>`).join('')}
       <p class="muted tiny">Changing the level gives new numbers to any safe that isn't cracked yet.</p></fieldset>
     <fieldset><legend>Reading &amp; sound</legend>
@@ -2502,6 +3084,7 @@ const ACTIONS = {
   closeModal: () => { if ($('#modal-root').dataset.closable) closeModal(); },
   pickAnimal: (a) => {
     S.profile.animal = a; save(); SFX.click();
+    const wp = $('#welcomePreview'); if (wp) wp.innerHTML = characterSVG({ size: 140 });
     document.querySelectorAll('.animal').forEach(b => { const on = b.dataset.arg === a; b.classList.toggle('on', on); b.setAttribute(b.getAttribute('role') === 'radio' ? 'aria-checked' : 'aria-pressed', on); });
   },
   finishSetup: () => {
@@ -2535,7 +3118,7 @@ const ACTIONS = {
   equip: (a) => equip(a),
   gearTap: () => { if (ui.holdDone) { ui.holdDone = false; return; } toast('Grown-ups: press and hold ⚙️ for 2 seconds.'); },
   testVoice: () => speak('Behind the museum is a quiet garden with a lily pond. A path of flat stepping stones crosses the water. Somebody ran across them last night, in a big hurry!', NARRATOR),
-  testCast: () => speakAll([["Hello, Detective! I'm Inspector Felix.", FELIX.voice], ...SUSPECT_IDS.map(id => [SUSPECTS[id].catch, SUSPECTS[id].voice])]),
+  testCast: () => speakAll([["Hello, Detective! I'm Inspector Felix.", FELIX.voice], ...SEASONS[S.cases[6].status === 'locked' ? 0 : 1].suspects.map(id => [SUSPECTS[id].catch, SUSPECTS[id].voice])]),
   resetAsk: () => { $('#resetConfirm').hidden = false; },
   resetCancel: () => { $('#resetConfirm').hidden = true; },
   resetDo: () => {
