@@ -2358,13 +2358,74 @@ function utterance(text, spec = NARRATOR) {
   const v = voiceFor(spec), c = cast();
   const own = v && c.narrator && voiceBase(v) !== voiceBase(c.narrator);
   // gentle pitch shifts only: a different voice carries the character, pitch just colors it
-  const k = (spec.role || 'narrator') === 'narrator' ? 0 : own ? 0.3 : 0.5;
+  const k = (spec.role || 'narrator') === 'narrator' ? 1 : own ? 0.3 : 0.5; // narrator pitch is set per sentence
   u.pitch = Math.max(0.8, Math.min(1.3, 1 + ((spec.pitch ?? 1) - 1) * k));
   u.rate = Math.max(0.7, Math.min(1.35, (spec.rate ?? 1) * (S.settings.voiceRate || 1)));
   if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
   return u;
 }
-function speak(text, spec = FELIX.voice) { speakAll([[text, spec]]); }
+function speak(text, spec = FELIX.voice) {
+  if ((spec.role || 'narrator') === 'narrator') return speakAll(storySegments(text));
+  speakAll([[text, spec]]);
+}
+/* Story reading: narration in the story voice, sentence by sentence with a little lift on
+   exclamations and questions, and every "quoted line" in the voice of whoever says it. */
+let NAME_VOICES = null;
+function nameVoices() {
+  if (NAME_VOICES) return NAME_VOICES;
+  const m = [['Felix', FELIX.voice], ['Remainder', REMAINDER.voice]];
+  if (typeof MIMIC !== 'undefined') m.push(['Mimic', MIMIC.voice]);
+  if (typeof ZERO !== 'undefined') m.push(['Zero', ZERO.voice]);
+  Object.values(SUSPECTS).forEach(x => m.push([x.short, x.voice]));
+  CASES.forEach(c => c.scenes.forEach(sc => m.push([sc.witness.name.split(' ')[0], sc.witness.voice])));
+  return (NAME_VOICES = m);
+}
+const SPEECH_VERB = '(?:says|said|asks|whispers|replies|calls|shouts|adds|explains|answers|cries|laughs|grins)';
+function nameIn(str, fromEnd) {
+  let best = null;
+  for (const [n, v] of nameVoices()) {
+    const re = new RegExp('\\b' + n + '\\b', 'g'); let m;
+    while ((m = re.exec(str))) { const d = fromEnd ? str.length - m.index : m.index; if (!best || d < best.d) best = { d, v }; }
+  }
+  return best ? best.v : null;
+}
+function speakerFor(after, before, prev, gap) {
+  const clause = after.split(/["]/)[0].split(/(?<=[.!?])\s/)[0];
+  const tag = clause.match(new RegExp('^\\s*(?:' + SPEECH_VERB + '\\s+([A-Z]\\w+)|([A-Z]\\w+)\\s+' + SPEECH_VERB + ')'));
+  if (tag) { const n = tag[1] || tag[2]; const hit = nameVoices().find(([x]) => x === n); if (hit) return hit[1]; }
+  if (prev && gap) return prev;                                                   // "...," he says. "...more"
+  const sentence = before.split(/(?<=[.!?])\s/).pop();
+  const named = nameIn(sentence, true);
+  if (named) return named;
+  if (/\bvoice\b/.test(sentence) && typeof MIMIC !== 'undefined') return MIMIC.voice; // a mystery voice
+  if (new RegExp('^\\s*(?:he|she|they)\\s+' + SPEECH_VERB).test(clause)) return nameIn(before, true) || FELIX.voice;
+  return nameIn(before, true) || FELIX.voice;
+}
+function storySegments(text) {
+  const segs = [], re = /"([^"]+)"/g; let last = 0, mt, prev = null, prevEnd = -1;
+  while ((mt = re.exec(text))) {
+    const q = mt[1];
+    if (q.length < 25 && !/[.!?,]/.test(q)) continue; // a name in quotes ("Best Fizz"), not dialogue
+    if (mt.index > last) segs.push([text.slice(last, mt.index), null]);
+    const sig = q.match(/—\s*([A-Z])\s*$/);
+    const masters = { R: REMAINDER, M: typeof MIMIC !== 'undefined' ? MIMIC : null, Z: typeof ZERO !== 'undefined' ? ZERO : null };
+    const between = prevEnd >= 0 ? text.slice(prevEnd, mt.index) : '';
+    const gap = prevEnd >= 0 && between.length < 30 && new RegExp(SPEECH_VERB).test(between);
+    const voice = sig && masters[sig[1]] ? masters[sig[1]].voice : speakerFor(text.slice(re.lastIndex, re.lastIndex + 60), text.slice(Math.max(0, mt.index - 200), mt.index), prev, gap);
+    segs.push([q, voice]); last = re.lastIndex; prev = voice; prevEnd = re.lastIndex;
+  }
+  if (last < text.length) segs.push([text.slice(last), null]);
+  const out = [];
+  for (const [t, v] of segs) {
+    if (v) { out.push([t, v]); continue; }
+    for (const raw of t.match(/[^.!?]+[.!?]*/g) || []) {
+      const sn = raw.trim(); if (!/[A-Za-z0-9]/.test(sn)) continue;
+      const excl = /!$/.test(sn), ques = /\?$/.test(sn);
+      out.push([sn, { ...NARRATOR, pitch: excl ? 1.1 : ques ? 1.07 : 1, rate: (NARRATOR.rate || 1) * (excl ? 1.05 : 1) }]);
+    }
+  }
+  return out.length ? out : [[text, NARRATOR]];
+}
 function speakAll(lines) {
   if (!CAN_SPEAK || !lines.length) return;
   try {
