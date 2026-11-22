@@ -1452,6 +1452,360 @@ SHOP.decor.push(
 );
 
 /* ============================================================
+   SEASON 3: THE VANISHING ACT
+   New suspects, a new mastermind (the Great Zero), six new cases.
+   Stories never contain numerals; problems use {a} {b} {N} {d}.
+   ============================================================ */
+
+Object.assign(SUSPECTS, {
+  gloria: { e: '🦍', name: 'Gloria Gorilla', short: 'Gloria', desc: 'Cheerful strongwoman and gym coach',
+    catch: 'WHAT? Me? I was lifting weights!', cleared: 'Ha! Told you! Now, who wants to see me lift a piano?',
+    voice: { pitch: 0.8, rate: 1.1 } },
+  humphrey: { e: '🐫', name: 'Professor Humphrey Camel', short: 'Humphrey', desc: 'Explorer who loves long stories',
+    catch: 'Ah, that reminds me of my desert adventure...', cleared: 'Splendid! That reminds me of the last time I was cleared...',
+    voice: { pitch: 0.75, rate: 0.85 } },
+  wolfgang: { e: '🐺', name: 'Wolfgang Wolf', short: 'Wolfgang', desc: 'Piano teacher who howls when he sings',
+    catch: 'Aaa-wooo! The only thing I steal is the show!', cleared: 'Wonderful! I shall write a song about this. Aaa-wooo!',
+    voice: { pitch: 1.0, rate: 1.05 } },
+  clementine: { e: '🐄', name: 'Clementine Cow', short: 'Clementine', desc: 'Gentle ice cream maker',
+    catch: 'Mooo... me? I only make ice cream.', cleared: 'Mooo, thank you. Free sprinkles for everyone!',
+    voice: { pitch: 1.05, rate: 0.88 } },
+});
+const ZERO = { e: '🦑', name: 'The Great Zero', voice: { pitch: 1.15, rate: 1.0 } };
+MASTERMINDS.zero = ZERO;
+
+Object.assign(THEMES, {
+  theater:     { sky: ['#2a1020', '#55203a'], floor: '#5a2a2a', props: ['🎭', '🎻', '🪑', '🎟️', '🃏', '🕯️'] },
+  sciencefair: { sky: ['#1a2840', '#2f4a6a'], floor: '#7a8a96', props: ['🔭', '🧲', '🪐', '🧬', '📏', '💡'] },
+  desert:      { sky: ['#3a2a1a', '#7a5530'], floor: '#d9b26b', props: ['🌵', '🏺', '🦴', '🪨', '⛺', '🌞'] },
+  jungle:      { sky: ['#10301e', '#1f5535'], floor: '#4a3a20', props: ['🌴', '🌿', '🍃', '🌺', '🪵', '🍄'] },
+  space:       { sky: ['#070a1e', '#1a1446'], floor: '#5a5a6e', props: ['🪐', '🛰️', '🌙', '☄️', '🧑‍🚀', '🌠'] },
+  castle:      { sky: ['#1e1530', '#3a2a55'], floor: '#5a4a6a', props: ['🗝️', '🕯️', '🛡️', '👑', '🎭', '🏺'] },
+});
+
+CASES.push(
+  /* ---------------- CASE 13 ---------------- */
+  {
+    id: 'theater', season: 3, title: 'The Magic Theater Mystery', icon: '🪄', theme: 'theater',
+    treasure: 'the Golden Wand', culprit: 'gloria',
+    intro: `Spring has come to Starlight Town, and that means the Starlight Magic Festival! Magicians from everywhere perform in the old Magic Theater, and the star of the show is the Golden Wand, which sparkles whenever someone does a really good trick. But last night, during the final bow, there was a POOF of dark smoke, and the wand vanished! All that was left was a card with a big round zero drawn on it: "Now you see it, now you don't. — Z". Felix frowns. "A vanishing thief? Not on our watch, Detective!"`,
+    scenes: [
+      { op: 'add', title: 'The Heavy Sandbags', place: 'Backstage',
+        witness: { e: '🦒', name: 'Gigi the Giraffe', voice: { pitch: 1.15, rate: 1.0 },
+          quote: `From up here I see everything. Those sandbags were far too heavy for most folks to budge!` },
+        story: `Backstage, heavy sandbags hold the curtains in place. Gigi the Giraffe is the stage manager, and she is so tall she can see over every set. Last night she noticed that two sandbags had been dragged aside, so someone could squeeze through the secret trapdoor! Yesterday, all four suspects joined the festival's strength contest, and Gigi wrote down exactly how much each one lifted. "Add up the two sandbags the thief moved," says Felix, "and we'll see whose strength matches."`,
+        evidence: { e: '🪨', label: 'heavy sandbags' }, token: '🪨',
+        problem: 'The thief moved one sandbag of {a} grams and another of {b} grams. How many grams did they lift in all?',
+        cat: { e: '🏋️', label: 'Weight lifted (grams)' }, out: ['humphrey'] },
+      { op: 'div', title: 'The Stuffed Hats', place: 'The Prop Table',
+        witness: { e: '🕊️', name: 'Coo the Dove', voice: { pitch: 1.5, rate: 1.0 },
+          quote: `Coo! I live in that hat! When I came home, it was stuffed full of scarves. No room for me!` },
+        story: `Coo the Dove lives inside a magician's top hat on the prop table. Last night, Coo came home to find every hat on the table stuffed with colorful silk scarves, the same number in each one! The thief must have hidden the Golden Wand under the scarves while they waited for the smoke to clear. Every suspect took the scarf-trick class at the festival this week, and each one stuffs a hat their own way. "Find the scarves in each hat," says Felix, "and we'll know whose trick this is."`,
+        evidence: { e: '🎩', label: 'hats stuffed with scarves' }, token: '🧣',
+        problem: 'The thief stuffed {N} silk scarves into {d} magic hats, the same number in each hat. How many scarves went in each hat?',
+        cat: { e: '🎩', label: 'Scarves per hat' }, out: [] },
+      { op: 'sub', title: 'The Spotlight Switch', place: 'The Lighting Platform',
+        witness: { e: '🦧', name: 'Ollie the Orangutan', voice: { pitch: 0.95, rate: 1.05 },
+          quote: `I swing from these ropes all night. Somebody flipped my light switches without asking!` },
+        story: `Ollie the Orangutan runs the theater lights from a high platform. Just before the wand vanished, every spotlight switched off at once! When Ollie turned them back on, she spotted someone hurrying into a dressing room. The number sign on the door was half broken, but Ollie remembers the two numbers painted on it, and the real room number is the difference between them. Every suspect has their own dressing room this week. "Work out the difference," says Felix, "and we'll knock on the right door."`,
+        evidence: { e: '💡', label: 'a switched-off spotlight' }, token: '🔢',
+        problem: 'The two numbers on the broken sign were {a} and {b}. The room number is the difference between them. What is the dressing room number?',
+        cat: { e: '🚪', label: 'Dressing room' }, out: ['clementine'] },
+      { op: 'mul', title: 'The Flying Flowers', place: 'The Front Row',
+        witness: { e: '🦃', name: 'Gobbles the Turkey', voice: { pitch: 1.2, rate: 1.15 },
+          quote: `Gobble gobble! Flowers everywhere! I tripped on a tulip and landed on a daisy!` },
+        story: `Gobbles the Turkey is the theater usher, and he shows everyone to their seats. Right before the puff of smoke, someone threw bouquet after bouquet of flowers onto the stage, and the whole audience turned to look. That was the moment the wand vanished! Every bouquet had the same number of flowers. This week, each suspect bought flowers at the festival flower stand, and the florist kept a list. "Count all those flowers," says Felix, "and match them to the list."`,
+        evidence: { e: '💐', label: 'a pile of bouquets' }, token: '🌸',
+        problem: 'The thief threw {a} bouquets onto the stage. Each bouquet had {b} flowers. How many flowers was that?',
+        cat: { e: '💐', label: 'Flowers bought' }, out: ['wolfgang'] },
+    ],
+    alibis: {
+      gloria: `WHAT? Me? I was at the gym, lifting weights! Okay, I was ALSO at the theater. For a little while.`,
+      humphrey: `Ah, last night? That reminds me of a night in the great desert, when the stars... oh, yes. I was at home writing my travel book.`,
+      wolfgang: `I was playing piano in the theater band! Did you hear my big solo? Aaa-wooo!`,
+      clementine: `Mooo... I was selling ice cream in the lobby. Mint chip was very popular.`,
+    },
+    confession: [
+      { art: '🦍🪄', line: `WHAT? Okay, okay. I teach a gym class for little ones, and they always ask me to do a magic trick.` },
+      { art: '🃏✨', line: `Then a card appeared in my gym bag. It said the Golden Wand makes ANY trick work. So I moved those sandbags and slipped through the trapdoor.` },
+      { art: '🦍😳', line: `But my trick should come from me, not from a stolen wand. I'm sorry! I'll show the kids how I lift a piano instead.` },
+    ],
+    ending: `Gloria returns the Golden Wand, and the Magic Festival goes on. For her gym kids, she does her very own trick: lifting the theater piano with Wolfgang still playing on top! But who put that card in her gym bag? Tucked inside the wand's velvet box is another card, with a big round zero drawn on it.`,
+    rNote: 'Every good trick needs a disappearing act. — Z', rClue: 'Z draws a zero on every note.',
+  },
+
+  /* ---------------- CASE 14 ---------------- */
+  {
+    id: 'sciencefair', season: 3, title: 'The Science Fair Fizzle', icon: '🧪', theme: 'sciencefair',
+    treasure: 'the Volcano Trophy', culprit: 'clementine',
+    intro: `Every spring, Starlight School holds the Science Fair, and the grand prize is the Volcano Trophy, a golden volcano that really bubbles and fizzes. This morning, the judges opened its glass case and found it empty, except for some dark, smoky stains and another card with a zero on it. Mister Mimic is already talking about it on Starlight Town Radio! Felix pulls on a pair of safety goggles. "Science has rules, Detective, and so do detectives. Let's follow the evidence."`,
+    scenes: [
+      { op: 'mul', title: 'The Test Tube Racks', place: 'The School Lab',
+        witness: { e: '🐔', name: 'Professor Cluck', voice: { pitch: 1.3, rate: 1.1 },
+          quote: `Bawk! Science is all about careful counting, and SOMEONE was not careful with my test tubes!` },
+        story: `Professor Cluck the Chicken is the head judge of the Science Fair. In the school lab, rows of racks hold glass test tubes. This morning, several racks were empty, with the same number of test tubes missing from each one! The thief must have used them to make bubbling foam, so the trophy would keep fizzing while they carried it away. Each suspect borrowed test tubes from the lab this week, and Professor Cluck keeps a careful record. "Count the missing tubes," says Felix, "and check the record."`,
+        evidence: { e: '🧪', label: 'empty test tube racks' }, token: '🧪',
+        problem: 'The thief emptied {a} racks. Each rack held {b} test tubes. How many test tubes did they take?',
+        cat: { e: '🧪', label: 'Test tubes borrowed' }, out: [] },
+      { op: 'sub', title: 'The Tired Robot', place: 'The Robotics Corner',
+        witness: { e: '🐍', name: 'Noodle the Snake', voice: { pitch: 1.0, rate: 1.0 },
+          quote: `Hisss... I mean, hi! My robot saw everything, but it only speaks in beeps.` },
+        story: `Noodle the Snake built a robot for the Science Fair, and it is so long and wiggly that it looks just like him. Last night, someone borrowed a robot from the robotics club to roll the heavy trophy out of the gym! Every robot starts the day full of battery, and this morning each suspect's robot shows a different amount left. Noodle's robot camera recorded how much battery the thief's robot started with and how much the heist used up. "Work out what's left," says Felix, "and find the matching robot."`,
+        evidence: { e: '🔋', label: 'a tired robot' }, token: '🔋',
+        problem: `The thief's robot started with {a} units of battery. Rolling the trophy away used {b} units. How many units are left?`,
+        cat: { e: '🔋', label: 'Robot battery left' }, out: ['gloria'] },
+      { op: 'div', title: 'The Fizzy Cups', place: 'The Gym Floor',
+        witness: { e: '🐂', name: 'Oscar the Ox', voice: { pitch: 0.6, rate: 0.85 },
+          quote: `Mmm. I just mopped this floor. Now it's foamy, sticky, AND fizzy.` },
+        story: `Oscar the Ox keeps the school clean, and this morning he found a big mess: cups of fizzing foam all over the gym floor! The thief shared spoonfuls of baking soda into the cups, the same number in each one, to make a bubbly cloud that hid them while they worked. Every suspect entered the Best Fizz contest at the fair, and each one has a secret recipe for how many spoonfuls go in a cup. "Find the thief's recipe," says Felix, "and we'll know who made this mess."`,
+        evidence: { e: '🥄', label: 'cups of fizzing foam' }, token: '🥄',
+        problem: 'The thief shared {N} spoonfuls of baking soda into {d} cups, the same number in each cup. How many spoonfuls went in each cup?',
+        cat: { e: '🥄', label: 'Spoonfuls per cup' }, out: ['wolfgang'] },
+      { op: 'add', title: 'The Sprinkle Trail', place: 'The Fossil Exhibit',
+        witness: { e: '🦕', name: 'Sauri the Dinosaur', voice: { pitch: 0.85, rate: 0.9 },
+          quote: `I'm as old as the fossils, and I've never seen so many sprinkles in one place!` },
+        story: `Sauri the Dinosaur volunteers at the fossil exhibit, right next to the trophy case. She noticed rainbow sprinkles scattered across the floor, from the case all the way to the back door. The thief had used up two whole jars of sprinkles! Sprinkles are sold at only one shop in town, and each suspect bought some this week. The shop keeps track of how many sprinkles go in every jar. "Add up both jars," says Felix, "and the shop's list will show us the thief."`,
+        evidence: { e: '🍨', label: 'rainbow sprinkles on the floor' }, token: '🍬',
+        problem: 'One jar had {a} sprinkles and the other jar had {b} sprinkles. How many sprinkles is that altogether?',
+        cat: { e: '🍨', label: 'Sprinkles bought' }, out: ['humphrey'] },
+    ],
+    alibis: {
+      gloria: `WHAT? I was judging the Strongest Bridge contest! Bridges, not volcanoes!`,
+      humphrey: `Ah, science fairs remind me of my very first experiment, long, long ago... anyway, I was helping a student build a model pyramid.`,
+      wolfgang: `I was in the music room, building a piano out of glass jars! Aaa-wooo!`,
+      clementine: `Mooo... I was at my ice cream shop. Making... a new flavor. With sprinkles. No reason.`,
+    },
+    confession: [
+      { art: '🐄🌋', line: `Mooo... a card said the Volcano Trophy bubbles with the fizziest foam in the whole world.` },
+      { art: '🍨🫧', line: `I wanted to invent Erupting Ice Cream Floats! So I took the trophy to my shop for one tiny test. It foamed all over my freezer.` },
+      { art: '🐄😳', line: `I'm so sorry. I'll give every science fair kid a free float. The regular kind.` },
+    ],
+    ending: `Clementine returns the Volcano Trophy, and the winner is a little hedgehog who built a sun-powered snail racer. Clementine brings free ice cream floats for everyone, the regular kind. But when the judges lift the trophy, a puff of dark smoke drifts out of it, and inside is another card with a zero.`,
+    rNote: 'Poof! I vanish like smoke. — Z', rClue: 'Z can vanish in a puff of dark smoke.',
+  },
+
+  /* ---------------- CASE 15 ---------------- */
+  {
+    id: 'desert', season: 3, title: 'The Desert Dig', icon: '🏜️', theme: 'desert',
+    treasure: 'the Sun Scarab', culprit: 'humphrey',
+    intro: `Past the edge of Starlight Town is the Whispering Desert, where scientists are digging for ancient treasures. Last week, they found the Sun Scarab, a golden beetle carving that glows at sunrise. But this morning, the scarab's tent was empty, and the sand inside was strangely damp, with a salty smell like the sea. In the desert! On the table lay a card with a zero on it. Felix shades his eyes from the sun. "Pack plenty of water, Detective. This case is going to be hot."`,
+    scenes: [
+      { op: 'div', title: 'The Water Bottles', place: 'The Water Truck',
+        witness: { e: '🐃', name: 'Bess the Water Buffalo', voice: { pitch: 0.7, rate: 0.9 },
+          quote: `I carry water for everybody, but somebody helped themselves without even saying thank you!` },
+        story: `Bess the Water Buffalo drives the water truck to the dig site every day, because desert work is thirsty work! Last night, someone took water bottles from her truck and packed them into backpacks, the same number in each one, ready for a long walk across the sand. Every suspect visited the dig this week, and Bess remembers that each one packs a backpack in a different way. "Find out how many bottles went in each backpack," says Felix, "and we'll know who was planning a desert trip."`,
+        evidence: { e: '🎒', label: 'packed backpacks' }, token: '💧',
+        problem: 'The thief packed {N} water bottles into {d} backpacks, the same number in each one. How many bottles went in each backpack?',
+        cat: { e: '🎒', label: 'Bottles per backpack' }, out: ['wolfgang'] },
+      { op: 'add', title: 'The Sunscreen Clue', place: 'The Scarab Tent',
+        witness: { e: '🦂', name: 'Sandy the Scorpion', voice: { pitch: 1.1, rate: 1.05 },
+          quote: `Click click! I may look scary, but I'm very friendly. And that thief smelled like coconut sunscreen.` },
+        story: `Sandy the Scorpion lives under a rock right next to the scarab tent. She saw the thief arrive in the hot afternoon, covered in sunscreen from nose to toes. Two empty sunscreen bottles were left beside the tent! The dig site shop sells sunscreen in all different sizes, and it wrote down how much each suspect bought this week. "Add up both bottles," says Felix, "and the shop's list will show who was here."`,
+        evidence: { e: '🧴', label: 'empty sunscreen bottles' }, token: '🧴',
+        problem: 'One bottle held {a} milliliters of sunscreen and the other held {b} milliliters. How many milliliters is that altogether?',
+        cat: { e: '🧴', label: 'Sunscreen bought (ml)' }, out: ['clementine'] },
+      { op: 'mul', title: 'The Digging Brushes', place: 'The Tool Tent',
+        witness: { e: '🧞', name: 'Gene the Genie', voice: { pitch: 0.9, rate: 0.95 },
+          quote: `Three wishes? Sorry, I'm retired. But I do have one wish: that you catch that thief!` },
+        story: `Last month, the diggers found an old brass lamp, and out popped Gene the Genie! Gene doesn't grant wishes anymore. He's retired, and now he helps clean fossils. Last night, Gene saw someone take soft brushes from the tool boxes, the same number from each box. The thief needed the brushes to dust the scarab without scratching it. Every suspect borrowed brushes to try digging this week. "Count the missing brushes," says Felix, "and compare."`,
+        evidence: { e: '🖌️', label: 'empty brush boxes' }, token: '🖌️',
+        problem: 'The thief took brushes from {a} tool boxes. Each box had {b} brushes. How many brushes did they take?',
+        cat: { e: '🖌️', label: 'Brushes borrowed' }, out: [] },
+      { op: 'sub', title: 'The Row of Tents', place: 'The Night Camp',
+        witness: { e: '🐏', name: 'Ramsey the Ram', voice: { pitch: 0.8, rate: 1.0 },
+          quote: `Nobody gets past me! Well... one somebody did. But I saw exactly where they went!` },
+        story: `At night, everyone at the dig sleeps in tents with numbers painted on the front. Ramsey the Ram guards the camp, and he saw a figure carrying something shiny slip into one of the tents. It was too dark to read the number, but Ramsey counted the tents along the row and turned what he saw into a riddle. "Rams are excellent at puzzles," he says proudly. "Solve Ramsey's riddle," says Felix, "and we'll peek inside the right tent."`,
+        evidence: { e: '⛺', label: 'a tent flap left open' }, token: '🔢',
+        problem: `Ramsey's riddle: "Start at {a}. Take away {b}. That is the tent number!" What is the tent number?`,
+        cat: { e: '⛺', label: 'Tent number' }, out: ['gloria'] },
+    ],
+    alibis: {
+      gloria: `WHAT? Too hot for me! I was at the beach gym, lifting coconuts.`,
+      humphrey: `Ah, the desert! It reminds me of my greatest adventure... I was at the dig, yes, but only studying the sand. Very interesting sand.`,
+      wolfgang: `I was giving a concert under the desert stars! Aaa-wooo!`,
+      clementine: `Mooo... I was selling ice cream at the dig. It melted very fast.`,
+    },
+    confession: [
+      { art: '🐫🪲', line: `Ah... yes. A card told me the Sun Scarab would make my Museum of Adventures the most famous in the world.` },
+      { art: '🏜️🎒', line: `So I packed my bags and carried it off across the sand. Finders keepers, I thought. That's what explorers say, isn't it?` },
+      { art: '🐫🙇', line: `But treasures belong to everyone, not just the one who finds them. I'm sorry. I'll write about the scarab in my book instead.` },
+    ],
+    ending: `Humphrey returns the Sun Scarab, and at sunrise it glows gold across the whole desert. The diggers make Humphrey their official storyteller, and he tells campfire tales every night. They are very, very long. But the strange damp sand is still a mystery. Under the scarab's stand, Felix finds another card with a zero, and it smells like the sea.`,
+    rNote: 'I am never far from the water. — Z', rClue: 'Z leaves damp, salty marks behind.',
+  },
+
+  /* ---------------- CASE 16 ---------------- */
+  {
+    id: 'jungle', season: 3, title: 'The Rainforest Riddle', icon: '🌴', theme: 'jungle',
+    treasure: 'the Singing Seed', culprit: 'wolfgang',
+    intro: `Deep in the Starlight Rainforest is a village of treehouses joined by swaying rope bridges. In the tallest tree grows the Singing Seed, a seed pod that hums a gentle song whenever it rains. But tonight the rain came, and there was no song. The Singing Seed was gone! Every branch around it was wet and sticky, as if something had wrapped around them. Another zero card was tucked between the leaves. "Watch your step on those bridges," says Felix. "Let's climb!"`,
+    scenes: [
+      { op: 'sub', title: 'The Basket Elevator', place: 'The Bottom of the Tallest Tree',
+        witness: { e: '🐗', name: 'Bramble the Boar', voice: { pitch: 0.7, rate: 1.0 },
+          quote: `Snort! My elevator carries everyone safely. Even sneaky someones, I guess.` },
+        story: `To reach the tall trees, visitors ride a basket elevator pulled up by ropes. Bramble the Boar runs the elevator, and the basket has a scale on the bottom, so it never gets too heavy. Last night, someone rode the basket all the way to the top, and the scale remembered the weight! Every suspect visited the village this week, and Bramble weighed each one for safety. "If we take away the weight of the empty basket," says Felix, "we'll know exactly how heavy the thief is."`,
+        evidence: { e: '🧺', label: 'the elevator basket' }, token: '🔢',
+        problem: 'With the thief inside, the scale showed {a} units. The empty basket weighs {b} units. How heavy is the thief?',
+        cat: { e: '⚖️', label: 'Weight (units)' }, out: ['clementine'] },
+      { op: 'mul', title: 'The Banana Bunches', place: 'The Banana Market',
+        witness: { e: '🐤', name: 'Peep the Baby Bird', voice: { pitch: 1.9, rate: 1.2 },
+          quote: `Peep peep! So many bananas! It was SO loud. I had to cover my ears with my wings!` },
+        story: `Peep the Baby Bird lives in a nest by the banana market. She is too little to fly far, so she watches everything! Last night she saw the thief grab bunches of bananas from the market, the same number on every bunch, and toss them up into the trees. Every parrot and monkey in the rainforest started chattering, and the noise covered the thief's footsteps. Each suspect bought bananas at the market this week. "Count those bananas," says Felix, "and match the order."`,
+        evidence: { e: '🍌', label: 'banana peels' }, token: '🍌',
+        problem: 'The thief took {a} bunches of bananas. Each bunch had {b} bananas. How many bananas did they take?',
+        cat: { e: '🍌', label: 'Bananas bought' }, out: [] },
+      { op: 'add', title: 'The Waterfall Slide', place: 'The Waterfall Pool',
+        witness: { e: '🐟', name: 'Flick the Fish', voice: { pitch: 1.3, rate: 1.1 },
+          quote: `Blub blub! Somebody splashed in so hard, they almost knocked me out of the pool!` },
+        story: `Flick the Fish lives at the bottom of the waterfall slide, where riders splash into the pool. Last night, someone zoomed down the slide holding something that hummed! The slide has two parts, a twisty part and a straight part, and the ride counter measures how far every rider goes. All four suspects rode the waterfall slide this week, and each one slid a different distance. "Add up both parts of the thief's ride," says Felix, "and see whose ride matches."`,
+        evidence: { e: '💦', label: 'a splashy slide' }, token: '💧',
+        problem: 'The thief slid {a} centimeters on the twisty part and {b} centimeters on the straight part. How far did they slide in all?',
+        cat: { e: '💦', label: 'Slide ride (cm)' }, out: ['humphrey'] },
+      { op: 'div', title: 'The Page of Music', place: 'Under the Tallest Tree',
+        witness: { e: '🪱', name: 'Wiggles the Worm', voice: { pitch: 1.2, rate: 0.95 },
+          quote: `I don't have ears, but I could still feel that song. It wiggled right through the ground!` },
+        story: `Wiggles the Worm was wiggling through the soil under the tallest tree when a page of paper floated down. It was music! Someone had written down the Singing Seed's song, with the same number of notes on every line. All four suspects can write music, and each one always puts a different number of notes on a line. "Find the notes on each line," says Felix, "and we'll know whose handwriting this is."`,
+        evidence: { e: '🎼', label: 'a page of music' }, token: '🎵',
+        problem: 'The page had {N} notes, spread evenly over {d} lines. How many notes were on each line?',
+        cat: { e: '🎵', label: 'Notes per line' }, out: ['gloria'] },
+    ],
+    alibis: {
+      gloria: `WHAT? I was climbing trees for exercise! Up, down, up, down!`,
+      humphrey: `Ah, the rainforest reminds me of the time I... oh, I was in my hammock, taking notes about frogs.`,
+      wolfgang: `I was... practicing! A new song. It's a rainy kind of song. Aaa... hmm.`,
+      clementine: `Mooo... I was making banana ice cream at the market.`,
+    },
+    confession: [
+      { art: '🐺🎹', line: `Aaa-wooo... I'm sorry! A card said the Singing Seed knows the most beautiful song in the whole world.` },
+      { art: '🌧️🎵', line: `I wanted to play it at my big concert. So I took the seed home and wrote down every note while it rained.` },
+      { art: '🐺🙏', line: `But a stolen song isn't really mine. I'll write my own song. And I'll put the seed right back.` },
+    ],
+    ending: `Wolfgang climbs back up the tallest tree and returns the Singing Seed just as the rain begins. Its gentle song floats over the whole rainforest, and Wolfgang plays along on a little keyboard. But in the wet, sticky branches, Felix finds something else: another zero card, and long, curly marks on the bark, as if many arms had held on at once.`,
+    rNote: 'I can hold ten things at once. Can you? — Z', rClue: 'Z has many, many arms.',
+  },
+
+  /* ---------------- CASE 17 ---------------- */
+  {
+    id: 'space', season: 3, title: 'The Space Camp Caper', icon: '🚀', theme: 'space',
+    treasure: 'the Moon Rock', culprit: 'gloria',
+    intro: `At Starlight Space Camp, kids train to be astronauts. They float in a giant swimming pool, try on space helmets, and launch model rockets. The camp's greatest treasure is a real Moon Rock, a little gray stone that came all the way from the moon. But this morning its case was empty, and the glass was smudged with dark ink that glowed in the dark! Felix flicks off the lights to look closer. "Glowing ink? Detective, our zero-card friend is getting bolder."`,
+    scenes: [
+      { op: 'mul', title: 'The Launch Pads', place: 'The Rocket Field',
+        witness: { e: '🐀', name: 'Rocket the Rat', voice: { pitch: 1.4, rate: 1.25 },
+          quote: `They call me Rocket because I'm fast. But those rockets were faster! WHOOSH!` },
+        story: `Rocket the Rat is in charge of the model rocket launch pads. Last night, someone set off rockets from every launch pad, the same number from each one! WHOOSH! While everyone ran outside to watch, the Moon Rock disappeared. Every suspect bought model rockets at the camp store this week, and the store keeps a list. "Count up all those rockets," says Felix, "and see who bought exactly that many."`,
+        evidence: { e: '🎆', label: 'used-up model rockets' }, token: '🚀',
+        problem: 'The thief launched rockets from {a} launch pads, with {b} rockets on each pad. How many rockets did they launch?',
+        cat: { e: '🎆', label: 'Model rockets bought' }, out: ['humphrey'] },
+      { op: 'add', title: 'The Training Pool', place: 'The Astronaut Pool',
+        witness: { e: '🦈', name: 'Finn the Shark', voice: { pitch: 0.9, rate: 1.0 },
+          quote: `Don't worry, I'm a very friendly shark. I only chomp on seaweed sandwiches!` },
+        story: `Finn the Shark coaches the astronaut training pool, where kids practice moving in heavy space suits. Last night, Finn saw someone swim across the pool, climb out the far side, and run! The pool has two lanes, and the thief swam one lane and then the other. Every suspect took the camp swim test this week, and Finn wrote down how far each one swam. "Add up both lanes," says Felix, "and we'll match it to Finn's notes."`,
+        evidence: { e: '👣', label: 'wet footprints' }, token: '💧',
+        problem: 'The thief swam {a} centimeters in the first lane and {b} centimeters in the second lane. How far did they swim altogether?',
+        cat: { e: '🏊', label: 'Swim test (cm)' }, out: ['wolfgang'] },
+      { op: 'div', title: 'The Space Snacks', place: 'The Mess Hall',
+        witness: { e: '👽', name: 'Zib the Alien', voice: { pitch: 1.35, rate: 1.05 },
+          quote: `Greetings, Earthling! I counted the snacks with all of my eyes. Very easy.` },
+        story: `Zib the Alien came to Space Camp from very far away, on a student trip. Zib loves Earth snacks! Last night, Zib saw the thief pack freeze-dried space snacks into pouches, the same number in each pouch, as if they were planning a long trip. Each suspect packed snack pouches at camp this week, and each one has a favorite number of snacks per pouch. "Find out how many snacks went in each pouch," says Felix, "and we'll know whose packing this is."`,
+        evidence: { e: '🥡', label: 'space snack pouches' }, token: '🍪',
+        problem: 'The thief packed {N} space snacks into {d} pouches, the same number in each pouch. How many snacks went in each pouch?',
+        cat: { e: '🥡', label: 'Snacks per pouch' }, out: [] },
+      { op: 'sub', title: 'The Helmet Lockers', place: 'The Suit-Up Room',
+        witness: { e: '🕷️', name: 'Webby the Spider', voice: { pitch: 1.2, rate: 0.95 },
+          quote: `I spin, I watch, I remember. Read my web, Detective!` },
+        story: `Webby the Spider lives in the corner above the helmet lockers, where every camper has a numbered locker. Last night, Webby saw the thief stuff something gray and lumpy into one of them! Spiders can't write numbers, but Webby is clever: she spun a puzzle into her web so she wouldn't forget. "Solve Webby's web puzzle," says Felix, "and we'll open the right locker."`,
+        evidence: { e: '🕸️', label: 'a web with a message' }, token: '🔢',
+        problem: `Webby's web says: "Begin at {a}, then subtract {b}." What is the locker number?`,
+        cat: { e: '🔢', label: 'Helmet locker' }, out: ['clementine'] },
+    ],
+    alibis: {
+      gloria: `WHAT? I was... lifting rocks. Regular rocks! Earth rocks! For exercise!`,
+      humphrey: `Ah, space! It reminds me of the night I counted the stars... I was in the planetarium, napping. I mean, studying.`,
+      wolfgang: `I was howling at the moon! Aaa-wooo! It's what wolves do!`,
+      clementine: `Mooo... I was making Astronaut Ice Cream. It's freeze-dried. It crunches.`,
+    },
+    confession: [
+      { art: '🦍🌕', line: `WHAT? Okay... it's me again. A card said nobody in history had ever lifted a piece of the moon.` },
+      { art: '🪨💪', line: `I wanted to be the first! So I took the Moon Rock and did one big lift. It weighs about as much as a muffin.` },
+      { art: '🦍😳', line: `I'm sorry, Space Camp. I'll lift the camp bus for the kids instead. That's MUCH more impressive.` },
+    ],
+    ending: `Gloria returns the Moon Rock and keeps her promise: she lifts the whole camp bus while the campers cheer. But the glowing ink is still a mystery. When Felix switches off the lights, a message glows on the wall beside a big zero, written in shining, inky letters.`,
+    rNote: 'My ink glows, just like the stars. — Z', rClue: 'Z writes with ink that glows in the dark.',
+  },
+
+  /* ---------------- CASE 18 ---------------- */
+  {
+    id: 'castle', season: 3, title: 'The Midnight Masquerade', icon: '🎭', theme: 'castle',
+    treasure: 'the Crystal Hourglass', culprit: 'humphrey', finale: true, mastermind: 'zero', finaleBadge: 'z_unmasked',
+    intro: `On top of Starlight Hill stands Starlight Castle, and tonight it is holding a Midnight Masquerade, a fancy party where everyone wears a mask. The castle's treasure, the Crystal Hourglass, sparkles on a golden stand. When its sand runs out at midnight, the whole town makes a wish. But at a quarter to midnight there was a POOF of dark smoke, and the hourglass vanished! A card fluttered down: "My greatest trick of all. — Z". Felix straightens his mask. "Everybody here is in disguise, Detective. Let's find out who is really who!"`,
+    scenes: [
+      { op: 'sub', title: 'The Coin Purse', place: 'The Mask Shop',
+        witness: { e: '👻', name: 'Boo the Friendly Ghost', voice: { pitch: 1.1, rate: 0.9 },
+          quote: `Boooo! Oh, sorry, that's just how I say hello. I saw everything, and I wasn't scared one bit!` },
+        story: `Boo the Friendly Ghost has haunted Starlight Castle for a very long time, and he loves a good party. Before the masquerade, he floated past the mask shop in the great hall. He saw one guest buy the very last mask, the sparkliest one in the shop, and then head straight for the hourglass. At the castle door, Felix counted the coins in every guest's purse. "Work out how much the thief has left," says Felix, "and we'll match the purse."`,
+        evidence: { e: '👛', label: 'a dropped coin purse' }, token: '🪙',
+        problem: `The thief's purse had {a} cents. They paid {b} cents for the sparkliest mask. How many cents are left in the purse?`,
+        cat: { e: '🪙', label: 'Purse (cents left)' }, out: ['gloria'] },
+      { op: 'div', title: 'The Glowing Dance Floor', place: 'The Ballroom',
+        witness: { e: '🧚', name: 'Twinkle the Fairy', voice: { pitch: 1.7, rate: 1.1 },
+          quote: `I sprinkle sparkle, but I don't like sneaky sparkle! That was a trick!` },
+        story: `Twinkle the Fairy is in charge of the castle's sparkle. Right before the hourglass vanished, someone handed out glow sticks to the dancers, the same number to each one, and the whole ballroom flashed and glowed. Everyone looked at the twinkly dance floor, and nobody watched the hourglass! Each suspect handed out glow sticks at the party, and Twinkle noticed that each one gave a different number to every dancer. "Find out how many each dancer got," says Felix.`,
+        evidence: { e: '✨', label: 'scattered glow sticks' }, token: '✨',
+        problem: 'The thief shared {N} glow sticks among {d} dancers, the same number for each dancer. How many glow sticks did each dancer get?',
+        cat: { e: '✨', label: 'Glow sticks per dancer' }, out: [] },
+      { op: 'add', title: 'The Secret Passage', place: 'Behind the Bookcase',
+        witness: { e: '🦖', name: 'Rex the Royal Guard', voice: { pitch: 0.55, rate: 0.9 },
+          quote: `ROAR! I mean, good evening. I can't open the bookcase very well with these little arms, but I saw everything.` },
+        story: `Rex the Royal Guard is a very tall dinosaur with very short arms, and he guards the secret passages of Starlight Castle. Behind a bookcase, he found a candle still dripping wax. The thief had escaped through two secret tunnels! Earlier this evening, every suspect took the secret passage tour, and Rex measured how far each one walked. "Add up both tunnels," says Felix, "and see whose walk matches."`,
+        evidence: { e: '🕯️', label: 'a dripping candle' }, token: '🕯️',
+        problem: 'The thief walked {a} centimeters through the first tunnel and {b} centimeters through the second. How far did they walk altogether?',
+        cat: { e: '🕯️', label: 'Passage walk (cm)' }, out: ['wolfgang'] },
+      { op: 'mul', title: 'The Costume Stuffing', place: 'The Costume Closet',
+        witness: { e: '🧙', name: 'Wizzle the Court Wizard', voice: { pitch: 0.8, rate: 0.95 },
+          quote: `By my beard! Someone stuffed a costume very, very full. Lumpy in all the wrong places!` },
+        story: `Wizzle the Court Wizard keeps the castle's costume closet tidy. Tonight he found several boxes of fluffy costume stuffing completely empty, with the same number of cotton puffs missing from each box! Someone needed lots of stuffing to puff up a costume. Each suspect bought costume stuffing for the masquerade, and Wizzle wrote down every order. "Count the missing puffs," Felix says slowly, "and I think we'll find out who isn't who they seem."`,
+        evidence: { e: '📦', label: 'empty boxes of stuffing' }, token: '☁️',
+        problem: 'The thief emptied {a} boxes of stuffing. Each box had {b} cotton puffs. How many puffs did they use?',
+        cat: { e: '☁️', label: 'Costume stuffing bought' }, out: ['clementine'] },
+    ],
+    alibis: {
+      gloria: `WHAT? I was dancing! The Gorilla Shuffle! Everybody loved it.`,
+      humphrey: `Ah... yes. It reminds me of... of... a squirt. I mean, a SPORT. I was playing a sport. In the sea. I mean, the desert!`,
+      wolfgang: `I was playing the castle piano! Aaa-wooo!`,
+      clementine: `Mooo... I was serving midnight ice cream sundaes.`,
+    },
+    unmask: {
+      art: '🐫➡️🦑',
+      line: `Felix gives a gentle poke to Humphrey's lumpy hump... and out pops a long, wiggly arm! Then another, and another! It's not Humphrey at all. It's a squid in a camel costume, wearing a magician's cape!`,
+      note: `The real Humphrey was in the castle library all evening, reading a very long story to some very sleepy bats. He is VERY surprised.`,
+    },
+    confession: [
+      { art: '🦑🎩', line: `Ta-da! You found me! I am the Great Zero, magician of the deep sea, and I can vanish in a cloud of ink!` },
+      { art: '🦑🃏', line: `But my magic shows always flopped. The cards fell, the bunny wouldn't come out of the hat, and everyone laughed.` },
+      { art: '🦑✨', line: `So I planned the greatest vanishing act ever: make the town's treasures disappear! I'm sorry. I only wanted people to clap for me.` },
+    ],
+    ending: `The Great Zero gives back the Crystal Hourglass just before midnight, and the whole town makes its wish. Then Felix has an idea. The Magic Festival needs a brand new act! Now every spring, the Great Zero performs the Glow-Ink Show, painting shining pictures in the air, and the whole town claps and cheers. Professor Remainder and Mister Mimic sit in the front row. And you, Detective, receive the Diamond Wand of Starlight Town.`,
+    rNote: 'Thank you for watching my last trick. Clap, clap! — Z', rClue: 'Z is the Great Zero, a squid magician!',
+  },
+);
+
+SEASONS.push({ n: 3, title: 'The Vanishing Act', who: 'Z', suspects: ['gloria', 'humphrey', 'wolfgang', 'clementine'], finale: 17,
+  boardIntro: 'Cards with a big zero, signed <b>Z</b>, keep turning up. Close cases to pin them here and figure out who Z is.',
+  boardSolved: '🦑 Mystery solved! Z is <b>the Great Zero</b>, star of the Glow-Ink Show at the Magic Festival.',
+  award: 'Diamond Wand of Starlight Town', seal: '💎', villain: 'the Great Zero' });
+
+BADGES.push({ id: 'z_unmasked', e: '🦑', name: 'Zero Hero', desc: 'Reveal who Z really is.' });
+BADGES.find(b => b.id === 'all_cases').desc = 'Close every case in all three seasons.';
+RANKS.push({ min: 1900, name: 'Legend of Three Seasons', e: '🌠' });
+SHOP.pets.push({ id: 'minisquid', e: '🦑', name: 'Mini Zero', price: 0, reward: 'z_unmasked', isNew: true });
+
+/* voice roles for the new characters */
+['gloria', 'humphrey', 'wolfgang', 'clementine'].forEach(id => { SUSPECTS[id].voice.role = id; });
+ZERO.voice.role = 'zero';
+CASES.filter(c => c.season === 3).forEach(c => c.scenes.forEach(s => { s.witness.voice.role = 'w:' + s.witness.name; }));
+
+/* ============================================================
    Problem generator, decoys, mistake diagnosis (pure functions)
    ============================================================ */
 
@@ -1971,7 +2325,8 @@ function englishVoices() {
   catch (e) { return []; }
 }
 const CAST_ROLES = [['felix', 'm', null], ['barnaby', 'm', null], ['penelope', 'f', /GB|IE|AU|NZ|ZA/i], ['viktor', 'm', null], ['maxima', 'f', /GB|IE|AU|NZ|ZA/i], ['remainder', 'm', /GB|AU|IE/i],
-  ['florence', 'f', /GB|IE|AU|NZ|ZA/i], ['gus', 'm', /AU|US/i], ['bertie', 'm', null], ['sasha', 'f', null], ['mimic', 'm', /GB|AU|IE/i]];
+  ['florence', 'f', /GB|IE|AU|NZ|ZA/i], ['gus', 'm', /AU|US/i], ['bertie', 'm', null], ['sasha', 'f', null], ['mimic', 'm', /GB|AU|IE/i],
+  ['gloria', 'f', null], ['humphrey', 'm', /GB|AU|IE/i], ['wolfgang', 'm', null], ['clementine', 'f', /US|IE/i], ['zero', 'f', /GB|AU|IE/i]];
 let CAST = null;
 function castVoices(list) {
   const ranked = list || englishVoices();
@@ -2761,7 +3116,9 @@ function seasonHTML(se) {
     </section></section>`;
 }
 function mapHTML() {
-  const order = seasonDone(1) ? [SEASONS[1], SEASONS[0]] : SEASONS; // the season in progress comes first
+  // the season in progress comes first, then the rest newest-first
+  const cur = SEASONS.find(se => !seasonDone(se.n)) || SEASONS[SEASONS.length - 1];
+  const order = [cur, ...SEASONS.filter(se => se !== cur).reverse()];
   return `<section class="hero">
       <div class="hero-av">${characterSVG({ size: 118 })}${sidekickHTML()}</div>
       <div class="hero-info"><div class="eyebrow">Agency ID card</div><h1 class="display hero-name">Detective ${esc(S.profile.name)}</h1>${rankBlockHTML()}</div>
@@ -3267,7 +3624,7 @@ const ACTIONS = {
   equip: (a) => equip(a),
   gearTap: () => { if (ui.holdDone) { ui.holdDone = false; return; } toast('Grown-ups: press and hold ⚙️ for 2 seconds.'); },
   testVoice: () => speak('Behind the museum is a quiet garden with a lily pond. A path of flat stepping stones crosses the water. Somebody ran across them last night, in a big hurry!', NARRATOR),
-  testCast: () => speakAll([["Hello, Detective! I'm Inspector Felix.", FELIX.voice], ...SEASONS[S.cases[6].status === 'locked' ? 0 : 1].suspects.map(id => [SUSPECTS[id].catch, SUSPECTS[id].voice])]),
+  testCast: () => speakAll([["Hello, Detective! I'm Inspector Felix.", FELIX.voice], ...[...SEASONS].reverse().find(se => S.cases[CASES.findIndex(c => c.season === se.n)].status !== 'locked').suspects.map(id => [SUSPECTS[id].catch, SUSPECTS[id].voice])]),
   resetAsk: () => { $('#resetConfirm').hidden = false; },
   resetCancel: () => { $('#resetConfirm').hidden = true; },
   resetDo: () => {
