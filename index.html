@@ -337,6 +337,34 @@ select.text-input { font-size: 17px; appearance: auto; }
 .cracked-ans b { color: #fff; }
 .stars-pop { font-family: var(--f-display); font-size: 28px; color: var(--brass); animation: popIn .5s ease-out 1.1s both; }
 
+/* equation builder */
+.eq-builder { max-width: 620px; background: var(--paper); color: var(--ink); border-radius: 16px; padding: 16px; box-shadow: var(--shadow); display: grid; gap: 12px; color-scheme: light; border: 3px solid var(--brass); }
+.eq-builder.done { border-color: var(--clue); gap: 6px; }
+.eq-instr { margin: 0; font-size: 17px; }
+.eq-row { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 6px 0; }
+.eq-box { min-width: 86px; height: 64px; padding: 0 10px; border-radius: 12px; display: inline-grid; place-items: center; font-family: var(--f-display); font-size: 30px; letter-spacing: .02em; border: 3px dashed rgba(31,42,68,.35); background: #fff; color: var(--ink); cursor: pointer; }
+.eq-box.filled { border-style: solid; border-color: var(--brass); background: #fff7e0; }
+.eq-box.ans { border-style: solid; border-color: rgba(31,42,68,.2); background: var(--paper-2); cursor: default; color: var(--muted-ink); }
+.eq-op { width: 56px; height: 56px; border-radius: 50%; display: inline-grid; place-items: center; font-family: var(--f-display); font-size: 32px; border: 3px dashed rgba(31,42,68,.35); color: var(--ink); }
+.eq-op.filled { border-style: solid; border-color: var(--stamp); color: var(--stamp); background: #fff; }
+.eq-eq { font-family: var(--f-display); font-size: 32px; }
+.eq-pick { display: grid; gap: 6px; }
+.eq-label { font-family: var(--f-type); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-ink); }
+.eq-chips, .eq-signs { display: flex; flex-wrap: wrap; gap: 10px; }
+.eq-chip { min-height: 56px; min-width: 96px; padding: 6px 16px; border-radius: 14px; border: 0; background: var(--brass); color: var(--ink); font-family: var(--f-display); font-size: 28px; cursor: pointer; box-shadow: inset 0 -4px 0 rgba(0,0,0,.2); }
+.eq-chip[disabled] { opacity: .3; cursor: default; }
+.eq-sign { width: 64px; height: 64px; border-radius: 16px; border: 3px solid rgba(31,42,68,.2); background: #fff; color: var(--ink); font-family: var(--f-display); font-size: 34px; cursor: pointer; }
+.eq-sign.on { border-color: var(--stamp); color: var(--stamp); background: #ffeceb; }
+.eq-sign.glow { animation: signGlow 1.2s ease-in-out infinite; border-color: var(--clue); }
+@keyframes signGlow { 50% { box-shadow: 0 0 0 7px rgba(47,158,143,.35); } }
+@media (max-width: 520px) { .eq-row { gap: 5px; flex-wrap: nowrap; } .eq-box { min-width: 60px; height: 54px; font-size: 22px; padding: 0 6px; } .eq-op { width: 44px; height: 44px; font-size: 26px; } .eq-eq { font-size: 26px; } .eq-chip { min-width: 80px; font-size: 24px; } .eq-sign { width: 58px; height: 58px; } }
+.eq-builder .coach { color: var(--ink); background: var(--paper-2); }
+.eq-builder .coach.miss { background: #fde4e2; }
+.eq-yes { margin: 0; font-weight: 700; color: var(--clue-ink); text-align: center; }
+.eq-row.big .eq-box { cursor: default; }
+.problem b.num { color: var(--stamp); }
+.problem mark { background: #ffe58a; color: inherit; border-radius: 4px; padding: 0 2px; }
+#cipherRoot:not(:empty), #eqRoot:not(:empty) { margin-bottom: 4px; }
 /* models */
 .model { max-width: 620px; background: var(--desk-2); border-radius: 16px; padding: 14px; margin-top: 14px; border: 1px solid rgba(255,255,255,.08); display: grid; gap: 10px; }
 .model-head { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
@@ -1795,7 +1823,8 @@ SEASONS.push({ n: 3, title: 'The Vanishing Act', who: 'Z', suspects: ['gloria', 
   boardSolved: '🦑 Mystery solved! Z is <b>the Great Zero</b>, star of the Glow-Ink Show at the Magic Festival.',
   award: 'Diamond Wand of Starlight Town', seal: '💎', villain: 'the Great Zero' });
 
-BADGES.push({ id: 'z_unmasked', e: '🦑', name: 'Zero Hero', desc: 'Reveal who Z really is.' });
+BADGES.push({ id: 'z_unmasked', e: '🦑', name: 'Zero Hero', desc: 'Reveal who Z really is.' },
+  { id: 'equation_ace', e: '🧮', name: 'Equation Builder', desc: 'Build 10 equations right on the first try.' });
 BADGES.find(b => b.id === 'all_cases').desc = 'Close every case in all three seasons.';
 RANKS.push({ min: 1900, name: 'Legend of Three Seasons', e: '🌠' });
 SHOP.pets.push({ id: 'minisquid', e: '🦑', name: 'Mini Zero', price: 0, reward: 'z_unmasked', isNew: true });
@@ -2525,6 +2554,7 @@ function checkStatBadges() {
   if (st.casesClosed >= 3) earnBadge('triple');
   if (st.purchases >= 3) earnBadge('shopper');
   if (S.cases.every(c => c.status === 'closed')) earnBadge('all_cases');
+  if ((st.eqFirst || 0) >= 10) earnBadge('equation_ace');
   if (st.labSolved >= 20) earnBadge('lab_20');
 }
 
@@ -2891,6 +2921,107 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* ============================================================
+   Step 1 before every safe: build the equation from the word problem.
+   The kid places the two numbers and picks the sign; − and ÷ need the
+   right order. Mistakes coach (and highlight clue words) but cost no stars.
+   ============================================================ */
+const CLUE_WORDS = {
+  add: /\b(altogether|in all|more|total|together|add them)\b/gi,
+  sub: /\b(take away|taken away|left|less than|difference|subtract|minus|went down by|down by|turned back|count back|before the end|torn out|used|spent|paid|took)\b/gi,
+  mul: /\b(each|every)\b/gi,
+  div: /\b(evenly|equally|same number|shared|share|each)\b/gi,
+};
+const OP_MEANING = {
+  add: 'Adding puts two amounts together into one bigger amount.',
+  sub: 'Subtracting starts with an amount and takes some away, or finds the difference.',
+  mul: 'Multiplying is for equal groups: a number of groups with the same amount in each.',
+  div: 'Dividing shares a total out equally, the same amount in each group.',
+};
+const OP_CLUE_HINT = {
+  add: 'Two amounts are being put together. Look for words like "more", "in all" or "altogether".',
+  sub: 'Something is taken away, used up, or compared. Look for words like "left", "take away" or "difference".',
+  mul: 'There are equal groups: a number of groups, with the same amount in each one. Look for "each".',
+  div: 'A total is shared out evenly into groups. Look for "evenly" or "the same number in each".',
+};
+
+/* clue text with the numbers in bold, and (optionally) the clue words for one operation marked */
+function clueHTML(text, markOp) {
+  let h = esc(text);
+  if (markOp) h = h.replace(CLUE_WORDS[markOp], m => `<mark>${m}</mark>`);
+  return h.replace(/\d[\d,]*/g, m => `<b class="num">${m}</b>`);
+}
+function eqNumbers(p) { return p.op === 'div' ? [p.N, p.d] : [p.a, p.b]; }
+
+function createEqBuilder(root, p, opts) {
+  const nums = eqNumbers(p);
+  const chips = shuffle(makeRng('eq', p.ans, nums.join('-')), [0, 1]); // which number shows first
+  const st = { slots: [null, null], op: null, misses: 0, coach: null, done: false };
+  function coach(kind, msg) { st.coach = { kind, msg }; }
+
+  function render() {
+    if (!root.isConnected) return;
+    if (st.done) {
+      root.innerHTML = `<div class="eq-builder done"><div class="eyebrow">Step 1 · Equation</div>
+        <div class="eq-row big"><span class="eq-box filled">${fmt(nums[0])}</span><span class="eq-op filled">${OP_SYMBOL[p.op]}</span><span class="eq-box filled">${fmt(nums[1])}</span><span class="eq-eq">=</span><span class="eq-box ans">?</span></div>
+        <p class="eq-yes">✅ That's the equation! Now crack the safe to find the answer.</p></div>`;
+      return;
+    }
+    const box = (k) => st.slots[k] == null
+      ? `<button type="button" class="eq-box empty" data-e="slot" data-k="${k}" aria-label="Empty number box">?</button>`
+      : `<button type="button" class="eq-box filled" data-e="slot" data-k="${k}" aria-label="${fmt(nums[st.slots[k]])}, tap to remove">${fmt(nums[st.slots[k]])}</button>`;
+    const opBox = st.op ? `<span class="eq-op filled">${OP_SYMBOL[st.op]}</span>` : `<span class="eq-op empty">?</span>`;
+    const chipBtns = chips.map(i => `<button type="button" class="eq-chip" data-e="num" data-i="${i}" ${st.slots.includes(i) ? 'disabled' : ''}>${fmt(nums[i])}</button>`).join('');
+    const glow = st.misses >= 2 ? p.op : null;
+    const opBtns = ['add', 'sub', 'mul', 'div'].map(o => `<button type="button" class="eq-sign ${st.op === o ? 'on' : ''} ${glow === o ? 'glow' : ''}" data-e="op" data-o="${o}" aria-pressed="${st.op === o}" aria-label="${OP_NAME[o]}">${OP_SYMBOL[o]}</button>`).join('');
+    const instr = 'Step one: build the equation. Tap the numbers from the clue to put them in the boxes, and pick the sign.';
+    root.innerHTML = `<div class="eq-builder">
+      <div class="eyebrow">Step 1 · Build the equation</div>
+      <p class="eq-instr">Which sign does this clue need? Tap the numbers from the clue into the boxes, then pick the sign. ${sayBtn(instr, FELIX.voice, 'Read the instructions')}</p>
+      <div class="eq-row">${box(0)}${opBox}${box(1)}<span class="eq-eq">=</span><span class="eq-box ans">?</span></div>
+      <div class="eq-pick"><div class="eq-label">Numbers</div><div class="eq-chips">${chipBtns}</div></div>
+      <div class="eq-pick"><div class="eq-label">Sign</div><div class="eq-signs">${opBtns}</div></div>
+      ${st.coach ? `<div class="coach ${st.coach.kind}" aria-live="polite"><span class="coach-e">🦊</span><span>${st.coach.msg}</span>${sayBtn(st.coach.msg.replace(/<[^>]+>/g, ''), FELIX.voice, 'Read Felix\'s tip')}</div>` : ''}
+      <div class="stage-actions"><button type="button" class="btn primary big" data-e="check">Check my equation ✔</button></div>
+    </div>`;
+  }
+
+  function check() {
+    if (st.slots.includes(null) || !st.op) {
+      coach('remind', st.op ? 'Put both numbers in the boxes first.' : 'Pick a sign: plus, minus, times or divided by.');
+      return render();
+    }
+    const order = st.slots.join('');
+    const commutes = p.op === 'add' || p.op === 'mul';
+    if (st.op === p.op && (commutes || order === '01')) {
+      st.done = true; SFX.chime();
+      const firstTry = st.misses === 0;
+      if (opts.onDone) opts.onDone({ firstTry, misses: st.misses });
+      return render();
+    }
+    st.misses++; SFX.boop();
+    if (st.op === p.op) {
+      const start = p.op === 'div' ? 'the total that is being shared' : 'the amount we start with';
+      coach('miss', `The sign is right! But which number comes first? For ${OP_NAME[p.op].toLowerCase()}, start with ${start}: <b>${fmt(nums[0])}</b>.`);
+    } else {
+      coach('miss', `Hmm, not ${OP_SYMBOL[st.op]}. ${OP_MEANING[st.op]} Read the clue again: ${OP_CLUE_HINT[p.op]}`);
+      if (opts.onMiss) opts.onMiss(p.op);
+    }
+    render();
+  }
+
+  root.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-e]'); if (!b || !root.contains(b) || b.disabled || st.done) return;
+    const k = b.dataset.e;
+    if (k === 'num') { const i = Number(b.dataset.i); const at = st.slots.indexOf(null); if (at >= 0) { st.slots[at] = i; SFX.click(); } }
+    else if (k === 'slot') { st.slots[Number(b.dataset.k)] = null; SFX.click(); }
+    else if (k === 'op') { st.op = b.dataset.o; SFX.tumbler(); }
+    else if (k === 'check') return check();
+    st.coach = null; render();
+  });
+  render();
+}
+
+/* ============================================================
    Flashlight scanner: a dark scene, a lens that follows the pointer,
    one required evidence spot and bonus spots.
    ============================================================ */
@@ -3209,7 +3340,7 @@ function openCase(i) {
 /* ---------------- case screen ---------------- */
 function caseHTML() {
   const { i, c, run } = curCase();
-  const dots = c.scenes.map((sc, s) => `<span class="sdot ${run.solved[s] ? 'done' : ''} ${s === run.scene && run.stage !== 'arrest' ? 'cur' : ''}" title="Scene ${s + 1}: ${OP_NAME[sc.op]}">${run.solved[s] ? '✓' : OP_SYMBOL[sc.op]}</span>`).join('');
+  const dots = c.scenes.map((sc, s) => `<span class="sdot ${run.solved[s] ? 'done' : ''} ${s === run.scene && run.stage !== 'arrest' ? 'cur' : ''}" title="Scene ${s + 1}">${run.solved[s] ? '✓' : s + 1}</span>`).join('');
   return `<div class="case-head">
       <button type="button" class="btn ghost back" data-action="go" data-arg="map" aria-label="Back to case map">◀ <span class="hide-sm">Cases</span></button>
       <div class="case-title"><span class="case-icon">${c.icon}</span><div><div class="eyebrow on-desk">Case ${i + 1}</div><h1>${esc(c.title)}</h1></div></div>
@@ -3274,14 +3405,35 @@ function renderStage() {
   if (run.stage === 'cipher') {
     const p = ensureProblem(i, s);
     const text = fillText(sc.problem, p);
-    st.innerHTML = `<div class="paper clue-card"><div class="eyebrow">The clue · ${sc.cat.e} ${esc(sc.cat.label)}</div><p class="problem">${esc(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
-      <div id="cipherRoot"></div><div id="afterSolve"></div>`;
+    st.innerHTML = `<div class="paper clue-card"><div class="eyebrow">The clue · ${sc.cat.e} ${esc(sc.cat.label)}</div><p class="problem" id="clueText">${clueHTML(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
+      <div id="eqRoot"></div><div id="cipherRoot"></div><div id="afterSolve"></div>`;
     if (S.settings.autoRead) speak(text, NARRATOR);
     if (run.solved[s]) {
       $('#cipherRoot').innerHTML = `<div class="safe open"><div class="safe-inside"><div class="stamp cracked">CRACKED!</div><div class="cracked-ans">${equationText(p)} = <b>${fmt(p.ans)}</b></div><div class="stars-pop">+${run.sceneStars[s]} ⭐</div></div></div>`;
       $('#afterSolve').innerHTML = afterSolveHTML(0);
       return;
     }
+    if (!(run.eqDone && run.eqDone[s])) {
+      createEqBuilder($('#eqRoot'), p, {
+        onMiss(op) { const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text, op); },
+        onDone(r) {
+          run.eqDone = run.eqDone || [false, false, false, false]; run.eqDone[s] = true; equationStat(r); save();
+          const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text);
+          mountCaseSafe(i, s, p, sc, run);
+          setTimeout(() => { const c = $('#cipherRoot'); if (c) c.scrollIntoView({ block: 'start', behavior: REDUCED() ? 'auto' : 'smooth' }); }, 60);
+        },
+      });
+      return;
+    }
+    mountCaseSafe(i, s, p, sc, run);
+    return;
+  }
+  if (run.stage === 'check') { st.innerHTML = checkHTML(); return; }
+  if (run.stage === 'arrest') { st.innerHTML = arrestHTML(); return; }
+  st.innerHTML = `<div class="paper"><p>This case is closed.</p><button type="button" class="btn primary" data-action="go" data-arg="map">Back to cases</button></div>`;
+}
+function equationStat(r) { S.stats.eqBuilt = (S.stats.eqBuilt || 0) + 1; if (r.firstTry) S.stats.eqFirst = (S.stats.eqFirst || 0) + 1; checkStatBadges(); }
+function mountCaseSafe(i, s, p, sc, run) {
     createCipher($('#cipherRoot'), p, {
       seedKey: `${run.seed}-${s}`, tokenEmoji: sc.token,
       onSolved(res) {
@@ -3294,11 +3446,6 @@ function renderStage() {
         return stars;
       },
     });
-    return;
-  }
-  if (run.stage === 'check') { st.innerHTML = checkHTML(); return; }
-  if (run.stage === 'arrest') { st.innerHTML = arrestHTML(); return; }
-  st.innerHTML = `<div class="paper"><p>This case is closed.</p><button type="button" class="btn primary" data-action="go" data-arg="map">Back to cases</button></div>`;
 }
 function updateCaseHead() {
   const { c, run } = curCase();
@@ -3310,7 +3457,7 @@ function foundPanelHTML() {
   const { i, c, run } = curCase(); const sc = c.scenes[run.scene];
   const p = ensureProblem(i, run.scene); const text = fillText(sc.problem, p);
   return `<div class="found paper"><div class="found-e" aria-hidden="true">${sc.evidence.e}</div>
-    <div class="found-body"><div class="eyebrow">Evidence found</div><p>You found ${esc(sc.evidence.label)}! There's a clue on it:</p><p class="problem">${esc(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
+    <div class="found-body"><div class="eyebrow">Evidence found</div><p>You found ${esc(sc.evidence.label)}! There's a clue on it:</p><p class="problem">${clueHTML(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
     <button type="button" class="btn primary big" data-action="toStage" data-arg="cipher">Crack the safe 🔐</button></div>`;
 }
 function afterSolveHTML(misses) {
@@ -3479,10 +3626,22 @@ function labHTML() {
   return `<section class="lab-head"><div><div class="eyebrow on-desk">Agency training lab</div><h1 class="display">Training Lab 🧪</h1><p class="on-desk-muted">Practice any skill. Every safe you crack earns stars. Hints are free in the Lab.</p></div></section>
     <div class="chip-row" role="group" aria-label="Operation">${ops.map(([id, l]) => `<button type="button" class="chip ${S.lab.op === id ? 'on' : ''}" data-action="labOp" data-arg="${id}" aria-pressed="${S.lab.op === id}">${l}</button>`).join('')}</div>
     <div class="chip-row" role="group" aria-label="Level">${[1, 2, 3].map(l => `<button type="button" class="chip ${S.lab.level === l ? 'on' : ''}" data-action="labLevel" data-arg="${l}" aria-pressed="${S.lab.level === l}">Level ${l}</button>`).join('')}</div>
-    <div class="lab-grid"><div><div class="paper clue-card"><div class="eyebrow">Training puzzle · ${OP_NAME[p.op]}</div><p class="problem">${tpl.e} ${esc(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the puzzle')}<span class="muted tiny">Read it to me</span></div></div>
-    <div id="cipherRoot"></div><div id="afterSolve"></div></div></div>`;
+    <div class="lab-grid"><div><div class="paper clue-card"><div class="eyebrow">Training puzzle · Level ${p.level}</div><p class="problem">${tpl.e} <span id="clueText">${clueHTML(text)}</span></p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the puzzle')}<span class="muted tiny">Read it to me</span></div></div>
+    <div id="eqRoot"></div><div id="cipherRoot"></div><div id="afterSolve"></div></div></div>`;
 }
 function mountLab() {
+  const { p, text } = ui.lab;
+  if (!ui.lab.eqDone) {
+    createEqBuilder($('#eqRoot'), p, {
+      onMiss(op) { const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text, op); },
+      onDone(r) { ui.lab.eqDone = true; equationStat(r); save(); const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text); mountLabSafe();
+        setTimeout(() => { const c = $('#cipherRoot'); if (c) c.scrollIntoView({ block: 'start', behavior: REDUCED() ? 'auto' : 'smooth' }); }, 60); },
+    });
+    return;
+  }
+  mountLabSafe();
+}
+function mountLabSafe() {
   const { p } = ui.lab;
   createCipher($('#cipherRoot'), p, {
     lab: true, seedKey: 'lab', tokenEmoji: LAB_TOKENS[p.op],
@@ -3580,7 +3739,7 @@ function treehouseHTML() {
   const cur = rankFor(S.starsEarned);
   const ladder = RANKS.map(r => `<li class="${r === cur ? 'cur' : S.starsEarned >= r.min ? 'past' : ''}"><span>${r.e}</span><b>${esc(r.name)}</b><small>${r.min} ⭐</small></li>`).join('');
   const st = S.stats;
-  const stats = [['Safes cracked', st.ciphersSolved], ['Cases closed', distinctClosed()], ['Best first-try streak', st.bestFirstTryStreak], ['Carry gears placed', st.carries], ['Borrows made', st.borrows], ['Crate models built', st.arrays], ['Fair shares dealt', st.deals], ['Bonus clues found', st.tokensFound], ['Lab puzzles solved', st.labSolved], ['Stars earned (all time)', S.starsEarned]];
+  const stats = [['Safes cracked', st.ciphersSolved], ['Cases closed', distinctClosed()], ['Best first-try streak', st.bestFirstTryStreak], ['Carry gears placed', st.carries], ['Borrows made', st.borrows], ['Crate models built', st.arrays], ['Fair shares dealt', st.deals], ['Bonus clues found', st.tokensFound], ['Lab puzzles solved', st.labSolved], ['Equations built first try', st.eqFirst || 0], ['Stars earned (all time)', S.starsEarned]];
   const certs = SEASONS.filter(se => seasonDone(se.n)).map(se => `<div class="certificate"><div class="eyebrow">Starlight Town · Official · Season ${se.n}</div><div class="seal" aria-hidden="true">${se.seal}</div><h2>${esc(se.award)}</h2><p>This certifies that <b>Detective ${esc(S.profile.name)}</b> solved all six mysteries of <b>${esc(se.title)}</b>, cracked every safe, and unmasked the sneaky <b>${esc(se.villain)}</b>.</p><p class="sig">Inspector Felix 🦊<br><small>Chief of the Starlight Detective Agency</small></p></div>`).join('');
   return `<section class="lab-head"><div><div class="eyebrow on-desk">Headquarters</div><h1 class="display">${esc(S.profile.name)}'s Treehouse</h1></div></section>
     ${S.owned.decor.length ? `<div class="th-tools">${ui.decorEdit ? '<span class="th-hint">✋ Drag things to move them</span><button type="button" class="btn small ghost" data-action="decorReset">Put everything back</button><button type="button" class="btn small primary" data-action="decorEdit">Done ✓</button>' : '<button type="button" class="btn small" data-action="decorEdit">✋ Move things around</button>'}</div>` : ''}
