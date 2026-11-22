@@ -445,12 +445,32 @@ select.text-input { font-size: 17px; appearance: auto; }
 .shop-preview { background: radial-gradient(circle at 50% 60%, var(--desk-3), var(--desk-2) 70%); border-radius: 24px; padding: 6px 14px 0; flex: none; }
 .shop-preview .char { display: block; }
 .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.tab { white-space: nowrap; }
 .tab { min-height: 44px; padding: 8px 14px; border-radius: 12px; border: 2px solid rgba(255,255,255,.18); background: transparent; color: var(--on-desk); font-weight: 700; cursor: pointer; }
 .tab.on { background: var(--manila); color: var(--ink); border-color: var(--manila); }
 .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: 12px; }
 .item { background: var(--paper); color: var(--ink); border-radius: 14px; padding: 14px 10px; display: grid; justify-items: center; align-content: start; gap: 8px; text-align: center; border: 3px solid transparent; }
 .item.worn { border-color: var(--clue); }
+.item .btn.ghost { color: var(--ink); }
 .item-e { font-size: 46px; line-height: 1.1; }
+.item { position: relative; }
+.item-try { display: grid; place-items: center; height: 84px; }
+.item-try .char .ch-body, .item-try .char .ch-eyes { animation: none; }
+.item-tag { position: absolute; top: 8px; left: 8px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--clue); color: #fff; border-radius: 6px; padding: 2px 6px; }
+.item-tag.reward { background: var(--stamp); }
+.item.is-reward { background: linear-gradient(170deg, #fff6dc, var(--paper)); border-color: rgba(217,164,65,.6); }
+.item-how { font-size: 12.5px; color: var(--muted-ink); line-height: 1.3; }
+.reward-waiting { background: var(--brass); color: var(--ink); font-weight: 700; border-radius: 10px; padding: 6px 12px; display: inline-block; margin: 4px 0 0; }
+.shop-preview, .hero-av { position: relative; }
+.sidekick { position: absolute; right: -6px; bottom: 2px; font-size: 40px; line-height: 1; filter: drop-shadow(0 3px 2px rgba(0,0,0,.35)); animation: petHop 2.6s ease-in-out infinite; }
+.hero-av .sidekick { font-size: 34px; right: -14px; }
+.th-pet { right: auto; left: 64%; bottom: 2%; font-size: 7cqw; z-index: 118; }
+@keyframes petHop { 0%, 70%, 100% { transform: translateY(0); } 80% { transform: translateY(-14%); } 90% { transform: translateY(0); } }
+.th-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-end; max-width: 980px; margin: 0 auto 10px; }
+.th-hint { color: var(--manila); font-weight: 700; margin-right: auto; }
+.treehouse.editing .decor { cursor: grab; outline: 2px dashed rgba(255,255,255,.75); outline-offset: 4px; border-radius: 8px; touch-action: none; }
+.treehouse.editing .decor.dragging { cursor: grabbing; outline-color: var(--brass); filter: drop-shadow(0 10px 8px rgba(0,0,0,.45)); }
+.treehouse.editing .decor .decor-e { animation: none; }
 .swatch { width: 54px; height: 54px; border-radius: 50%; box-shadow: inset 0 0 0 3px rgba(0,0,0,.15); }
 .lens-swatch { width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle, #d8eeff 0 54%, transparent 55%), var(--rim); display: grid; place-items: center; font-size: 16px; }
 /* treehouse room: everything is sized as a share of the room width (cqw), so items stay in proportion on any screen */
@@ -1365,6 +1385,73 @@ FELIX.voice.role = 'felix'; REMAINDER.voice.role = 'remainder'; MIMIC.voice.role
 CASES.forEach(c => c.scenes.forEach(s => { s.witness.voice.role = 'w:' + s.witness.name; }));
 
 /* ============================================================
+   Gadget Shop expansion: more hats, coats, magnifiers and decor,
+   two new categories (glasses, sidekicks), and reward items that
+   are earned with badges instead of stars.
+   ============================================================ */
+SHOP.hats.push(
+  { id: 'beanie', e: '🧶', name: 'Pom-Pom Beanie', price: 50, isNew: true },
+  { id: 'party', e: '🥳', name: 'Party Hat', price: 50, isNew: true },
+  { id: 'chef', e: '👨‍🍳', name: 'Chef Hat', price: 70, isNew: true },
+  { id: 'cowboy', e: '🤠', name: 'Cowboy Hat', price: 80, isNew: true },
+  { id: 'flowers', e: '🌼', name: 'Flower Crown', price: 90, isNew: true },
+  { id: 'pirate', e: '🏴‍☠️', name: 'Pirate Hat', price: 100, isNew: true },
+  { id: 'viking', e: '⚔️', name: 'Viking Helmet', price: 120, isNew: true },
+  { id: 'wizard', e: '🧙', name: 'Wizard Hat', price: 160, isNew: true },
+);
+SHOP.coats.push(
+  { id: 'sunshine', name: 'Sunshine Yellow', price: 40, css: '#f6c445', isNew: true },
+  { id: 'lava', name: 'Lava Red', price: 40, css: '#d9483b', isNew: true },
+  { id: 'polka', name: 'Polka Dots', price: 70, css: 'radial-gradient(circle, #fff 0 22%, transparent 24%) 0 0 / 14px 14px, #4fa3e0', isNew: true },
+  { id: 'candy', name: 'Candy Stripes', price: 70, css: 'repeating-linear-gradient(45deg, #ff7eb6 0 6px, #fff 6px 12px)', isNew: true },
+  { id: 'tiger', name: 'Tiger Stripes', price: 90, css: 'repeating-linear-gradient(60deg, #f39c32 0 8px, #2b2320 8px 11px)', isNew: true },
+  { id: 'galaxy', name: 'Galaxy', price: 140, css: 'radial-gradient(circle at 30% 30%, #fff 0 1.5px, transparent 2px), radial-gradient(circle at 70% 70%, #ffd0f0 0 1.5px, transparent 2px), linear-gradient(135deg, #2a1a5e, #7a2f9a 55%, #1f4fa0)', isNew: true },
+  { id: 'platinum', name: 'Platinum', price: 0, reward: 'all_cases', css: 'linear-gradient(135deg, #ffffff, #b9c6d6 45%, #eef3f8 60%, #8796ab)', isNew: true },
+);
+SHOP.lenses.push(
+  { id: 'emerald', name: 'Emerald', price: 60, rim: ['#3ddc84', '#0f7a45'], isNew: true },
+  { id: 'sunset', name: 'Sunset', price: 90, rim: ['#ff9a3c', '#e0457b'], isNew: true },
+  { id: 'ice', name: 'Ice Crystal', price: 120, rim: ['#e3f7ff', '#5fb3d9'], sparkle: true, isNew: true },
+  { id: 'crystal', name: 'Lab Crystal', price: 0, reward: 'lab_20', rim: ['#f0e6ff', '#9a7bff'], sparkle: true, isNew: true },
+);
+SHOP.glasses = [
+  { id: 'none', e: '', name: 'No glasses', price: 0 },
+  { id: 'specs', e: '👓', name: 'Smart Specs', price: 40, isNew: true },
+  { id: 'goggles', e: '🥽', name: 'Swim Goggles', price: 50, isNew: true },
+  { id: 'threed', e: '🎞️', name: '3D Glasses', price: 60, isNew: true },
+  { id: 'hearts', e: '💖', name: 'Heart Shades', price: 70, isNew: true },
+  { id: 'stars', e: '⭐', name: 'Star Shades', price: 80, isNew: true },
+  { id: 'monocle', e: '🧐', name: 'Fancy Monocle', price: 120, isNew: true },
+];
+SHOP.pets = [
+  { id: 'none', e: '', name: 'No sidekick', price: 0 },
+  { id: 'chick', e: '🐥', name: 'Chirpy the Chick', price: 50, isNew: true },
+  { id: 'turtle', e: '🐢', name: 'Speedy the Turtle', price: 60, isNew: true },
+  { id: 'hedgehog', e: '🦔', name: 'Prickles the Hedgehog', price: 70, isNew: true },
+  { id: 'frog', e: '🐸', name: 'Hopper the Frog', price: 70, isNew: true },
+  { id: 'penguin', e: '🐧', name: 'Pebble the Penguin', price: 90, isNew: true },
+  { id: 'unicorn', e: '🦄', name: 'Sparkle the Unicorn', price: 180, isNew: true },
+  { id: 'dragon', e: '🐉', name: 'Ember the Dragon', price: 250, isNew: true },
+  { id: 'minifelix', e: '🦊', name: 'Mini Felix', price: 0, reward: 'triple', isNew: true },
+  { id: 'miniraccoon', e: '🦝', name: 'Mini Remainder', price: 0, reward: 'r_unmasked', isNew: true },
+  { id: 'miniparrot', e: '🦜', name: 'Mini Mimic', price: 0, reward: 'm_unmasked', isNew: true },
+];
+SHOP.decor.push(
+  { id: 'teddy', e: '🧸', name: 'Teddy Bear', price: 40, isNew: true },
+  { id: 'map', e: '🗺️', name: 'Treasure Map', price: 45, isNew: true },
+  { id: 'clock', e: '🕰️', name: 'Old Clock', price: 50, isNew: true },
+  { id: 'kite', e: '🪁', name: 'Kite', price: 50, isNew: true },
+  { id: 'easel', e: '🎨', name: 'Paint Set', price: 55, isNew: true },
+  { id: 'painting', e: '🖼️', name: 'Painting', price: 60, isNew: true },
+  { id: 'piano', e: '🎹', name: 'Keyboard', price: 90, isNew: true },
+  { id: 'robot', e: '🤖', name: 'Robot Pal', price: 100, isNew: true },
+  { id: 'castle', e: '🏰', name: 'Toy Castle', price: 110, isNew: true },
+  { id: 'rocket', e: '🚀', name: 'Toy Rocket', price: 140, isNew: true },
+  { id: 'medals', e: '🏅', name: 'Medal Wall', price: 0, reward: 'first_try_5', isNew: true },
+  { id: 'microscope', e: '🔬', name: 'Microscope', price: 0, reward: 'sharp_eyes', isNew: true },
+);
+
+/* ============================================================
    Problem generator, decoys, mistake diagnosis (pure functions)
    ============================================================ */
 
@@ -1602,11 +1689,16 @@ const CHAR_ANIMALS = {
 let charN = 0;
 
 function coatPaint(coatId, uid) {
-  const solid = { trench: '#9a7148', midnight: '#2f4e9a', mint: '#4fbf98', pink: '#ee79ad' };
+  const solid = { trench: '#9a7148', midnight: '#2f4e9a', mint: '#4fbf98', pink: '#ee79ad', sunshine: '#f6c445', lava: '#d9483b' };
   if (solid[coatId]) return { fill: solid[coatId], defs: '' };
   if (coatId === 'rainbow') return { fill: `url(#${uid}co)`, defs: `<linearGradient id="${uid}co" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".25" stop-color="#ffd93d"/><stop offset=".5" stop-color="#6bcb77"/><stop offset=".75" stop-color="#4d96ff"/><stop offset="1" stop-color="#c77dff"/></linearGradient>` };
   if (coatId === 'gold') return { fill: `url(#${uid}co)`, defs: `<linearGradient id="${uid}co" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1a8"/><stop offset=".45" stop-color="#e2a91f"/><stop offset=".6" stop-color="#fff1a8"/><stop offset="1" stop-color="#b9800f"/></linearGradient>` };
   if (coatId === 'starry') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#1b2457"/><circle cx="5" cy="6" r="1.6" fill="#fff"/><circle cx="16" cy="14" r="1.3" fill="#ffe9a8"/><circle cx="9" cy="18" r="1" fill="#fff"/></pattern>` };
+  if (coatId === 'platinum') return { fill: `url(#${uid}co)`, defs: `<linearGradient id="${uid}co" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#b9c6d6"/><stop offset=".6" stop-color="#eef3f8"/><stop offset="1" stop-color="#8796ab"/></linearGradient>` };
+  if (coatId === 'polka') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#4fa3e0"/><circle cx="4" cy="4" r="3" fill="#fff"/><circle cx="12" cy="12" r="3" fill="#fff"/></pattern>` };
+  if (coatId === 'candy') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="14" fill="#fff"/><rect width="7" height="14" fill="#ff7eb6"/></pattern>` };
+  if (coatId === 'tiger') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="16" height="16" fill="#f39c32"/><rect width="4" height="16" fill="#2b2320"/></pattern>` };
+  if (coatId === 'galaxy') return { fill: `url(#${uid}co)`, defs: `<linearGradient id="${uid}cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a5e"/><stop offset=".55" stop-color="#7a2f9a"/><stop offset="1" stop-color="#1f4fa0"/></linearGradient><pattern id="${uid}co" width="200" height="240" patternUnits="userSpaceOnUse"><rect width="200" height="240" fill="url(#${uid}cg)"/><g fill="#fff"><circle cx="70" cy="150" r="1.6"/><circle cx="120" cy="140" r="1.2"/><circle cx="95" cy="190" r="1.8"/><circle cx="130" cy="180" r="1.3"/><circle cx="62" cy="185" r="1.1"/><circle cx="110" cy="160" r="1"/></g><circle cx="80" cy="170" r="1.5" fill="#ffd0f0"/></pattern>` };
   return { fill: '#9a7148', defs: '' };
 }
 function lensPaint(lensId, uid) {
@@ -1624,6 +1716,30 @@ function hatSVG(id, uid) {
     case 'rescue': return `<path d="M48 52 Q50 2 100 2 Q150 2 152 52 Z" fill="#f4f4f6" stroke="#cfd3d8" stroke-width="2"/><path d="M42 52 Q100 60 158 52 Q156 61 100 65 Q44 61 42 52 Z" fill="#dfe3e8"/><path d="M94 14 h12 v10 h10 v12 h-10 v10 h-12 v-10 h-10 v-12 h10 Z" fill="#d6303a"/>`;
     case 'explorer': return `<ellipse cx="100" cy="48" rx="68" ry="12" fill="#b49a62"/><path d="M58 48 Q58 2 100 2 Q142 2 142 48 Z" fill="#c9b27c"/><path d="M59 37 Q100 43 141 37 L142 46 Q100 52 58 46 Z" fill="#7d6638"/><circle cx="100" cy="3" r="5" fill="#b49a62"/>`;
     case 'crown': return `<path d="M60 48 L54 12 L78 30 L100 4 L122 30 L146 12 L140 48 Z" fill="#f1c232" stroke="#b9860f" stroke-width="3" stroke-linejoin="round"/><circle cx="54" cy="11" r="4.5" fill="#f1c232"/><circle cx="100" cy="3" r="4.5" fill="#f1c232"/><circle cx="146" cy="11" r="4.5" fill="#f1c232"/><circle cx="100" cy="34" r="5.5" fill="#d6303a"/><circle cx="76" cy="39" r="3.8" fill="#3a7bd5"/><circle cx="124" cy="39" r="3.8" fill="#3a7bd5"/>`;
+    case 'beanie': return `<path d="M50 52 Q52 4 100 4 Q148 4 150 52 Z" fill="#e5484d"/><path d="M47 42 Q100 34 153 42 L153 56 Q100 48 47 56 Z" fill="#c23439"/><path d="M60 40 v12 M72 38 v12 M84 37 v12 M96 36 v12 M108 36 v12 M120 37 v12 M132 38 v12 M144 40 v12" stroke="#a82a2f" stroke-width="2"/><circle cx="100" cy="2" r="11" fill="#fff"/><circle cx="96" cy="-1" r="4" fill="#f1f1f1"/>`;
+    case 'party': return `<path d="M74 46 L100 -18 L126 46 Z" fill="#ff6bb5"/><path d="M82 26 L118 26 M88 12 L112 12 M78 38 L122 38" stroke="#ffd93d" stroke-width="5"/><circle cx="100" cy="-19" r="7" fill="#ffd93d"/><path d="M74 46 Q100 52 126 46" stroke="#c8327f" stroke-width="3" fill="none"/>`;
+    case 'chef': return `<circle cx="76" cy="12" r="19" fill="#fff"/><circle cx="124" cy="12" r="19" fill="#fff"/><circle cx="100" cy="2" r="22" fill="#fff"/><path d="M64 20 L136 20 L138 52 Q100 46 62 52 Z" fill="#f6f6f8" stroke="#dcdde2" stroke-width="2"/><path d="M80 22 L82 48 M100 22 L100 47 M120 22 L118 48" stroke="#e3e4e8" stroke-width="2"/>`;
+    case 'cowboy': return `<path d="M26 44 Q100 66 174 44 Q170 58 100 64 Q30 58 26 44 Z" fill="#a8743f"/><path d="M64 50 Q60 10 82 10 Q100 22 118 10 Q140 10 136 50 Q100 44 64 50 Z" fill="#b9824a"/><path d="M64 40 Q100 34 136 40 L136 48 Q100 42 64 48 Z" fill="#5a3a1e"/><path d="M96 22 l4 -6 l4 6 l-4 6 Z" fill="#f1c232"/>`;
+    case 'flowers': {
+      const pts = [[54, 50, '#ff7eb6'], [66, 38, '#ffd93d'], [82, 30, '#9b7bff'], [100, 27, '#ff7eb6'], [118, 30, '#5fc7ff'], [134, 38, '#ffd93d'], [146, 50, '#9b7bff']];
+      return `<path d="M50 52 Q100 14 150 52" stroke="#4f9e4f" stroke-width="5" fill="none"/>` + pts.map(([x, y, c]) => `<g><circle cx="${x - 5}" cy="${y}" r="5" fill="${c}"/><circle cx="${x + 5}" cy="${y}" r="5" fill="${c}"/><circle cx="${x}" cy="${y - 5}" r="5" fill="${c}"/><circle cx="${x}" cy="${y + 5}" r="5" fill="${c}"/><circle cx="${x}" cy="${y}" r="3.5" fill="#fff4b0"/></g>`).join('');
+    }
+    case 'pirate': return `<path d="M36 50 Q40 18 100 10 Q160 18 164 50 Q130 40 100 46 Q70 40 36 50 Z" fill="#232329"/><path d="M36 50 Q70 40 100 46 Q130 40 164 50" stroke="#d9a441" stroke-width="4" fill="none"/><circle cx="100" cy="28" r="8" fill="#f4f4f4"/><circle cx="97" cy="27" r="1.8" fill="#232329"/><circle cx="103" cy="27" r="1.8" fill="#232329"/><path d="M88 38 L112 46 M112 38 L88 46" stroke="#f4f4f4" stroke-width="3" stroke-linecap="round"/>`;
+    case 'viking': return `<path d="M54 34 Q28 30 24 0 Q40 18 62 22 Z" fill="#f3ead2" stroke="#c9b98f" stroke-width="2"/><path d="M146 34 Q172 30 176 0 Q160 18 138 22 Z" fill="#f3ead2" stroke="#c9b98f" stroke-width="2"/><path d="M52 50 Q54 4 100 4 Q146 4 148 50 Z" fill="#9aa4ae"/><path d="M100 4 L100 42" stroke="#7d8790" stroke-width="5"/><path d="M50 42 Q100 34 150 42 L150 53 Q100 45 50 53 Z" fill="#7a5532"/><circle cx="66" cy="45" r="2.5" fill="#d9a441"/><circle cx="100" cy="41" r="2.5" fill="#d9a441"/><circle cx="134" cy="45" r="2.5" fill="#d9a441"/>`;
+    case 'wizard': return `<path d="M58 48 L106 -22 L142 48 Z" fill="#4b3aa8"/><ellipse cx="100" cy="48" rx="58" ry="9" fill="#3b2d88"/><path d="M88 22 l2.5 5 l5.5 .8 l-4 3.8 l1 5.4 l-5 -2.6 l-5 2.6 l1 -5.4 l-4 -3.8 l5.5 -.8 Z" fill="#ffd93d"/><path d="M114 30 l1.8 3.6 l4 .6 l-2.9 2.8 l.7 3.9 l-3.6 -1.9 l-3.6 1.9 l.7 -3.9 l-2.9 -2.8 l4 -.6 Z" fill="#ffd93d"/><path d="M108 4 a7 7 0 1 0 6 10 a5.5 5.5 0 1 1 -6 -10 Z" fill="#fff4b0"/>`;
+    default: return '';
+  }
+}
+
+function starPts(cx, cy, r1, r2) { let p = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? r2 : r1, a = -Math.PI / 2 + i * Math.PI / 5; p.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`); } return p.join(' '); }
+function glassesSVG(id) {
+  switch (id) {
+    case 'specs': return `<g fill="rgba(255,255,255,.18)" stroke="#3a2a1e" stroke-width="3"><circle cx="80" cy="85" r="13"/><circle cx="120" cy="85" r="13"/></g><path d="M93 84 Q100 79 107 84 M67 83 L44 78 M133 83 L156 78" stroke="#3a2a1e" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    case 'goggles': return `<path d="M42 84 L158 84" stroke="#2b3a4a" stroke-width="7"/><g fill="rgba(140,215,255,.45)" stroke="#2f9e8f" stroke-width="5"><circle cx="80" cy="85" r="15"/><circle cx="120" cy="85" r="15"/></g><path d="M74 79 Q78 75 83 76 M114 79 Q118 75 123 76" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+    case 'threed': return `<rect x="62" y="74" width="76" height="24" rx="5" fill="#f4f4f4" stroke="#222" stroke-width="2.5"/><rect x="67" y="78" width="28" height="16" rx="3" fill="rgba(230,40,60,.75)"/><rect x="105" y="78" width="28" height="16" rx="3" fill="rgba(40,120,240,.75)"/><path d="M62 82 L44 78 M138 82 L156 78" stroke="#222" stroke-width="3" stroke-linecap="round"/>`;
+    case 'hearts': return `<g fill="rgba(255,70,110,.85)" stroke="#c81d4d" stroke-width="2.5"><path d="M80 98 C62 86 64 72 74 72 C78 72 80 75 80 77 C80 75 82 72 86 72 C96 72 98 86 80 98 Z"/><path d="M120 98 C102 86 104 72 114 72 C118 72 120 75 120 77 C120 75 122 72 126 72 C136 72 138 86 120 98 Z"/></g><path d="M94 82 L106 82 M64 80 L44 77 M136 80 L156 77" stroke="#c81d4d" stroke-width="3" stroke-linecap="round"/>`;
+    case 'stars': return `<g fill="rgba(40,40,55,.8)" stroke="#ffcf3d" stroke-width="3" stroke-linejoin="round"><polygon points="${starPts(80, 86, 17, 8)}"/><polygon points="${starPts(120, 86, 17, 8)}"/></g><path d="M95 84 L105 84 M64 82 L44 78 M136 82 L156 78" stroke="#ffcf3d" stroke-width="3" stroke-linecap="round"/>`;
+    case 'monocle': return `<circle cx="120" cy="85" r="13" fill="rgba(255,255,255,.2)" stroke="#d9a441" stroke-width="3.5"/><path d="M131 92 Q140 112 128 130" stroke="#d9a441" stroke-width="1.8" fill="none" stroke-dasharray="3 2"/>`;
     default: return '';
   }
 }
@@ -1692,6 +1808,7 @@ function characterSVG(opts = {}) {
   const A = CHAR_ANIMALS[opts.animal || S.profile.animal] || CHAR_ANIMALS['🐶'];
   const uid = 'ch' + (++charN);
   const hatId = opts.hat ?? S.equipped.hat, coatId = opts.coat || S.equipped.coat, lensId = opts.lens || S.equipped.lens;
+  const glassesId = opts.glasses ?? S.equipped.glasses;
   const coat = coatPaint(coatId, uid), lens = lensPaint(lensId, uid);
   const limb = A.limb || A.fur;
   const head = opts.crop === 'head';
@@ -1724,7 +1841,7 @@ function characterSVG(opts = {}) {
     <g class="ch-body">${body}
     ${earsOnTop ? '' : earsBehind(A)}
     <ellipse cx="100" cy="82" rx="60" ry="54" fill="${A.fur}"/>
-    ${earsFront(A)}${faceSVG(A)}
+    ${earsFront(A)}${faceSVG(A)}${glassesSVG(glassesId)}
     ${hatDrawn ? hatSVG(hatId, uid) : ''}
     ${earsOnTop ? earsBehind(A) : ''}
     ${arm}</g></svg>`;
@@ -1747,8 +1864,9 @@ function defaultState() {
     profile: { name: '', animal: '🐶', setupDone: false },
     starsBalance: 0, starsEarned: 0, tokens: 3,
     settings: { level: 'auto', autoRead: false, sound: true, voiceRate: 1, voiceName: '', unlockAll: false },
-    owned: { hats: ['none', 'cap'], coats: ['trench'], lenses: ['brass'], decor: [] },
-    equipped: { hat: 'cap', coat: 'trench', lens: 'brass' },
+    owned: { hats: ['none', 'cap'], coats: ['trench'], lenses: ['brass'], decor: [], glasses: ['none'], pets: ['none'] },
+    equipped: { hat: 'cap', coat: 'trench', lens: 'brass', glasses: 'none', pet: 'none' },
+    decorPos: {},
     cases: CASES.map((_, i) => newCaseState(i)),
     rNotes: [],
     stats: { ciphersSolved: 0, firstTryStreak: 0, bestFirstTryStreak: 0, carries: 0, borrows: 0, arrays: 0, deals: 0, tokensFound: 0, labSolved: 0, purchases: 0, interrogated: 0, casesClosed: 0 },
@@ -1976,6 +2094,8 @@ function earnBadge(id) {
   const b = BADGES.find(x => x.id === id); if (!b) return;
   S.badges.push(id); save();
   setTimeout(() => { SFX.chime(); toast(`<span class="toast-badge">${b.e}</span> New badge: <b>${esc(b.name)}</b>`, 3600); }, 600);
+  const gift = Object.values(SHOP).flat().find(it => it.reward === id);
+  if (gift) setTimeout(() => toast(`🎁 You unlocked a reward: <b>${esc(gift.name)}</b>! Claim it in the Gadget Shop.`, 4200), 2200);
 }
 function checkStatBadges() {
   const st = S.stats;
@@ -1994,6 +2114,12 @@ function checkStatBadges() {
 
 /* avatar: the player's drawn detective (see character.js) */
 function avatarHTML(size = 64, opts = {}) { return characterSVG({ ...opts, size }); }
+
+/* the player's sidekick pet, shown beside the detective */
+function sidekickHTML(cls = '') {
+  const p = SHOP.pets.find(x => x.id === S.equipped.pet);
+  return p && p.e ? `<span class="sidekick ${cls}" title="${esc(p.name)}" aria-hidden="true">${p.e}</span>` : '';
+}
 
 /* ============================================================
    The safe (cipher). Column wheels for + and −, free wheels for × and ÷,
@@ -2637,7 +2763,7 @@ function seasonHTML(se) {
 function mapHTML() {
   const order = seasonDone(1) ? [SEASONS[1], SEASONS[0]] : SEASONS; // the season in progress comes first
   return `<section class="hero">
-      <div class="hero-av">${characterSVG({ size: 118 })}</div>
+      <div class="hero-av">${characterSVG({ size: 118 })}${sidekickHTML()}</div>
       <div class="hero-info"><div class="eyebrow">Agency ID card</div><h1 class="display hero-name">Detective ${esc(S.profile.name)}</h1>${rankBlockHTML()}</div>
     </section>
     ${order.map(seasonHTML).join('')}
@@ -2954,30 +3080,42 @@ function mountLab() {
 }
 
 /* ---------------- shop ---------------- */
-const SHOP_TABS = [['hats', '🎩', 'Hats', 'hat'], ['coats', '🧥', 'Coats', 'coat'], ['lenses', '🔍', 'Magnifiers', 'lens'], ['decor', '🪴', 'Treehouse', null]];
+const SHOP_TABS = [['hats', '🎩', 'Hats', 'hat'], ['coats', '🧥', 'Coats', 'coat'], ['glasses', '👓', 'Glasses', 'glasses'], ['lenses', '🔍', 'Magnifiers', 'lens'], ['pets', '🐾', 'Sidekicks', 'pet'], ['decor', '🪴', 'Treehouse', null]];
 function shopVisual(cat, it) {
-  if (cat === 'hats') return `<span class="item-e">${it.e || '🚫'}</span>`;
+  if (cat === 'hats') return `<span class="item-try">${characterSVG({ crop: 'head', hat: it.id, glasses: 'none', showHat: true, size: 76 })}</span>`;
+  if (cat === 'glasses') return `<span class="item-try">${characterSVG({ crop: 'head', hat: 'none', glasses: it.id, size: 76 })}</span>`;
   if (cat === 'coats') return `<span class="swatch" style="background:${it.css}"></span>`;
   if (cat === 'lenses') return `<span class="lens-swatch" style="--rim:${it.rim === 'rainbow' ? 'conic-gradient(#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff,#ff6b6b)' : `linear-gradient(135deg,${it.rim[0]},${it.rim[1]})`}">${it.sparkle ? '✨' : ''}</span>`;
-  return `<span class="item-e">${it.e}</span>`;
+  return `<span class="item-e">${it.e || '🚫'}</span>`;
 }
 function shopHTML() {
   const tab = ui.shopTab; const [, , , slot] = SHOP_TABS.find(t => t[0] === tab);
   const items = SHOP[tab].map(it => {
     const owned = S.owned[tab].includes(it.id), worn = slot && S.equipped[slot] === it.id;
+    const none = it.id === 'none';
+    const verb = none ? (tab === 'pets' ? 'Go solo' : 'Take off') : tab === 'lenses' ? 'Use' : tab === 'pets' ? 'Bring along' : 'Wear', done = none ? 'Chosen' : tab === 'lenses' ? 'Using' : tab === 'pets' ? 'With you' : 'Wearing';
     let btn;
     if (tab === 'decor') btn = owned ? `<button type="button" class="btn small" disabled>In your treehouse ✓</button>` : buyBtn(tab, it);
-    else btn = worn ? `<button type="button" class="btn small" disabled>${tab === 'lenses' ? 'Using' : 'Wearing'} ✓</button>` : owned ? `<button type="button" class="btn small ghost" data-action="equip" data-arg="${tab}:${it.id}">${tab === 'lenses' ? 'Use' : 'Wear'}</button>` : buyBtn(tab, it);
-    return `<div class="item ${owned ? 'owned' : ''} ${worn ? 'worn' : ''}">${shopVisual(tab, it)}<b>${esc(it.name)}</b>${btn}</div>`;
+    else btn = worn ? `<button type="button" class="btn small" disabled>${done} ✓</button>` : owned ? `<button type="button" class="btn small ghost" data-action="equip" data-arg="${tab}:${it.id}">${verb}</button>` : buyBtn(tab, it);
+    const tag = it.reward ? '<span class="item-tag reward">Reward</span>' : it.isNew && !owned ? '<span class="item-tag">New</span>' : '';
+    return `<div class="item ${owned ? 'owned' : ''} ${worn ? 'worn' : ''} ${it.reward ? 'is-reward' : ''}">${tag}${shopVisual(tab, it)}<b>${esc(it.name)}</b>${btn}</div>`;
   }).join('');
+  const waiting = Object.entries(SHOP).some(([cat, list]) => list.some(it => it.reward && S.badges.includes(it.reward) && !S.owned[cat].includes(it.id)));
   return `<section class="shop-head">
-      <div class="shop-preview">${characterSVG({ size: 150 })}</div>
-      <div><div class="eyebrow on-desk">Gadget shop</div><h1 class="display">Spend your stars</h1><p class="on-desk-muted">You have <b class="brass">⭐ ${S.starsBalance}</b> to spend. Magnifiers change your flashlight lens!</p></div>
+      <div class="shop-preview">${characterSVG({ size: 150 })}${sidekickHTML()}</div>
+      <div><div class="eyebrow on-desk">Gadget shop</div><h1 class="display">Spend your stars</h1><p class="on-desk-muted">You have <b class="brass">⭐ ${S.starsBalance}</b> to spend. Reward items are free, but you earn them with badges.</p>
+      ${waiting ? '<p class="reward-waiting">🎁 You have a reward waiting to be claimed!</p>' : ''}</div>
     </section>
     <div class="tabs" role="tablist">${SHOP_TABS.map(([id, e, l]) => `<button type="button" role="tab" class="tab ${tab === id ? 'on' : ''}" aria-selected="${tab === id}" data-action="shopTab" data-arg="${id}">${e} ${l}</button>`).join('')}</div>
     <div class="items">${items}</div>`;
 }
 function buyBtn(tab, it) {
+  if (it.reward) {
+    const b = BADGES.find(x => x.id === it.reward);
+    return S.badges.includes(it.reward)
+      ? `<button type="button" class="btn small buy" data-action="buy" data-arg="${tab}:${it.id}">Claim 🎁</button>`
+      : `<button type="button" class="btn small" disabled>🔒 Earn ${b.e} ${esc(b.name)}</button><small class="item-how">${esc(b.desc)}</small>`;
+  }
   if (it.price === 0) return `<button type="button" class="btn small ghost" data-action="buy" data-arg="${tab}:${it.id}">Free</button>`;
   const can = S.starsBalance >= it.price;
   return can ? `<button type="button" class="btn small buy" data-action="buy" data-arg="${tab}:${it.id}">Buy · ${it.price} ⭐</button>`
@@ -2985,11 +3123,13 @@ function buyBtn(tab, it) {
 }
 function buy(arg) {
   const [tab, id] = arg.split(':'); const it = SHOP[tab].find(x => x.id === id);
-  if (!it || S.owned[tab].includes(id) || S.starsBalance < it.price) return;
+  if (!it || S.owned[tab].includes(id)) return;
+  if (it.reward ? !S.badges.includes(it.reward) : S.starsBalance < it.price) return;
   S.starsBalance -= it.price; S.owned[tab].push(id);
   if (it.price > 0) S.stats.purchases++;
   const slot = SHOP_TABS.find(t => t[0] === tab)[3]; if (slot) S.equipped[slot] = id;
-  SFX.coin(); toast(`${tab === 'decor' ? it.e + ' Added to your treehouse!' : 'New look!'} <b>${esc(it.name)}</b>`);
+  SFX.coin(); if (it.reward) { SFX.fanfare(); confetti(); }
+  toast(`${tab === 'decor' ? it.e + ' Added to your treehouse!' : tab === 'pets' ? it.e + ' A new sidekick!' : 'New look!'} <b>${esc(it.name)}</b>`);
   checkStatBadges(); save(); render();
 }
 function equip(arg) {
@@ -3001,15 +3141,21 @@ function equip(arg) {
 /* ---------------- treehouse ---------------- */
 /* x = center (% of room width), y = bottom (% of room height), sz = size (% of room width) */
 const DECOR_SLOTS = {
-  plant:   { x: 7,  y: 5,  sz: 12 }, fish:   { x: 20, y: 5, sz: 8, cls: 'tank' }, puzzle: { x: 31, y: 2, sz: 7 },
+  plant:   { x: 7,  y: 5,  sz: 12 }, fish:   { x: 20, y: 5, sz: 8, cls: 'tank' }, puzzle: { x: 27, y: 2, sz: 7 },
   guitar:  { x: 30, y: 36, sz: 11, cls: 'lean' }, books: { x: 13, y: 58, sz: 11 }, trophy: { x: 87, y: 58, sz: 9 },
   scope:   { x: 67, y: 6,  sz: 10 }, couch:  { x: 83, y: 3,  sz: 21 }, dino:   { x: 96, y: 3,  sz: 8 },
   disco:   { x: 41, y: 76, sz: 9, cls: 'hang' }, ufo: { x: 22, y: 74, sz: 10, cls: 'hang float' }, balloon: { x: 76, y: 68, sz: 8, cls: 'float' },
+  teddy:   { x: 36, y: 0,  sz: 7 }, map: { x: 31, y: 56, sz: 9 }, clock: { x: 45, y: 52, sz: 6 }, kite: { x: 7, y: 78, sz: 8, cls: 'float' },
+  easel:   { x: 33, y: 22, sz: 8 }, painting: { x: 90, y: 34, sz: 8 }, piano: { x: 21, y: 22, sz: 9 }, robot: { x: 13, y: 0, sz: 8 },
+  castle:  { x: 87, y: 0,  sz: 8 }, rocket: { x: 83, y: 78, sz: 8, cls: 'hang float' }, medals: { x: 80, y: 46, sz: 6 }, microscope: { x: 21, y: 58, sz: 6 },
 };
+function decorPos(id) { const p = DECOR_SLOTS[id] || { x: 50, y: 30, sz: 9 }; const m = (S.decorPos || {})[id]; return m ? { ...p, x: m.x, y: m.y } : p; }
 function treehouseHTML() {
   const decor = S.owned.decor.map(id => {
-    const d = SHOP.decor.find(x => x.id === id), p = DECOR_SLOTS[id] || { x: 50, y: 30, sz: 9 };
-    return `<span class="decor ${p.cls || ''}" style="--x:${p.x}%;--y:${p.y}%;--sz:${p.sz}" title="${esc(d.name)}"><span class="decor-e">${d.e}</span></span>`;
+    const d = SHOP.decor.find(x => x.id === id); if (!d) return '';
+    const p = decorPos(id), moved = (S.decorPos || {})[id];
+    const cls = moved ? (p.cls || '').replace('hang', '') : (p.cls || ''); // a moved hanging toy loses its string
+    return `<span class="decor ${cls}" data-decor="${id}" style="--x:${p.x}%;--y:${p.y}%;--sz:${p.sz};z-index:${Math.round(120 - p.y)}" title="${esc(d.name)}"><span class="decor-e">${d.e}</span></span>`;
   }).join('');
   const shelfL = S.owned.decor.includes('books'), shelfR = S.owned.decor.includes('trophy');
   const badges = BADGES.map(b => { const got = S.badges.includes(b.id); return `<div class="badge ${got ? 'got' : ''}"><span class="badge-e">${got ? b.e : '🔒'}</span><b>${esc(b.name)}</b><small>${esc(b.desc)}</small></div>`; }).join('');
@@ -3019,13 +3165,14 @@ function treehouseHTML() {
   const stats = [['Safes cracked', st.ciphersSolved], ['Cases closed', distinctClosed()], ['Best first-try streak', st.bestFirstTryStreak], ['Carry gears placed', st.carries], ['Borrows made', st.borrows], ['Crate models built', st.arrays], ['Fair shares dealt', st.deals], ['Bonus clues found', st.tokensFound], ['Lab puzzles solved', st.labSolved], ['Stars earned (all time)', S.starsEarned]];
   const certs = SEASONS.filter(se => seasonDone(se.n)).map(se => `<div class="certificate"><div class="eyebrow">Starlight Town · Official · Season ${se.n}</div><div class="seal" aria-hidden="true">${se.seal}</div><h2>${esc(se.award)}</h2><p>This certifies that <b>Detective ${esc(S.profile.name)}</b> solved all six mysteries of <b>${esc(se.title)}</b>, cracked every safe, and unmasked the sneaky <b>${esc(se.villain)}</b>.</p><p class="sig">Inspector Felix 🦊<br><small>Chief of the Starlight Detective Agency</small></p></div>`).join('');
   return `<section class="lab-head"><div><div class="eyebrow on-desk">Headquarters</div><h1 class="display">${esc(S.profile.name)}'s Treehouse</h1></div></section>
-    <div class="treehouse" aria-label="Your treehouse room">
+    ${S.owned.decor.length ? `<div class="th-tools">${ui.decorEdit ? '<span class="th-hint">✋ Drag things to move them</span><button type="button" class="btn small ghost" data-action="decorReset">Put everything back</button><button type="button" class="btn small primary" data-action="decorEdit">Done ✓</button>' : '<button type="button" class="btn small" data-action="decorEdit">✋ Move things around</button>'}</div>` : ''}
+    <div class="treehouse ${ui.decorEdit ? 'editing' : ''}" id="treehouse" aria-label="Your treehouse room">
       <span class="th-beam" aria-hidden="true"></span>
       <span class="th-window" aria-hidden="true"></span>
       ${shelfL ? '<span class="th-shelf" style="--x:13%" aria-hidden="true"></span>' : ''}${shelfR ? '<span class="th-shelf" style="--x:87%" aria-hidden="true"></span>' : ''}
       <span class="th-floor" aria-hidden="true"></span><span class="th-rug" aria-hidden="true"></span>
       ${decor}
-      <span class="th-avatar">${characterSVG({ size: 200 })}</span>
+      <span class="th-avatar" style="z-index:117">${characterSVG({ size: 200 })}</span>${sidekickHTML('th-pet')}
       ${S.owned.decor.length ? '' : '<div class="th-empty">Your treehouse is empty! <button type="button" class="btn small primary" data-action="go" data-arg="shop">Visit the Gadget Shop 🛍️</button></div>'}
     </div>
     ${certs}
@@ -3114,6 +3261,8 @@ const ACTIONS = {
   labLevel: (a) => { S.lab.level = Number(a); save(); newLabProblem(); render(); },
   labNext: () => { newLabProblem(); render(); window.scrollTo({ top: 0, behavior: REDUCED() ? 'auto' : 'smooth' }); },
   shopTab: (a) => { ui.shopTab = a; render(); },
+  decorEdit: () => { ui.decorEdit = !ui.decorEdit; SFX.click(); render(); },
+  decorReset: () => { S.decorPos = {}; save(); SFX.tumbler(); render(); },
   buy: (a) => buy(a),
   equip: (a) => equip(a),
   gearTap: () => { if (ui.holdDone) { ui.holdDone = false; return; } toast('Grown-ups: press and hold ⚙️ for 2 seconds.'); },
@@ -3168,6 +3317,32 @@ document.addEventListener('pointercancel', () => cancelHold());
 document.addEventListener('keydown', (e) => { if ((e.key === 'Enter' || e.key === ' ') && e.target.id === 'parentGear' && !e.repeat) { e.preventDefault(); startHold(e.target); } });
 document.addEventListener('keyup', (e) => { if ((e.key === 'Enter' || e.key === ' ') && e.target.id === 'parentGear') { cancelHold(); } });
 document.addEventListener('contextmenu', (e) => { if (e.target.closest && e.target.closest('#parentGear')) e.preventDefault(); });
+
+/* treehouse: drag decorations while in move mode */
+(function () {
+  let drag = null;
+  document.addEventListener('pointerdown', (e) => {
+    if (!ui.decorEdit) return;
+    const el = e.target.closest && e.target.closest('.treehouse.editing .decor'); if (!el) return;
+    const room = el.parentElement.getBoundingClientRect(), id = el.dataset.decor, p = decorPos(id);
+    drag = { el, id, room, sx: e.clientX, sy: e.clientY, x: p.x, y: p.y };
+    el.classList.add('dragging'); el.setPointerCapture && el.setPointerCapture(e.pointerId); e.preventDefault();
+  });
+  document.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const x = Math.max(3, Math.min(97, drag.x + (e.clientX - drag.sx) / drag.room.width * 100));
+    const y = Math.max(0, Math.min(84, drag.y - (e.clientY - drag.sy) / drag.room.height * 100));
+    drag.nx = x; drag.ny = y;
+    drag.el.style.setProperty('--x', x + '%'); drag.el.style.setProperty('--y', y + '%'); drag.el.style.zIndex = Math.round(120 - y);
+  });
+  const end = () => {
+    if (!drag) return;
+    drag.el.classList.remove('dragging');
+    if (drag.nx != null) { S.decorPos = S.decorPos || {}; S.decorPos[drag.id] = { x: +drag.nx.toFixed(1), y: +drag.ny.toFixed(1) }; save(); SFX.click(); }
+    drag = null;
+  };
+  document.addEventListener('pointerup', end); document.addEventListener('pointercancel', end);
+})();
 
 /* boot */
 try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch (e) {}

@@ -1,6 +1,6 @@
 /* Starlight Detective Agency: offline support.
    The page itself is network-first (new versions arrive when online); everything else is cache-first. */
-const CACHE = 'starlight-a87060f383';
+const CACHE = 'starlight-e41cbc2af2';
 const ASSETS = [
   "./",
   "./index.html",
