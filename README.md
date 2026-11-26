@@ -2,6 +2,7 @@
 
 A detective story math game for young readers (grade 3): read each mystery, search dark rooms with a flashlight,
 crack number safes with +, −, × and ÷, and rule out suspects until only the culprit is left.
+Five seasons and 30 cases, Double Lock two-step safes, a Daily Case File, a 3-minute Speed Safe, and a Gadget Shop full of reward gear.
 
 **Play:** open the site in Safari on an iPad, tap Share, then **Add to Home Screen**. It runs full screen and works offline.
 Progress is saved on the device. Grown-up settings: press and hold the ⚙️ button for 2 seconds.

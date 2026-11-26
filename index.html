@@ -463,6 +463,63 @@ select.text-input { font-size: 17px; appearance: auto; }
 .toast-badge { font-size: 22px; vertical-align: middle; margin-right: 4px; }
 #confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 70; }
 
+/* ---------- double lock ---------- */
+.eq-chip.carried { background: #7fd6c4; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; gap: 3px; }
+.eq-chip.carried small { font-family: var(--f-body, inherit); font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; opacity: .8; }
+.safe.partial .safe-inside { background: radial-gradient(circle at 50% 40%, #2f5a52, #10211e 75%); }
+.lock-next { font-family: var(--f-display); font-size: 24px; color: #9ff0de; animation: popIn .5s ease-out .9s both; }
+.flow-eq:empty, .flow-safe:empty { display: none; }
+.flow-safe + .flow-eq { margin-top: 18px; }
+
+/* ---------- challenges ---------- */
+.lab-head:has(.on-desk-btn) { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.on-desk-btn { color: var(--on-desk); }
+.chal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; margin-top: 8px; }
+.chal-card { display: grid; gap: 12px; align-content: start; }
+.chal-card h2 { margin: 0; }
+.chal-card p { margin: 0; line-height: 1.5; }
+.chal-top { display: flex; gap: 12px; align-items: center; }
+.chal-icon { font-size: 44px; line-height: 1; }
+.chal-card.daily { border-top: 6px solid var(--brass); }
+.chal-card.speed { border-top: 6px solid #4d96ff; }
+.chal-card.done h2 { color: #2f7a4f; }
+.chal-stats { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 15px; color: var(--muted-ink); }
+.chal-stats b { color: var(--ink); font-size: 18px; }
+.week { display: flex; gap: 6px; }
+.day-dot { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; background: var(--paper-2); color: var(--muted-ink); border: 2px solid rgba(31,42,68,.12); }
+.day-dot.on { background: #ff8a3d; color: #fff; border-color: #e26a1c; }
+.day-dot.today { outline: 3px solid var(--brass); outline-offset: 2px; }
+.goals-card { margin-top: 18px; }
+.goals { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 12px; }
+.goal { display: flex; gap: 12px; align-items: flex-start; background: var(--paper-2); border-radius: 12px; padding: 12px; }
+.goal.got { background: #e3f4e7; }
+.goal-e { font-size: 32px; line-height: 1; }
+.goal-main { display: grid; gap: 4px; min-width: 0; flex: 1; }
+.goal-main small { color: var(--muted-ink); font-size: 14px; }
+.goal-bar { height: 10px; border-radius: 6px; background: rgba(31,42,68,.12); overflow: hidden; }
+.goal-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--brass), #f6c445); border-radius: 6px; transition: width .4s; }
+.goal.got .goal-bar i { background: #3fae6a; }
+.goal-gift { font-size: 14px; font-weight: 700; color: #8a4fb0; }
+.speed-run { max-width: 560px; display: grid; gap: 12px; }
+.speed-top { display: flex; justify-content: space-between; font-size: 20px; }
+.speed-top b { font-family: var(--f-display); font-size: 30px; font-weight: 400; }
+.speed-track { height: 14px; border-radius: 8px; background: rgba(31,42,68,.12); overflow: hidden; }
+.speed-track i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #4d96ff, #6bcb77); transition: width .25s linear; }
+.speed-track i.hurry { background: linear-gradient(90deg, #e5484d, #ff9a3c); }
+.speed-card { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; background: linear-gradient(160deg, var(--steel), var(--steel-2)); color: var(--paper); border-radius: 18px; padding: 22px 12px; font-family: var(--f-display); font-size: clamp(40px, 10vw, 60px); line-height: 1; }
+.speed-ans { min-width: 2.4ch; text-align: center; background: var(--steel-face); border-radius: 12px; padding: 6px 10px; color: var(--brass); }
+.speed-ans.empty { color: rgba(255,255,255,.35); }
+.speed-card.good { animation: speedGood .35s ease-out; }
+.speed-card.bad { animation: speedBad .35s ease-out; }
+@keyframes speedGood { 40% { box-shadow: 0 0 0 8px rgba(63,174,106,.6); transform: scale(1.03); } }
+@keyframes speedBad { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+.speed-run .key-actions .key.wide { background: var(--paper-2); color: var(--ink); box-shadow: inset 0 0 0 2px rgba(31,42,68,.25); }
+.speed-result { max-width: 520px; text-align: center; display: grid; gap: 10px; justify-items: center; }
+.speed-result h2 b { font-size: 1.3em; color: var(--brass-2); }
+.char .ch-prop { transform-box: fill-box; transform-origin: center; animation: propSpin .6s linear infinite; }
+@keyframes propSpin { 50% { transform: scaleX(-1); } }
+@media (prefers-reduced-motion: reduce) { .char .ch-prop, .speed-card.good, .speed-card.bad { animation: none; } }
+
 /* ---------- lab / shop / treehouse ---------- */
 .lab-head h1 { color: var(--manila); font-size: clamp(30px, 5vw, 44px); }
 .lab-head p { margin-top: 0; }
@@ -502,7 +559,7 @@ select.text-input { font-size: 17px; appearance: auto; }
 .swatch { width: 54px; height: 54px; border-radius: 50%; box-shadow: inset 0 0 0 3px rgba(0,0,0,.15); }
 .lens-swatch { width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle, #d8eeff 0 54%, transparent 55%), var(--rim); display: grid; place-items: center; font-size: 16px; }
 /* treehouse room: everything is sized as a share of the room width (cqw), so items stay in proportion on any screen */
-.treehouse { position: relative; width: 100%; max-width: 980px; margin: 0 auto; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden; border: 10px solid var(--wood); box-shadow: var(--shadow);
+.treehouse { isolation: isolate; position: relative; width: 100%; max-width: 980px; margin: 0 auto; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden; border: 10px solid var(--wood); box-shadow: var(--shadow);
   container-type: inline-size; background: repeating-linear-gradient(90deg, #a77c4f 0 7.5%, #94703f 7.5% 7.8%); }
 @media (min-width: 900px) { .treehouse { aspect-ratio: 16 / 10; } }
 .th-beam { position: absolute; left: 0; right: 0; top: 0; height: 5%; background: linear-gradient(#6e4a29, #5b3d22); box-shadow: 0 4px 8px rgba(0,0,0,.25); }
@@ -1835,6 +1892,807 @@ ZERO.voice.role = 'zero';
 CASES.filter(c => c.season === 3).forEach(c => c.scenes.forEach(s => { s.witness.voice.role = 'w:' + s.witness.name; }));
 
 /* ============================================================
+   SEASON 4: THE DOUBLE-LOCK GANG
+   Introduces Double Lock safes (two-step problems: scene op 'two').
+   New suspects, a new mastermind (the Whisker Twins), six new cases.
+   ============================================================ */
+
+Object.assign(SUSPECTS, {
+  maxwell: { e: '🫎', name: 'Maxwell Moose', short: 'Maxwell', desc: `Very proper mayor's assistant`,
+    catch: 'I beg your pardon! I follow every single rule!', cleared: 'Splendid. I shall write that down in my notebook.',
+    voice: { pitch: 0.65, rate: 0.9 } },
+  gertie: { e: '🪿', name: 'Gertie Goose', short: 'Gertie', desc: 'Loud and proud crossing guard',
+    catch: `HONK! Me? I'm busy keeping everyone SAFE!`, cleared: 'HONK HONK! Thank you kindly!',
+    voice: { pitch: 1.35, rate: 1.15 } },
+  pickles: { e: '🐷', name: 'Pickles Pig', short: 'Pickles', desc: 'Cheerful pumpkin farmer',
+    catch: `Oink! I've been out in my pumpkin patch all day!`, cleared: 'Oink-tastic! Back to my pumpkins!',
+    voice: { pitch: 1.05, rate: 1.0 } },
+  horace: { e: '🐴', name: 'Horace Horse', short: 'Horace', desc: 'Speedy marathon runner',
+    catch: 'Neigh way! I was out running laps!', cleared: 'Neigh-ce! Well, gotta run!',
+    voice: { pitch: 0.9, rate: 1.2 } },
+});
+const TWINS = { e: '🐭', name: 'The Whisker Twins', voice: { pitch: 1.6, rate: 1.2 } };
+MASTERMINDS.twins = TWINS;
+
+Object.assign(THEMES, {
+  farm:     { sky: ['#2a1a10', '#5a3418'], floor: '#6a4a24', props: ['🌽', '🍂', '🥕', '🧺', '🪵', '🌾'] },
+  orchard:  { sky: ['#1a2614', '#3a4a22'], floor: '#5a4a2a', props: ['🍏', '🍐', '🪜', '🧺', '🍂', '🐝'] },
+  factory:  { sky: ['#1c1c2c', '#38384e'], floor: '#55556a', props: ['⚙️', '🔧', '🪀', '🚂', '🎁', '🧩'] },
+  balloons: { sky: ['#10203a', '#3a5a8a'], floor: '#4a6a3a', props: ['🎈', '🪂', '🧭', '🔭', '🌤️', '🪢'] },
+  stadium:  { sky: ['#0e1a2a', '#1e3a2a'], floor: '#2f6a32', props: ['⚽', '🏀', '🧢', '📣', '🏅', '🥤'] },
+  townhall: { sky: ['#1a1a26', '#3a3346'], floor: '#5a4a3a', props: ['📜', '🖼️', '🪑', '🗝️', '🕯️', '🏛️'] },
+});
+
+/* word problems for Double Lock safes in the Training Lab */
+const LAB_TWO_TEMPLATES = {
+  'add-sub': [
+    { e: '🍪', text: 'Felix baked {a} cookies on Monday and {b} on Tuesday. Then the team ate {c} of them. How many cookies are left?' },
+    { e: '📚', text: 'The library had {a} mystery books and got {b} more. Then {c} were borrowed. How many are still on the shelf?' },
+  ],
+  'mul-add': [
+    { e: '📦', text: 'There are {a} boxes with {b} clues in each box, plus {c} loose clues on the desk. How many clues in all?' },
+    { e: '🖍️', text: 'The class has {a} packs of crayons with {b} crayons in each pack, and {c} extra crayons. How many crayons altogether?' },
+  ],
+  'mul-sub': [
+    { e: '🍎', text: 'A farmer picked {a} baskets with {b} apples in each basket. Then {c} apples were sold. How many apples are left?' },
+    { e: '⭐', text: 'Felix had {a} sticker sheets with {b} stickers on each sheet. He gave away {c} stickers. How many stickers are left?' },
+  ],
+  'div-add': [
+    { e: '🍬', text: 'Share {N} candies equally into {d} bags. Then add {c} more candies to one bag. How many candies are in that bag now?' },
+    { e: '🧩', text: 'Split {N} puzzle pieces equally among {d} detectives. Felix gives one detective {c} more pieces. How many does that detective have?' },
+  ],
+};
+
+CASES.push(
+  /* ---------------- CASE 19 ---------------- */
+  {
+    id: 'pumpkins', season: 4, title: 'The Pumpkin Patch Puzzle', icon: '🎃', theme: 'farm',
+    treasure: 'the Giant Golden Pumpkin', culprit: 'gertie',
+    intro: `Autumn has come to Starlight Town. The leaves are orange and red, and everyone is getting ready for the Harvest Festival. The star of the festival is the Giant Golden Pumpkin, so big that it takes six farmers to roll it. But this morning, it was gone! There were two tiny sets of footprints in the mud, side by side, and a note signed twice: "Catch us if you can! — W, W". Felix scratches his ear. "Two W's? Detective, this season, the safes have DOUBLE locks. Let's crack them."`,
+    scenes: [
+      { op: 'sub', title: 'The Wagon Wheels', place: 'The Pumpkin Patch',
+        witness: { e: '🐦‍⬛', name: 'Corvin the Crow', voice: { pitch: 0.75, rate: 1.0 },
+          quote: `Caw! I'm supposed to be scared of the scarecrow. But honestly, we're good friends.` },
+        story: `Corvin the Crow sits on the scarecrow's hat all night, watching the pumpkin patch. He saw someone push the Giant Golden Pumpkin onto a wooden wagon and roll it away! Every farm wagon in town has a number painted on its side, and each suspect borrowed a wagon this week. Corvin couldn't read the number in the dark, but he saw how far the wagon odometer clicked. "Work out Corvin's clue," says Felix, "and we'll know whose wagon it was."`,
+        evidence: { e: '🛞', label: 'muddy wagon tracks' }, token: '🔢',
+        problem: 'The wagon odometer started at {a}. The thief rolled it back {b} clicks. What number did it stop on?',
+        cat: { e: '🛞', label: 'Wagon number' }, out: ['pickles'] },
+      { op: 'two', kind: 'add-sub', title: 'The Hay Bales', place: 'The Hay Maze',
+        witness: { e: '🫏', name: 'Dusty the Donkey', voice: { pitch: 0.7, rate: 0.85 },
+          quote: `Hee-haw. I built that hay maze myself. Somebody took my bales and made a big mess of it.` },
+        story: `Dusty the Donkey built a giant hay maze for the festival. Last night, the thief took bales from two parts of the maze to make a soft ramp, so the pumpkin could roll down without cracking. Then some bales fell into the pond and floated away! This is a Double Lock clue: one part of the story happens first, then another. Every suspect bought hay bales from Dusty this week. "First work out how many bales were taken," says Felix, "then how many are still in the ramp."`,
+        evidence: { e: '🌾', label: 'scattered hay' }, token: '🌾',
+        problem: 'The thief took {a} bales from the north side of the maze and {b} bales from the south side. Then {c} bales fell into the pond. How many bales are left in the ramp?',
+        cat: { e: '🌾', label: 'Hay bales bought' }, out: [] },
+      { op: 'mul', title: 'The Seed Packets', place: 'The Garden Shed',
+        witness: { e: '🌻', name: 'Sunny the Sunflower', voice: { pitch: 1.4, rate: 1.05 },
+          quote: `I always face the sun, but last night I turned around to watch the thief. My neck still hurts!` },
+        story: `Sunny the Sunflower is the tallest flower in the patch, and she sees everything from up there. Last night, the thief stopped at the garden shed and took boxes of pumpkin seed packets, so they could grow their own giant pumpkins next year. Every box had the same number of packets. Each suspect bought seed packets at the shed this week, and the farmer kept a list. "Count up the packets," says Felix, "and match the list."`,
+        evidence: { e: '🌱', label: 'empty seed boxes' }, token: '🌱',
+        problem: 'The thief took {a} boxes of seed packets. Each box had {b} packets. How many packets did they take?',
+        cat: { e: '🌱', label: 'Seed packets bought' }, out: ['horace'] },
+      { op: 'two', kind: 'div-add', title: 'The Candy Corn Buckets', place: 'The Festival Gate',
+        witness: { e: '🎃', name: 'Jack the Jack-o-Lantern', voice: { pitch: 0.9, rate: 0.95 },
+          quote: `I glow all night by the gate. Nothing gets past my candle. Well, almost nothing.` },
+        story: `Jack the Jack-o-Lantern glows by the festival gate. He saw the thief share candy corn equally into buckets, to keep the festival helpers busy while the pumpkin rolled out the gate. Then the thief added some extra candy corn to one bucket, the one they kept for themselves! Every suspect has a candy bucket at the festival. "First lock: how much went in each bucket," says Felix. "Second lock: how much is in the thief's bucket now. Then we'll compare."`,
+        evidence: { e: '🍬', label: 'buckets of candy corn' }, token: '🍬',
+        problem: 'The thief shared {N} pieces of candy corn equally into {d} buckets. Then they added {c} more pieces to their own bucket. How many pieces are in the thief\'s bucket now?',
+        cat: { e: '🍬', label: 'Candy in bucket' }, out: ['maxwell'] },
+    ],
+    alibis: {
+      maxwell: `I beg your pardon! I was at Town Hall, filing papers in perfect alphabetical order.`,
+      gertie: `HONK! I was helping pumpkins cross the road! I mean, people. People cross the road. HONK.`,
+      pickles: `Oink! I was in my own pumpkin patch, singing to my pumpkins. It helps them grow!`,
+      horace: `Neigh way! I was running laps around the hay maze. Twenty... I mean, lots of laps.`,
+    },
+    confession: [
+      { art: '🪿🎃', line: `HONK. Okay. A note said the Giant Golden Pumpkin was the perfect size for a crossing guard's lookout tower.` },
+      { art: '🪿👀', line: `I wanted to stand on top of it and see every road in town, all at once! So I rolled it home in the middle of the night.` },
+      { art: '🪿😳', line: `But it's for the whole festival, not just me. I'm sorry. I'll use a ladder like everybody else.` },
+    ],
+    ending: `Gertie rolls the Giant Golden Pumpkin back to the festival, with a lot of honking. The Harvest Festival is saved! But who left that note? Inside the pumpkin's stem, Felix finds a tiny rolled-up paper, signed twice again, and two sets of teeny-tiny footprints going round and round it.`,
+    rNote: 'Two heads are better than one! — W, W', rClue: 'W signs every note twice.',
+  },
+
+  /* ---------------- CASE 20 ---------------- */
+  {
+    id: 'orchard', season: 4, title: 'The Orchard at Midnight', icon: '🍎', theme: 'orchard',
+    treasure: 'the Golden Apple', culprit: 'horace',
+    intro: `On the hills outside Starlight Town is the Old Orchard, where the very first apple tree in town still grows. Once a year, it grows a single Golden Apple, and the whole town shares it in a giant pie. This year's Golden Apple was almost ripe... until last night. Now the branch is bare! A ladder leans against the tree, far too short for a full-grown animal. Felix tilts his head. "Short ladder, tiny footprints, notes signed twice. Our W's are small, Detective. Very small."`,
+    scenes: [
+      { op: 'add', title: 'The Apple Crates', place: 'The Packing Barn',
+        witness: { e: '🐣', name: 'Hatch the Chick', voice: { pitch: 1.9, rate: 1.2 },
+          quote: `Peep! I just hatched last week, and I already saw my first mystery! This is the best!` },
+        story: `Hatch the Chick lives in the packing barn, where apples go into crates. Last night, Hatch saw the thief fill two big crates with apples, to hide the Golden Apple in the middle where no one would look. The crates were weighed on the barn scale before the thief left. Every suspect bought a crate of apples this week, and each crate weighed a different amount. "Add up both crates," says Felix, "and we'll see whose apples these are."`,
+        evidence: { e: '📦', label: 'apple crates' }, token: '🍏',
+        problem: 'The first crate weighed {a} grams and the second crate weighed {b} grams. How many grams is that altogether?',
+        cat: { e: '📦', label: 'Apples bought (grams)' }, out: ['gertie'] },
+      { op: 'two', kind: 'mul-add', title: 'The Running Shoes', place: 'The Orchard Path',
+        witness: { e: '🌳', name: 'Oakley the Old Oak', voice: { pitch: 0.55, rate: 0.8 },
+          quote: `I am the oldest tree on this hill. I have seen many things. But I have never seen anyone run that fast.` },
+        story: `Oakley the Old Oak stands beside the orchard path. Last night he felt the ground shake as someone ran laps around the orchard, again and again, to check that nobody was watching. Oakley counted the laps, and he knows how many steps one lap takes. Then the thief jogged a few extra steps to the ladder! Every suspect wears a step-counter, and each one shows a different total. "The first lock is the laps," says Felix. "The second lock adds the extra steps."`,
+        evidence: { e: '👟', label: 'deep running footprints' }, token: '👣',
+        problem: 'The thief ran {a} laps around the orchard. Each lap was {b} steps. Then they jogged {c} more steps to the ladder. How many steps did they take in all?',
+        cat: { e: '👟', label: 'Step-counter total' }, out: ['maxwell'] },
+      { op: 'div', title: 'The Apple Baskets', place: 'Under the Golden Tree',
+        witness: { e: '🍂', name: 'Russet the Leaf', voice: { pitch: 1.2, rate: 1.1 },
+          quote: `I fell off my branch right on top of the thief's nose! Then I blew away. Wheee!` },
+        story: `Russet the Leaf was hanging on the golden tree when the thief climbed up. Before taking the Golden Apple, the thief picked ordinary apples and shared them equally into baskets, so the tree would look full and nobody would notice. Every suspect picked apples at the orchard this week, and each one always fills baskets their own way. "Find out how many apples went in each basket," says Felix, "and we'll know whose habit this is."`,
+        evidence: { e: '🧺', label: 'baskets of apples' }, token: '🍎',
+        problem: 'The thief shared {N} apples equally into {d} baskets. How many apples went into each basket?',
+        cat: { e: '🧺', label: 'Apples per basket' }, out: [] },
+      { op: 'two', kind: 'add-sub', title: 'The Cider Cups', place: 'The Cider Stand',
+        witness: { e: '🍏', name: 'Crispin the Apple', voice: { pitch: 1.1, rate: 1.05 },
+          quote: `They almost turned ME into cider! Luckily, I'm too green. Phew!` },
+        story: `At the cider stand, Crispin the Apple watched the thief stop for a drink after the getaway. The thief poured two jugs of apple cider into a big cooler, then drank some of it right there, because running makes you thirsty! Every suspect has a cider cooler at the festival, and each cooler has a different amount left this morning. "First lock: how much was poured in," says Felix. "Second lock: take away what they drank."`,
+        evidence: { e: '🧃', label: 'sticky cider cups' }, token: '🧃',
+        problem: 'The thief poured {a} milliliters of cider and then {b} more milliliters into the cooler. Then they drank {c} milliliters. How much cider is left in the cooler?',
+        cat: { e: '🧃', label: 'Cider left (ml)' }, out: ['pickles'] },
+    ],
+    alibis: {
+      maxwell: `I was reading the orchard rules. Rule number one: no climbing the golden tree. I would NEVER.`,
+      gertie: `HONK! I was walking geese across the orchard road. Very important work!`,
+      pickles: `Oink! I was baking pumpkin bread. Apples? Never heard of them. Okay, I've heard of them.`,
+      horace: `Neigh way! I was out running laps! Around... the orchard. But NOT up the tree!`,
+    },
+    confession: [
+      { art: '🐴🍎', line: `Neigh... a note said that whoever eats the Golden Apple can run faster than the wind.` },
+      { art: '🏃💨', line: `The Starlight Marathon is next week, and I really, really want to win. So I took it and ran away. Very fast.` },
+      { art: '🐴🙇', line: `But winning with a stolen apple isn't really winning. I'm sorry. I'll train extra hard instead.` },
+    ],
+    ending: `Horace returns the Golden Apple, and the town bakes the biggest apple pie ever. Horace gets the first slice, because he says sorry so nicely. Next week, he runs the marathon and comes in third, all by himself! But who wrote that note? Tied to the short ladder is a ribbon, with another note signed twice, and a nibbled bit of cheese.`,
+    rNote: 'We love a good snack. Cheese, please! — W, W', rClue: 'W leaves nibbled cheese behind.',
+  },
+
+  /* ---------------- CASE 21 ---------------- */
+  {
+    id: 'toyfactory', season: 4, title: 'The Toy Factory Tangle', icon: '🧸', theme: 'factory',
+    treasure: 'the Wind-Up Star', culprit: 'pickles',
+    intro: `Starlight Toy Factory makes every toy in town, from spinning tops to robot dogs. In a glass case at the front sits the factory's very first toy, the Wind-Up Star, which still twinkles and spins when you turn its little key. This morning, the case was open and the Wind-Up Star was gone! The only clue was a hole in the wall, about the size of a teacup, and a note signed twice. "A hole that small?" Felix crouches down. "Our W's could fit through a keyhole!"`,
+    scenes: [
+      { op: 'mul', title: 'The Toy Boxes', place: 'The Packing Room',
+        witness: { e: '🪆', name: 'Nesta the Nesting Doll', voice: { pitch: 1.3, rate: 1.0 },
+          quote: `I have dolls inside of dolls inside of dolls! And ALL of us saw the thief.` },
+        story: `Nesta the Nesting Doll guards the packing room, where toys go into boxes. Last night, the thief took several boxes of spinning tops, with the same number of tops in each box, and spun them all at once! The whole factory was full of spinning, whirring tops, and nobody noticed the Wind-Up Star leaving. Each suspect bought spinning tops from the factory shop this week. "Count up the tops," says Felix, "and match the receipts."`,
+        evidence: { e: '🎁', label: 'empty toy boxes' }, token: '🌀',
+        problem: 'The thief took {a} boxes of spinning tops. Each box had {b} tops. How many tops did they spin?',
+        cat: { e: '🌀', label: 'Spinning tops bought' }, out: [] },
+      { op: 'two', kind: 'mul-sub', title: 'The Gumball Machine', place: 'The Factory Shop',
+        witness: { e: '🎲', name: 'Dicey the Dice', voice: { pitch: 1.2, rate: 1.15 },
+          quote: `I roll around the shop all night. Usually I land on six. Last night, I landed on a CLUE!` },
+        story: `In the factory shop stands a giant gumball machine. Dicey the Dice saw the thief fill bags with gumballs, the same number in each bag. Then the thief ate some of them on the way out! Each suspect bought gumball bags at the shop this week, and each one has a different number of gumballs left at home. "First lock: how many gumballs went in the bags," says Felix. "Second lock: take away the ones that got eaten."`,
+        evidence: { e: '🍬', label: 'spilled gumballs' }, token: '🔴',
+        problem: 'The thief filled {a} bags with {b} gumballs in each bag. Then they ate {c} gumballs. How many gumballs are left?',
+        cat: { e: '🍬', label: 'Gumballs left' }, out: ['horace'] },
+      { op: 'sub', title: 'The Conveyor Belt', place: 'The Assembly Line',
+        witness: { e: '🪀', name: 'Zippy the Yo-Yo', voice: { pitch: 1.5, rate: 1.25 },
+          quote: `Up, down, up, down! I was bouncing along the conveyor belt when I saw it happen!` },
+        story: `Zippy the Yo-Yo rides the conveyor belt every night for fun. He saw the thief switch the belt on and ride it right out the back door, holding the Wind-Up Star! The belt has a counter that shows how far it has moved. Each suspect works a shift on the belt, and every shift ends at a different counter number. "Work out where the counter stopped," says Felix, "and we'll know whose shift it matches."`,
+        evidence: { e: '⚙️', label: 'a stopped conveyor belt' }, token: '🔢',
+        problem: 'The belt counter started at {a}. It counted down {b} while the thief rode it. Where did the counter stop?',
+        cat: { e: '⚙️', label: 'Belt counter' }, out: ['maxwell'] },
+      { op: 'two', kind: 'add-sub', title: 'The Wind-Up Keys', place: 'The Key Drawer',
+        witness: { e: '🧸', name: 'Sir Fluffington the Teddy', voice: { pitch: 0.8, rate: 0.9 },
+          quote: `I am a very brave bear. I only hid under the blanket for a minute.` },
+        story: `Sir Fluffington the Teddy sleeps next to the key drawer, where all the little wind-up keys are kept. The thief grabbed two handfuls of keys, trying to find the one that fits the Wind-Up Star, and then dropped some of the wrong keys on the floor. Every suspect has a jar of wind-up keys at home, and each jar holds a different number. "First lock: add up the handfuls," says Felix. "Second lock: take away the dropped keys."`,
+        evidence: { e: '🗝️', label: 'scattered wind-up keys' }, token: '🗝️',
+        problem: 'The thief grabbed {a} keys and then {b} more keys. Then they dropped {c} keys that didn\'t fit. How many keys did the thief keep?',
+        cat: { e: '🗝️', label: 'Keys in jar' }, out: ['gertie'] },
+    ],
+    alibis: {
+      maxwell: `I was inspecting the factory safety rules. Every one of them. Twice.`,
+      gertie: `HONK! I was helping the toy trucks cross the factory floor!`,
+      pickles: `Oink! I was... at home. Playing with... nothing. No toys. Definitely no stars.`,
+      horace: `Neigh way! I was running laps around the factory. For exercise!`,
+    },
+    confession: [
+      { art: '🐷⭐', line: `Oink... a note said the Wind-Up Star twinkles so brightly, it could light up a whole pumpkin patch at night.` },
+      { art: '🎃🌙', line: `My pumpkins get scared of the dark! I wanted them to have a nightlight. So I took the star home.` },
+      { art: '🐷😳', line: `I'm sorry. Pumpkins can't really get scared. I think I was the one who was scared.` },
+    ],
+    ending: `Pickles returns the Wind-Up Star, and the toy makers build him a pumpkin-shaped lantern for his patch. Now his pumpkins glow every night. But who told Pickles about the star? Beside the little hole in the wall is another note, rolled up tight, signed twice, and two sets of whiskers marks in the dust.`,
+    rNote: 'No door is too small for us! — W, W', rClue: 'W can squeeze through tiny holes.',
+  },
+
+  /* ---------------- CASE 22 ---------------- */
+  {
+    id: 'balloonrace', season: 4, title: 'The Balloon Race Riddle', icon: '🎈', theme: 'balloons',
+    treasure: 'the Rainbow Balloon Trophy', culprit: 'maxwell',
+    intro: `Every autumn, hot air balloons float up from Starlight Meadow for the Great Balloon Race. The winner gets the Rainbow Balloon Trophy, a crystal balloon that changes color in the sunlight. Just before the race, the trophy vanished from its stand! The race judge found two tiny parachutes in the grass, each one no bigger than a hanky, and another note signed twice. Felix looks up at the sky. "If our W's can fly, Detective, we'd better learn to think high."`,
+    scenes: [
+      { op: 'div', title: 'The Sandbag Shuffle', place: 'The Launch Field',
+        witness: { e: '🐻‍❄️', name: 'Snowy the Polar Bear', voice: { pitch: 0.7, rate: 0.95 },
+          quote: `I fly the blue balloon! I came all the way from the North Pole for this race.` },
+        story: `Snowy the Polar Bear is a balloon pilot. Balloons carry sandbags, and pilots drop sand to float higher. Last night, Snowy saw the thief take sand from the supply pile and pour it equally into sandbags, then tie them to a balloon basket. Every pilot in the race fills their sandbags their own way. Each suspect practiced balloon flying this week. "Find out how much sand went in each bag," says Felix, "and we'll see whose balloon it was."`,
+        evidence: { e: '⚖️', label: 'heavy sandbags' }, token: '🪨',
+        problem: 'The thief poured {N} scoops of sand equally into {d} sandbags. How many scoops went in each bag?',
+        cat: { e: '⚖️', label: 'Scoops per sandbag' }, out: ['horace'] },
+      { op: 'two', kind: 'mul-add', title: 'The Balloon Ropes', place: 'The Basket Tent',
+        witness: { e: '🪁', name: 'Swoop the Kite', voice: { pitch: 1.4, rate: 1.15 },
+          quote: `I zoom around the meadow all day! But last night, the wind blew me right into the action!` },
+        story: `Swoop the Kite was tangled in the basket tent when the thief came in. He watched them tie the basket to a balloon with ropes, the same length for every rope, and then add one extra long rope as a ladder to climb in! Every balloon in the race uses a different amount of rope. Each suspect tied a practice balloon this week. "The first lock is the matching ropes," says Felix. "The second lock adds the ladder rope."`,
+        evidence: { e: '🪢', label: 'knotted ropes' }, token: '🪢',
+        problem: 'The thief tied {a} ropes, each {b} centimeters long. Then they added a ladder rope {c} centimeters long. How many centimeters of rope is that in all?',
+        cat: { e: '🪢', label: 'Rope used (cm)' }, out: [] },
+      { op: 'add', title: 'The Wind Gauge', place: 'The Weather Tower',
+        witness: { e: '☁️', name: 'Nimbus the Cloud', voice: { pitch: 1.0, rate: 0.85 },
+          quote: `I drifted right over the meadow. From up here, I saw a balloon take off in the middle of the night.` },
+        story: `Nimbus the Cloud floats over the weather tower, where a wind gauge measures how far the wind blows. Last night, a balloon took off early, and the wind carried it in two big gusts! The wind gauge recorded both gusts. Every suspect flew a practice balloon this week, and the gauge recorded how far each balloon drifted. "Add up both gusts," says Felix, "and we'll match the flight."`,
+        evidence: { e: '🌬️', label: 'the wind gauge' }, token: '🌬️',
+        problem: 'The first gust carried the balloon {a} meters and the second gust carried it {b} meters. How far did the balloon drift altogether?',
+        cat: { e: '🌬️', label: 'Balloon drift (meters)' }, out: ['gertie'] },
+      { op: 'two', kind: 'mul-sub', title: 'The Popped Balloons', place: 'The Party Tent',
+        witness: { e: '🎈', name: 'Bobbles the Balloon', voice: { pitch: 1.7, rate: 1.2 },
+          quote: `I'm a party balloon, not a racing balloon. But I was VERY nervous when that thief came by with a pin!` },
+        story: `In the party tent, Bobbles the Balloon watched the thief grab bunches of party balloons, the same number in each bunch, to lift the trophy into the air. But some of the balloons popped on a sharp branch! Every suspect bought party balloons for the race celebration, and each one has a different number still floating at home. "First lock: how many balloons were in the bunches," says Felix. "Second lock: take away the popped ones."`,
+        evidence: { e: '🎉', label: 'popped balloon pieces' }, token: '🎈',
+        problem: 'The thief grabbed {a} bunches of balloons with {b} balloons in each bunch. Then {c} balloons popped. How many balloons were still floating?',
+        cat: { e: '🎈', label: 'Balloons still floating' }, out: ['pickles'] },
+    ],
+    alibis: {
+      maxwell: `I beg your pardon. I was... checking the race rules. Up close. In a balloon. For safety!`,
+      gertie: `HONK! I was flying in a V shape with my cousins. Geese don't need balloons!`,
+      pickles: `Oink! I was selling pumpkin pie at the race. Very popular!`,
+      horace: `Neigh way! I was running under the balloons, racing them from the ground!`,
+    },
+    confession: [
+      { art: '🫎🎈', line: `I beg your pardon... a note said the Rainbow Balloon Trophy belongs in Town Hall, where everything is neat and orderly.` },
+      { art: '🫎📋', line: `Balloon races are so messy! Ropes everywhere! So I took the trophy to keep it tidy in a filing cabinet.` },
+      { art: '🫎😳', line: `But a trophy is for winning, not for filing. I'm sorry. I'll even try flying a balloon myself.` },
+    ],
+    ending: `Maxwell returns the Rainbow Balloon Trophy, and the race begins in a sky full of color. Maxwell rides in Snowy's basket, and he loves it so much he forgets all about rules. But the tiny parachutes are still a mystery. Tucked in one of them is another note signed twice, in very, very small handwriting.`,
+    rNote: 'Little parachutes for little paws. Wheee! — W, W', rClue: 'W is very, very small.',
+  },
+
+  /* ---------------- CASE 23 ---------------- */
+  {
+    id: 'stadium', season: 4, title: 'The Stadium Stumper', icon: '🏟️', theme: 'stadium',
+    treasure: `the Champion's Cup`, culprit: 'gertie',
+    intro: `Tonight is the big game at Starlight Stadium! The Starlight Stars play the Moonvale Meteors, and the winners will lift the Champion's Cup, a shining silver trophy with handles shaped like stars. But during the halftime show, the lights flickered, the crowd gasped, and the cup was gone from its stand! On the stand were two tiny paw prints in silver polish, and a note signed twice. "Halftime is almost over," says Felix. "Let's find that cup before the final whistle!"`,
+    scenes: [
+      { op: 'sub', title: 'The Scoreboard Switch', place: 'The Scoreboard Room',
+        witness: { e: '⏱️', name: 'Tick the Stopwatch', voice: { pitch: 1.3, rate: 1.3 },
+          quote: `Tick tick tick! I time everything! And the thief was in that room for exactly... too long!` },
+        story: `Tick the Stopwatch lives in the scoreboard room, timing every game. During halftime, someone slipped into the room and flickered the lights to distract the crowd! The scoreboard counter shows a number that changes whenever someone presses its buttons. Every suspect has a staff pass with its own number, and the thief used their pass number to open the scoreboard. "Work out the number," says Felix, "and we'll check the passes."`,
+        evidence: { e: '💡', label: 'flickering lights' }, token: '🔢',
+        problem: 'The scoreboard counter showed {a}. Then the thief pressed the down button {b} times. What number does it show now?',
+        cat: { e: '🪪', label: 'Staff pass number' }, out: ['maxwell'] },
+      { op: 'two', kind: 'div-add', title: 'The Snack Trays', place: 'The Snack Stand',
+        witness: { e: '🥨', name: 'Twisty the Pretzel', voice: { pitch: 1.2, rate: 1.1 },
+          quote: `I'm all twisted up about this! Someone handed out snacks and then kept a big pile for themselves!` },
+        story: `Twisty the Pretzel works at the snack stand. At halftime, someone grabbed a big bag of pretzel bites and shared them equally onto trays for the band, to keep them busy. Then they piled extra bites onto their own tray! Every suspect bought pretzel bites at the stand tonight, and each one ended up with a different number. "First lock: how many on each tray," says Felix. "Second lock: add the extra bites."`,
+        evidence: { e: '🍽️', label: 'snack trays' }, token: '🥨',
+        problem: 'The thief shared {N} pretzel bites equally onto {d} trays. Then they added {c} more bites to their own tray. How many bites are on the thief\'s tray?',
+        cat: { e: '🥨', label: 'Pretzel bites' }, out: ['pickles'] },
+      { op: 'mul', title: 'The Marching Band', place: 'The Field',
+        witness: { e: '🥁', name: 'Rumble the Drum', voice: { pitch: 0.7, rate: 1.0 },
+          quote: `BOOM BOOM! I keep the beat! Someone in the band was marching out of step!` },
+        story: `Rumble the Drum leads the marching band at halftime. Tonight, someone sneaked into the band wearing a borrowed uniform, and marched the cup right off the field! The band marches in rows, with the same number of players in every row, and the extra player made one row too long. Every suspect marched in the band at practice this week. "Count the band players," says Felix, "and see which practice it matches."`,
+        evidence: { e: '🎺', label: 'a dropped trumpet' }, token: '🎺',
+        problem: 'The band marched in {a} rows, with {b} players in each row. How many players marched?',
+        cat: { e: '🎺', label: 'Band players' }, out: [] },
+      { op: 'two', kind: 'add-sub', title: 'The Foam Fingers', place: 'The Fan Shop',
+        witness: { e: '🧹', name: 'Bristle the Broom', voice: { pitch: 0.95, rate: 0.95 },
+          quote: `I sweep up after every game. Tonight I found something WAY more interesting than popcorn.` },
+        story: `Bristle the Broom sweeps the fan shop after every game. Tonight he found foam fingers everywhere! The thief bought two big stacks of foam fingers and gave them to fans, so the waving would hide them as they ran past with the cup. Then some fans gave their foam fingers back. Every suspect bought foam fingers tonight. "First lock: add both stacks," says Felix. "Second lock: take away the ones that came back."`,
+        evidence: { e: '👆', label: 'a pile of foam fingers' }, token: '👆',
+        problem: 'The thief bought {a} foam fingers and then {b} more. Then fans gave back {c} of them. How many foam fingers did the thief give away for good?',
+        cat: { e: '👆', label: 'Foam fingers' }, out: ['horace'] },
+    ],
+    alibis: {
+      maxwell: `I was in the stands, checking that everyone sat in the correct seat.`,
+      gertie: `HONK! I was the halftime show! Crossing guard dance! Did you see it?`,
+      pickles: `Oink! I was eating nachos. So many nachos.`,
+      horace: `Neigh way! I was running laps around the field at halftime. The crowd loved it!`,
+    },
+    confession: [
+      { art: '🪿🏆', line: `HONK... it's me again. A note said the Champion's Cup is the shiniest thing in the whole town.` },
+      { art: '🪿🧽', line: `I wanted to use it to show the little goslings how to be champions at crossing the street. Shiny things get their attention!` },
+      { art: '🪿🙏', line: `I'm sorry, everyone. Next time I'll make my OWN shiny trophy for the goslings.` },
+    ],
+    ending: `Gertie returns the Champion's Cup just before the final whistle. The Starlight Stars win by one point, and Gertie honks the loudest cheer in the stadium. But the silver paw prints lead somewhere. Felix follows them under the bleachers, where he finds another note signed twice... and two tiny umbrellas, perfect for mice.`,
+    rNote: 'Next stop: the biggest vault in town. — W, W', rClue: 'W are a pair of mice!',
+  },
+
+  /* ---------------- CASE 24 ---------------- */
+  {
+    id: 'townhall', season: 4, title: 'The Town Hall Vault', icon: '🏛️', theme: 'townhall',
+    treasure: 'the Starlight Charter', culprit: 'maxwell', finale: true, mastermind: 'twins', finaleBadge: 'w_unmasked',
+    intro: `Deep under Starlight Town Hall is the Great Vault, with the strongest double lock in town. Inside is the Starlight Charter, the very first page ever written about the town, with everyone's names on it. Tonight, the vault door is wide open, and the Charter is gone! On the floor sits a note: "You can't catch BOTH of us! — W, W". Felix tightens his scarf. "Two locks, two thieves, two W's. This is it, Detective. Let's catch the Whisker Twins!"`,
+    scenes: [
+      { op: 'mul', title: 'The Lantern Rows', place: 'The Grand Hall',
+        witness: { e: '🗿', name: 'Granite the Statue', voice: { pitch: 0.5, rate: 0.75 },
+          quote: `I have stood in this hall for one hundred years. Tonight was the most exciting night of all.` },
+        story: `Granite the Statue stands in the middle of the Grand Hall and never moves. Tonight he watched someone set out rows of lanterns across the floor, the same number in every row, to light the way to the vault stairs. Every suspect helped set up lanterns for the town party last week, and each one used a different number. "Count up the lanterns," says Felix, "and match it to the party plan."`,
+        evidence: { e: '🏮', label: 'rows of lanterns' }, token: '🏮',
+        problem: 'The thief set out {a} rows of lanterns, with {b} lanterns in each row. How many lanterns is that?',
+        cat: { e: '🏮', label: 'Lanterns set out' }, out: ['gertie'] },
+      { op: 'two', kind: 'mul-sub', title: 'The Cheese Crumbs', place: 'The Vault Stairs',
+        witness: { e: '🕰️', name: 'Tock the Old Clock', voice: { pitch: 0.75, rate: 0.85 },
+          quote: `Bong... bong... I have counted every hour on these stairs. And every crumb, too.` },
+        story: `Tock the Old Clock stands at the top of the vault stairs. He watched the thief carry cheese crackers down the stairs, in boxes with the same number of crackers in each box. Then the thief nibbled some crackers on every step. Little nibbles! Every suspect brought a snack box to the town party, and each one has a different number of crackers left. "First lock: how many crackers in the boxes," says Felix. "Second lock: take away the nibbled ones."`,
+        evidence: { e: '🧀', label: 'nibbled cheese crackers' }, token: '🧀',
+        problem: 'The thief carried {a} boxes with {b} cheese crackers in each box. Then they nibbled {c} crackers. How many crackers were left?',
+        cat: { e: '🧀', label: 'Crackers left' }, out: [] },
+      { op: 'div', title: 'The Vault Keys', place: 'The Key Room',
+        witness: { e: '🔔', name: 'Ding the Bell', voice: { pitch: 1.3, rate: 1.05 },
+          quote: `Ding ding! I should have rung the alarm! But I was so surprised, I forgot how to ding.` },
+        story: `Ding the Bell hangs in the key room, ready to ring if anything goes wrong. Tonight, the thief took all the old brass keys from the wall and shared them equally into key rings, trying every ring on the vault door. Each suspect has a set of Town Hall keys, and each one keeps them on rings their own way. "Find the keys on each ring," says Felix, "and we'll see whose habit this is."`,
+        evidence: { e: '🗝️', label: 'rings of keys' }, token: '🗝️',
+        problem: 'The thief shared {N} keys equally onto {d} key rings. How many keys went on each ring?',
+        cat: { e: '🗝️', label: 'Keys per ring' }, out: ['pickles'] },
+      { op: 'two', kind: 'add-sub', title: 'The Ink Stamps', place: 'The Vault Door',
+        witness: { e: '🖋️', name: 'Quill the Pen', voice: { pitch: 1.1, rate: 0.95 },
+          quote: `I write all the town's important papers. I know a sneaky signature when I see one!` },
+        story: `Quill the Pen lives on the desk beside the vault door. Every visitor stamps the vault book with an ink stamp. Tonight, the thief stamped the book over and over, from two different ink pads, to cover up their tiny footprints. Then Quill wiped some stamps off, because they were smudged. Every suspect has stamped the vault book before. "First lock: add up both ink pads," says Felix. "Second lock: take away the smudged ones."`,
+        evidence: { e: '📕', label: 'a stamped vault book' }, token: '🖋️',
+        problem: 'The thief made {a} stamps with the red ink pad and {b} stamps with the blue ink pad. Then {c} smudged stamps were wiped away. How many stamps are left in the book?',
+        cat: { e: '📕', label: 'Stamps in the book' }, out: ['horace'] },
+    ],
+    alibis: {
+      maxwell: `I beg your pardon... I was in my office. Being tall. Very tall. Squeak. I mean, ahem.`,
+      gertie: `HONK! I was guarding the crosswalk outside Town Hall all night!`,
+      pickles: `Oink! I was at the town party, eating cheese... I mean, pumpkin pie!`,
+      horace: `Neigh way! I was running laps around Town Hall. For fun!`,
+    },
+    unmask: {
+      art: '🫎➡️🐭🐭',
+      line: `Felix gives a gentle tug on Maxwell's tall moose antlers... and the whole costume wobbles, tips over, and out tumble TWO little mice! One was standing on the other's shoulders the whole time!`,
+      note: `The real Maxwell was at the library all night, reading a book called Rules About Rules. He is VERY shocked.`,
+    },
+    confession: [
+      { art: '🐭🐭', line: `Squeak! I'm Nib! And I'm Nub! We're the Whisker Twins, and we always do everything together!` },
+      { art: '🐭📝', line: `We're so small that nobody ever notices us. So we wrote notes and got the big animals to do our tricks for us.` },
+      { art: '🐭🙏', line: `We just wanted our names in the Starlight Charter, like everybody else. We're sorry. Can two small mice still be part of the town?` },
+    ],
+    ending: `The Whisker Twins give back the Starlight Charter. Then the mayor has an idea, and she writes two new names at the very bottom of the page, in tiny, careful letters: Nib and Nub, official Keyhole Inspectors of Starlight Town. Now they check that every lock in town works perfectly. And you, Detective, receive the Silver Double Key of Starlight Town.`,
+    rNote: 'Thank you for noticing us. Squeak, squeak! — W, W', rClue: 'W is the Whisker Twins, two mice!',
+  },
+);
+
+SEASONS.push({ n: 4, title: 'The Double-Lock Gang', who: 'W', suspects: ['maxwell', 'gertie', 'pickles', 'horace'], finale: 23,
+  boardIntro: 'Notes signed twice, <b>W, W</b>, keep turning up beside tiny footprints. This season brings Double Lock safes!',
+  boardSolved: '🐭🐭 Mystery solved! W is <b>the Whisker Twins</b>, now Starlight Town\'s official Keyhole Inspectors.',
+  award: 'Silver Double Key of Starlight Town', seal: '🗝️', villain: 'the Whisker Twins' });
+
+['maxwell', 'gertie', 'pickles', 'horace'].forEach(id => { SUSPECTS[id].voice.role = id; });
+TWINS.voice.role = 'twins';
+CASES.filter(c => c.season === 4).forEach(c => c.scenes.forEach(s => { s.witness.voice.role = 'w:' + s.witness.name; }));
+
+/* ============================================================
+   SEASON 5: THE DREAM KINGDOM (grand finale)
+   A portal opens in the Treehouse. The reformed masterminds come back
+   to help. New suspects, the last mastermind (Smolder, the dragon "D").
+   ============================================================ */
+
+Object.assign(SUSPECTS, {
+  bramble: { e: '🧌', name: 'Bramble the Troll', short: 'Bramble', desc: 'Grumpy bridge keeper',
+    catch: 'Hrrmph! Nobody crosses my bridge without a riddle, and nobody blames me without a reason!', cleared: 'Hrrmph. Fine. Thank you. Hrrmph.',
+    voice: { pitch: 0.55, rate: 0.85 } },
+  marina: { e: '🧜‍♀️', name: 'Marina the Mermaid', short: 'Marina', desc: 'Lullaby singer of Moonlight Lake',
+    catch: 'La-la-WHAT? I was singing the fish to sleep!', cleared: 'La la la! I knew you would see the truth!',
+    voice: { pitch: 1.3, rate: 0.95 } },
+  pip: { e: '🧝', name: 'Pip the Elf', short: 'Pip', desc: 'Toy maker who loves pranks',
+    catch: 'Hee hee! A prank, maybe. But a crime? Never!', cleared: 'Hee hee! Off to make more toys!',
+    voice: { pitch: 1.45, rate: 1.2 } },
+  stardust: { e: '🦄', name: 'Stardust the Unicorn', short: 'Stardust', desc: 'Very sparkly, very proud',
+    catch: 'Excuse me? Do I look like a thief? I look like a SUPERSTAR!', cleared: 'Of course. Sparkle on, Detective!',
+    voice: { pitch: 1.15, rate: 1.0 } },
+});
+const SMOLDER = { e: '🐲', name: 'Smolder the Dragon', voice: { pitch: 0.6, rate: 0.9 } };
+MASTERMINDS.smolder = SMOLDER;
+
+Object.assign(THEMES, {
+  clouds:    { sky: ['#1c1838', '#4a3e7a'], floor: '#8a86b8', props: ['☁️', '🌙', '⭐', '🛏️', '💤', '🪶'] },
+  candy:     { sky: ['#3a1430', '#7a2a5a'], floor: '#c07090', props: ['🍭', '🍬', '🧁', '🍩', '🍫', '🍪'] },
+  lake:      { sky: ['#081a30', '#163a5e'], floor: '#1e5a7a', props: ['🌙', '🐚', '🪷', '🫧', '🐟', '🌊'] },
+  mirrors:   { sky: ['#1a1030', '#3a2a5e'], floor: '#5a4a7a', props: ['🪞', '✨', '🔮', '🕯️', '🎩', '💫'] },
+  snowglobe: { sky: ['#0e2238', '#3a6a8a'], floor: '#dde8f2', props: ['❄️', '🎄', '⛸️', '🧣', '🏔️', '🌨️'] },
+  dragon:    { sky: ['#2a0e0e', '#6a2a1a'], floor: '#4a2a1a', props: ['🔥', '💎', '🏔️', '🪙', '👑', '🌋'] },
+});
+
+CASES.push(
+  /* ---------------- CASE 25 ---------------- */
+  {
+    id: 'cloudcastle', season: 5, title: 'The Pillow Fort Mystery', icon: '☁️', theme: 'clouds',
+    treasure: 'the Pillow of Sweet Dreams', culprit: 'pip',
+    intro: `One night, a sparkly swirl appears on the Treehouse wall. It's a portal! Felix peeks through. "Detective, it's the Dream Kingdom, the land where all the dreams are made!" On the other side, the Dream Queen is very worried. The Pillow of Sweet Dreams, which gives everyone happy dreams, has been stolen from the Cloud Castle. The note left behind is warm, a little scorched at the edges, and signed "D". Then a familiar face steps out of the clouds. It's Professor Remainder! "I'm a good guy now," he says, "and I know a thing or two about tricky notes. Let me help!"`,
+    scenes: [
+      { op: 'add', title: 'The Feather Trail', place: 'The Cloud Stairs',
+        witness: { e: '🪶', name: 'Plume the Feather', voice: { pitch: 1.5, rate: 1.1 },
+          quote: `I fell right out of that pillow! I floated down the stairs, slowly, slowly, and I saw everything.` },
+        story: `Plume the Feather lives inside the Pillow of Sweet Dreams, but she fell out while the thief ran down the Cloud Stairs. She saw the thief take the stairs in two big bounces. Professor Remainder points at the cloud steps. "Each step has a number on it," he says. "Every suspect bounced down these stairs yesterday, and each one stopped on a different step." Felix nods. "Add up both bounces, and we'll match the step."`,
+        evidence: { e: '🪶', label: 'a trail of feathers' }, token: '🪶',
+        problem: 'The thief bounced down {a} cloud steps, and then {b} more. How many steps did they bounce down altogether?',
+        cat: { e: '☁️', label: 'Cloud steps bounced' }, out: ['marina'] },
+      { op: 'two', kind: 'mul-add', title: 'The Pillow Fort', place: 'The Sleepy Tower',
+        witness: { e: '🌜', name: 'Luna the Moon', voice: { pitch: 0.95, rate: 0.85 },
+          quote: `I shine through the tower window every night. Last night, someone built a fort right under my light.` },
+        story: `Luna the Moon looked into the Sleepy Tower and saw the thief build a giant pillow fort to hide in. The thief stacked the pillows in piles, with the same number in every pile, and then threw a few extra pillows on top for a roof. Every suspect borrowed pillows from the tower this week. "The first lock is the piles," says Felix. "The second lock adds the roof pillows."`,
+        evidence: { e: '🛏️', label: 'a wobbly pillow fort' }, token: '🛏️',
+        problem: 'The thief made {a} piles with {b} pillows in each pile. Then they added {c} pillows for the roof. How many pillows did they use in all?',
+        cat: { e: '🛏️', label: 'Pillows borrowed' }, out: [] },
+      { op: 'div', title: 'The Bedtime Stories', place: 'The Story Library',
+        witness: { e: '🫧', name: 'Fizz the Bubble', voice: { pitch: 1.8, rate: 1.25 },
+          quote: `Pop! Sorry, that wasn't me popping. I'm still here! I saw the thief in the library!` },
+        story: `Fizz the Bubble floats around the Story Library, where every bedtime story in the Dream Kingdom is kept. The thief grabbed a big pile of storybooks and shared them equally into sacks, to cover up the pillow inside one of them. Each suspect checked out storybooks this week, and each one always packs them their own way. Professor Remainder chuckles. "Sharing equally! My favorite. Let's see if there's anything left over."`,
+        evidence: { e: '📚', label: 'sacks of storybooks' }, token: '📖',
+        problem: 'The thief shared {N} storybooks equally into {d} sacks. How many storybooks went into each sack?',
+        cat: { e: '📖', label: 'Books per sack' }, out: ['bramble'] },
+      { op: 'two', kind: 'add-sub', title: 'The Wish Coins', place: 'The Wishing Well',
+        witness: { e: '⭐', name: 'Shimmer the Star', voice: { pitch: 1.3, rate: 1.05 },
+          quote: `Every wish in the well makes me twinkle. Last night, I twinkled a LOT, and then I stopped twinkling.` },
+        story: `Shimmer the Star lives at the bottom of the Wishing Well. Before running away, the thief tossed in two handfuls of wish coins, wishing nobody would follow. Then they scooped some coins back out, because they needed them for the getaway! Every suspect has a wish-coin pouch, and each one has a different number of coins in it. "First lock: add up both handfuls," says Felix. "Second lock: take away the coins they scooped out."`,
+        evidence: { e: '🪙', label: 'wish coins' }, token: '🪙',
+        problem: 'The thief tossed {a} wish coins into the well, and then {b} more. Then they scooped {c} coins back out. How many coins are still in the well?',
+        cat: { e: '🪙', label: 'Wish coins' }, out: ['stardust'] },
+    ],
+    alibis: {
+      bramble: `Hrrmph! I was guarding my bridge all night. Nobody crossed it. Not even a dream.`,
+      marina: `La la la! I was singing lullabies at Moonlight Lake. The fish can tell you!`,
+      pip: `Hee hee! I was in my workshop, making toys. Definitely not pillow forts.`,
+      stardust: `I was polishing my horn. It takes a very long time to be this sparkly.`,
+    },
+    confession: [
+      { art: '🧝🛏️', line: `Hee... okay. A warm note said the Pillow of Sweet Dreams makes the best pillow fight ever.` },
+      { art: '🧝💥', line: `I just wanted ONE giant pillow fight. But then the whole kingdom started having grumpy dreams, and I got scared.` },
+      { art: '🧝🙇', line: `I'm sorry. That prank went way too far. I'll make everyone a new pillow to say sorry.` },
+    ],
+    ending: `Pip gives back the Pillow of Sweet Dreams, and the whole Dream Kingdom sighs happily as good dreams float back. The Dream Queen thanks you with a sleepy smile. Professor Remainder holds the warm note up to the moonlight. "Look, Detective. These scorch marks aren't from a candle. Something breathed on this paper."`,
+    rNote: 'Every treasure belongs in MY pile. — D', rClue: 'D leaves warm, scorched notes.',
+  },
+
+  /* ---------------- CASE 26 ---------------- */
+  {
+    id: 'candykingdom', season: 5, title: 'The Candy Crown Caper', icon: '🍭', theme: 'candy',
+    treasure: 'the Candy Crown', culprit: 'marina',
+    intro: `Past the Cloud Castle is Candy Hill, where the trees grow lollipops and the rivers run with chocolate milk. The Candy Crown sits on top of the hill. It's made of rock candy, and it glows in every color. But this morning, it was gone! In its place is a warm note signed "D", and a sticky trail going down the hill. A parrot swoops down. It's Mister Mimic! "Sticky situation, sticky situation!" he squawks. "I can copy any voice, Detective. Maybe I can copy the thief's tricks, too!"`,
+    scenes: [
+      { op: 'two', kind: 'div-add', title: 'The Gumdrop Jars', place: 'The Gumdrop Garden',
+        witness: { e: '🍭', name: 'Lolly the Lollipop', voice: { pitch: 1.6, rate: 1.15 },
+          quote: `Swirly-twirly, I was so dizzy! But I saw the thief in the garden, I promise!` },
+        story: `Lolly the Lollipop grows in the Gumdrop Garden. She saw the thief pick gumdrops and share them equally into jars, so they could hide the shiny crown under a pile of colorful candy. Then the thief added a few extra gumdrops to their own jar for a snack. Every suspect picked gumdrops this week. "First lock: how many in each jar," says Felix. "Second lock: add the snack gumdrops."`,
+        evidence: { e: '🫙', label: 'jars of gumdrops' }, token: '🍬',
+        problem: `The thief shared {N} gumdrops equally into {d} jars. Then they added {c} more gumdrops to their own jar. How many gumdrops are in the thief's jar?`,
+        cat: { e: '🍬', label: 'Gumdrops in jar' }, out: ['pip'] },
+      { op: 'sub', title: 'The Chocolate River', place: 'The Chocolate Bridge',
+        witness: { e: '🍩', name: 'Sprinkles the Donut', voice: { pitch: 1.1, rate: 1.0 },
+          quote: `I was floating in the chocolate river like a little boat. Then SPLASH! Somebody jumped in!` },
+        story: `Sprinkles the Donut was floating down the Chocolate River when the thief jumped in with the Candy Crown and swam away! The river has a depth stick that shows how high the chocolate milk is. The splash made the chocolate milk spill over the sides. Every suspect splashed in the river this week, and Mister Mimic remembers the depth stick reading after each splash. "Work out the new height," says Felix.`,
+        evidence: { e: '🌊', label: 'chocolate splashes' }, token: '🍫',
+        problem: 'The chocolate milk was {a} millimeters deep. The big splash spilled {b} millimeters over the sides. How deep is the river now?',
+        cat: { e: '🍫', label: 'River depth (mm)' }, out: ['stardust'] },
+      { op: 'two', kind: 'mul-sub', title: 'The Cupcake Towers', place: 'The Bakery',
+        witness: { e: '🧁', name: 'Frosting the Cupcake', voice: { pitch: 1.35, rate: 1.05 },
+          quote: `Somebody knocked over my cupcake towers! And they ate some of my friends! Very rude.` },
+        story: `Frosting the Cupcake works at the Candy Hill bakery. The thief stacked cupcakes into towers, with the same number in each tower, to make a wall to hide behind. Then they ate some cupcakes while they were waiting! Every suspect bought cupcakes at the bakery this week. Mister Mimic squawks, "Cupcake crumbs, cupcake crumbs!" Felix nods. "First lock: how many cupcakes in the towers. Second lock: take away the ones they ate."`,
+        evidence: { e: '🧁', label: 'cupcake crumbs' }, token: '🧁',
+        problem: 'The thief built {a} towers with {b} cupcakes in each tower. Then they ate {c} cupcakes. How many cupcakes were left?',
+        cat: { e: '🧁', label: 'Cupcakes left' }, out: [] },
+      { op: 'mul', title: 'The Candy Canes', place: 'The Candy Cane Forest',
+        witness: { e: '🍫', name: 'Cocoa the Chocolate Bar', voice: { pitch: 0.8, rate: 0.9 },
+          quote: `I was melting in the sun when the thief came by. Very hard to run when you're melting.` },
+        story: `Cocoa the Chocolate Bar was resting in the Candy Cane Forest. The thief cut candy canes into bundles, with the same number in each bundle, and used them to build a raft to cross the lake! Each suspect has gathered candy canes in the forest before. Cocoa counted the bundles and peeked at one. "Count up the canes," says Felix, "and we'll see whose bundle-making it matches."`,
+        evidence: { e: '🪵', label: 'a candy cane raft' }, token: '🍬',
+        problem: 'The thief made {a} bundles with {b} candy canes in each bundle. How many candy canes did they use?',
+        cat: { e: '🍬', label: 'Candy canes gathered' }, out: ['bramble'] },
+    ],
+    alibis: {
+      bramble: `Hrrmph! Candy makes my teeth hurt. I was at my bridge, eating vegetables.`,
+      marina: `La la... I was swimming. In the lake. Not the chocolate river. Probably.`,
+      pip: `Hee hee! I was building a gingerbread house! Okay, I ate most of it.`,
+      stardust: `I was taking a sparkle bath. Candy is too sticky for my beautiful mane.`,
+    },
+    confession: [
+      { art: '🧜‍♀️👑', line: `La la... a warm note said the Candy Crown glows so beautifully under the water.` },
+      { art: '🧜‍♀️🌙', line: `My lake gets so dark at night. I wanted something glowing to sing beside. So I swam it away.` },
+      { art: '🧜‍♀️💧', line: `I'm sorry. It isn't fair to the whole hill. I'll find a different way to light my lake.` },
+    ],
+    ending: `Marina gives back the Candy Crown, and Candy Hill glows in every color again. The candy bakers give Marina a jar of glowing jellybeans for her lake, and everyone is happy. Mister Mimic copies the warm note's handwriting perfectly, then frowns. "This writer has very, very big claws. Claws as big as a whole hand!"`,
+    rNote: 'Shiny, shiny! I want it ALL. — D', rClue: 'D has very big claws.',
+  },
+
+  /* ---------------- CASE 27 ---------------- */
+  {
+    id: 'lullabylake', season: 5, title: 'The Lullaby Lake Lockbox', icon: '🐚', theme: 'lake',
+    treasure: 'the Lullaby Shell', culprit: 'bramble',
+    intro: `Moonlight Lake is the quietest place in the Dream Kingdom. In the middle of the lake floats the Lullaby Shell. When you hold it to your ear, it sings a soft song that helps every creature in the kingdom fall asleep. Last night, the Lullaby Shell disappeared, and nobody could sleep a wink! A soggy, scorched note signed "D" floats by. Then the lake bubbles, and up pops the Great Zero! "Ta-da!" says the squid magician. "The water is my home. Let me help you, Detective!"`,
+    scenes: [
+      { op: 'mul', title: 'The Lily Pads', place: 'The Lily Pad Path',
+        witness: { e: '🪷', name: 'Lotus the Water Lily', voice: { pitch: 1.2, rate: 0.9 },
+          quote: `Someone hopped across my lily pads, step, step, step. They were very heavy feet.` },
+        story: `Lotus the Water Lily floats near the shore. Last night the thief crossed the lake on lily pads, hopping in rows with the same number of pads in each row. The Great Zero counted every wet footprint left on the pads. Each suspect crossed the lily pad path this week, and every crossing made a different number of footprints. "Count up the pads," says Felix, "and we'll find the matching crossing."`,
+        evidence: { e: '👣', label: 'wet footprints' }, token: '🪷',
+        problem: 'The thief hopped across {a} rows of lily pads, with {b} pads in each row. How many lily pads did they hop on?',
+        cat: { e: '🪷', label: 'Lily pads hopped' }, out: [] },
+      { op: 'two', kind: 'add-sub', title: 'The Pebble Pile', place: 'The Pebble Beach',
+        witness: { e: '🐚', name: 'Shelly the Seashell', voice: { pitch: 1.4, rate: 1.0 },
+          quote: `I'm the Lullaby Shell's cousin! I'm just a regular shell. But I saw who took her!` },
+        story: `Shelly the Seashell lives on Pebble Beach. She saw the thief scoop up two piles of pebbles and drop them into a sack, to weigh down a boat so it wouldn't tip over. Then some pebbles fell out through a hole in the sack! Every suspect collected pebbles on the beach this week. "First lock: add up both piles," says Felix. "Second lock: take away the pebbles that fell out."`,
+        evidence: { e: '🪨', label: 'a leaky pebble sack' }, token: '🪨',
+        problem: 'The thief scooped {a} pebbles and then {b} more pebbles into the sack. Then {c} pebbles fell out of a hole. How many pebbles are still in the sack?',
+        cat: { e: '🪨', label: 'Pebbles in sack' }, out: ['pip'] },
+      { op: 'sub', title: 'The Rowboat', place: 'The Boat Dock',
+        witness: { e: '🛶', name: 'Paddles the Canoe', voice: { pitch: 0.9, rate: 1.0 },
+          quote: `I was tied to the dock, sleeping. Then somebody took my friend the rowboat for a midnight ride!` },
+        story: `Paddles the Canoe sleeps at the boat dock. The thief untied the rowboat and rowed out to the Lullaby Shell. Every boat on the lake has a counter that counts down how many paddle strokes are left before it needs a rest. Each suspect has rowed this boat before. The Great Zero waves an arm at the counter. "This number will help us!" Felix nods. "Work out where the counter stopped."`,
+        evidence: { e: '🚣', label: 'a wet rowboat' }, token: '🔢',
+        problem: 'The rowboat counter started at {a}. The thief rowed {b} strokes. What number is the counter on now?',
+        cat: { e: '🔢', label: 'Rowboat counter' }, out: ['stardust'] },
+      { op: 'two', kind: 'mul-add', title: 'The Fireflies', place: 'The Firefly Cove',
+        witness: { e: '🪼', name: 'Jelly the Jellyfish', voice: { pitch: 1.25, rate: 1.15 },
+          quote: `Wibble wobble! I couldn't sleep without the lullaby, so I was wide awake and watching!` },
+        story: `Jelly the Jellyfish floats in Firefly Cove, where glowing fireflies light up the water. The thief caught fireflies in jars, with the same number in every jar, to light the way home. Then a few extra fireflies followed along, buzzing behind! Each suspect has visited the cove with jars before. "The first lock is the jars," says Felix. "The second lock adds the fireflies that followed."`,
+        evidence: { e: '🫙', label: 'glowing jars' }, token: '✨',
+        problem: 'The thief filled {a} jars with {b} fireflies in each jar. Then {c} more fireflies followed along. How many fireflies were glowing in all?',
+        cat: { e: '✨', label: 'Fireflies' }, out: ['marina'] },
+    ],
+    alibis: {
+      bramble: `Hrrmph! I was... under my bridge. Where it's quiet. Very quiet. Hrrmph.`,
+      marina: `La la la! I was looking everywhere for the Lullaby Shell! I need it to sing!`,
+      pip: `Hee hee! I was testing my new wind-up boat in the bathtub!`,
+      stardust: `I was asleep, of course. Superstars need their beauty sleep.`,
+    },
+    confession: [
+      { art: '🧌🐚', line: `Hrrmph... a warm note said the Lullaby Shell would make my bridge the quietest place in the whole kingdom.` },
+      { art: '🧌😴', line: `Everyone stomps across my bridge all day long! I just wanted one peaceful nap. So I took the shell.` },
+      { art: '🧌🙏', line: `But now NOBODY could sleep. Not even me. I'm sorry. Hrrmph. I mean it.` },
+    ],
+    ending: `Bramble returns the Lullaby Shell, and soft music floats over Moonlight Lake again. Everyone falls fast asleep, even Bramble, who snores like thunder. The Great Zero dries off the soggy note with a wave of his cape. "Detective, look. There's a sparkly scale stuck to it. A scale like this belongs to something very, very big."`,
+    rNote: 'Sleepy kingdom, easy pickings. — D', rClue: 'D has big, shiny scales.',
+  },
+
+  /* ---------------- CASE 28 ---------------- */
+  {
+    id: 'mirrormaze', season: 5, title: 'The Mirror Maze Muddle', icon: '🪞', theme: 'mirrors',
+    treasure: 'the Mirror of Wishes', culprit: 'pip',
+    intro: `In the middle of the Dream Kingdom is the Mirror Maze, a twisty place where every wall is a mirror. At the very center hangs the Mirror of Wishes. If you look into it and smile, your nicest wish shows up inside. Now the center of the maze is empty! There are a hundred reflections of a warm, scorched note signed "D". Then two tiny voices squeak from behind a mirror. It's the Whisker Twins! "We're Keyhole Inspectors now," says Nib. "And we can fit anywhere in this maze!" says Nub.`,
+    scenes: [
+      { op: 'two', kind: 'mul-sub', title: 'The Maze Lanterns', place: 'The Maze Entrance',
+        witness: { e: '🔮', name: 'Orbella the Crystal Ball', voice: { pitch: 1.05, rate: 0.85 },
+          quote: `I see... I see... a thief! Oh wait, that's just a reflection. No! It WAS the thief!` },
+        story: `Orbella the Crystal Ball sits at the maze entrance. She saw the thief carry boxes of tiny lanterns into the maze, with the same number in every box, to light up the path. Then the thief blew some of them out, so nobody would see where they went. Every suspect has taken lanterns into the maze before. "First lock: how many lanterns in the boxes," says Felix. "Second lock: take away the ones blown out."`,
+        evidence: { e: '🏮', label: 'smoky lanterns' }, token: '🏮',
+        problem: 'The thief carried {a} boxes with {b} lanterns in each box. Then they blew out {c} lanterns. How many lanterns were still lit?',
+        cat: { e: '🏮', label: 'Lanterns still lit' }, out: ['bramble'] },
+      { op: 'add', title: 'The Twisty Turns', place: 'The Maze Corners',
+        witness: { e: '🪞', name: 'Mira the Mirror', voice: { pitch: 1.3, rate: 1.0 },
+          quote: `Everything I see, I see backwards! But even backwards, I knew someone was sneaking.` },
+        story: `Mira the Mirror stands at the twistiest corner. She watched the thief walk two long paths through the maze. The Whisker Twins squeezed into the walls and measured both paths with their tails! Each suspect has walked through the maze before, and each one always takes a different route. "Add up both paths," says Felix, "and we'll know whose route it was."`,
+        evidence: { e: '👣', label: 'footprints going round and round' }, token: '👣',
+        problem: 'The thief walked {a} centimeters along the first path and {b} centimeters along the second. How far did they walk altogether?',
+        cat: { e: '👣', label: 'Maze route (cm)' }, out: ['marina'] },
+      { op: 'two', kind: 'div-add', title: 'The Magic Wands', place: 'The Wand Shop',
+        witness: { e: '🪄', name: 'Wanda the Wand', voice: { pitch: 1.5, rate: 1.1 },
+          quote: `Bibbidi-bobbidi-BOO! Did that scare the thief? No? Well, I tried!` },
+        story: `Wanda the Wand lives in the little wand shop inside the maze. The thief took a big bundle of practice wands and shared them equally into bags, to make the mirrors flash and sparkle and confuse everyone. Then the thief added a few extra wands to their own bag. Each suspect has bought practice wands here. "First lock: wands in each bag," says Felix. "Second lock: add the extra wands."`,
+        evidence: { e: '✨', label: 'sparkly wand dust' }, token: '🪄',
+        problem: `The thief shared {N} wands equally into {d} bags. Then they added {c} more wands to their own bag. How many wands are in the thief's bag?`,
+        cat: { e: '🪄', label: 'Wands in bag' }, out: [] },
+      { op: 'div', title: 'The Tea Party', place: 'The Center of the Maze',
+        witness: { e: '🫖', name: 'Tilly the Teapot', voice: { pitch: 1.2, rate: 1.0 },
+          quote: `I was pouring tea for nobody when the thief came. Would you like a cup? No? More for me!` },
+        story: `Tilly the Teapot hosts a tea party at the center of the maze every night. The thief poured her tea equally into cups for a pretend tea party, to make it look like everyone was just having fun. Each suspect has been to Tilly's tea party, and each one always pours the cups their own way. "Find out how much tea went in each cup," says Felix, "and we'll match the pouring."`,
+        evidence: { e: '☕', label: 'half-full teacups' }, token: '☕',
+        problem: 'The thief poured {N} milliliters of tea equally into {d} cups. How much tea went into each cup?',
+        cat: { e: '☕', label: 'Tea per cup (ml)' }, out: ['stardust'] },
+    ],
+    alibis: {
+      bramble: `Hrrmph! Mirrors? I don't like looking at myself. I wasn't in that maze.`,
+      marina: `La la! I was practicing my new song at the lake. The fireflies loved it!`,
+      pip: `Hee hee! I was... lost in the maze! For fun! For a prank! No, wait.`,
+      stardust: `I adore mirrors. But I was at the spa. Twelve sparkle facials.`,
+    },
+    confession: [
+      { art: '🧝🪞', line: `Hee... it's me again. A warm note said the Mirror of Wishes could show me how to make the best toy ever.` },
+      { art: '🧝🧸', line: `I wanted to make a toy so amazing that everybody in the kingdom would want one. So I took the mirror to my workshop.` },
+      { art: '🧝😳', line: `But I should make that toy with my own ideas. I'm sorry. No more pranks. Well, only nice ones.` },
+    ],
+    ending: `Pip carries the Mirror of Wishes back to the center of the maze, and everyone takes turns smiling into it. When you smile, the mirror shows you and Felix solving one last, very big case. Hmm! The Whisker Twins sniff the note. "It smells like smoke and campfire," says Nib. "And it came from the mountain!" says Nub.`,
+    rNote: 'Soon I will have the biggest treasure of all. — D', rClue: 'D breathes smoke and lives up on the mountain.',
+  },
+
+  /* ---------------- CASE 29 ---------------- */
+  {
+    id: 'snowglobe', season: 5, title: 'The Snow Globe Shuffle', icon: '❄️', theme: 'snowglobe',
+    treasure: 'the Snow Globe of Seasons', culprit: 'marina',
+    intro: `In the north of the Dream Kingdom is Frostwhistle Village, where it's always snowy. There, the Snow Globe of Seasons decides when it's winter, spring, summer, and fall in every dream. Shake it, and the seasons change! But now it's missing, and the whole kingdom is stuck in a blizzard. All four old friends come to help: Professor Remainder, Mister Mimic, the Great Zero, and the Whisker Twins. "We've each seen one of D's notes," says Professor Remainder. "Warm, scorched, and signed in big claw letters. D is somewhere close."`,
+    scenes: [
+      { op: 'two', kind: 'add-sub', title: 'The Snowballs', place: 'The Village Square',
+        witness: { e: '☃️', name: 'Frosty Flake the Snowman', voice: { pitch: 0.9, rate: 0.9 },
+          quote: `I can't run, I can't jump, but I CAN watch. And boy, did I watch!` },
+        story: `Frosty Flake the Snowman stands in the village square. He saw the thief roll two big piles of snowballs to build a wall, so nobody could see them sneak past. Then some of the snowballs melted near a warm lamp! Every suspect had a snowball fight in the square this week. "First lock: add up both piles," says Felix. "Second lock: take away the melted ones."`,
+        evidence: { e: '⚪', label: 'a snowball wall' }, token: '❄️',
+        problem: 'The thief made {a} snowballs and then {b} more. Then {c} snowballs melted. How many snowballs were left in the wall?',
+        cat: { e: '❄️', label: 'Snowballs left' }, out: ['stardust'] },
+      { op: 'mul', title: 'The Ice Skates', place: 'The Frozen Pond',
+        witness: { e: '🧊', name: 'Cubey the Ice Cube', voice: { pitch: 1.4, rate: 1.2 },
+          quote: `Brrr! I'm always cold, so I'm always awake! Nothing gets past me on the pond.` },
+        story: `Cubey the Ice Cube lives on the frozen pond. The thief skated across the pond in circles, the same number of circles each time, to make the ice too scratchy for anyone to follow. Mister Mimic copies the scratching sound perfectly. "Scritch-scratch! Scritch-scratch!" Each suspect skated on the pond this week. "Count all the circles," says Felix, "and we'll see whose skating it matches."`,
+        evidence: { e: '⛸️', label: 'scratchy skate marks' }, token: '⛸️',
+        problem: 'The thief skated {a} times around the pond, making {b} circles each time. How many circles did they skate?',
+        cat: { e: '⛸️', label: 'Skating circles' }, out: ['bramble'] },
+      { op: 'two', kind: 'mul-add', title: 'The Warm Mittens', place: 'The Mitten Shop',
+        witness: { e: '🍄', name: 'Toadstool Tom', voice: { pitch: 0.8, rate: 0.95 },
+          quote: `I'm a mushroom. I grow in the shade by the mitten shop. I saw the thief buy SO many mittens.` },
+        story: `Toadstool Tom grows next to the mitten shop. The thief bought packs of mittens, with the same number in every pack, to keep their hands warm while carrying the icy snow globe. Then they took a few extra mittens from the lost-and-found box! Every suspect bought mittens at the shop this week. "The first lock is the packs," says Felix. "The second lock adds the extra mittens."`,
+        evidence: { e: '🧤', label: 'a dropped mitten' }, token: '🧤',
+        problem: 'The thief bought {a} packs with {b} mittens in each pack. Then they took {c} more mittens. How many mittens did they have in all?',
+        cat: { e: '🧤', label: 'Mittens' }, out: [] },
+      { op: 'sub', title: 'The Sled Ride', place: 'Sledding Hill',
+        witness: { e: '🌷', name: 'Tulip the Flower', voice: { pitch: 1.5, rate: 1.05 },
+          quote: `I'm a spring flower, stuck in all this snow! I want my spring back, so I'll help you!` },
+        story: `Tulip the Flower is peeking out of the snow at the bottom of Sledding Hill. She saw the thief zoom down the hill on a sled with the Snow Globe of Seasons! Every sled has a height meter. It shows how high up the hill it is. Each suspect sledded down this hill yesterday, and each one stopped at a different height. "Work out where the sled stopped," says Felix.`,
+        evidence: { e: '🛷', label: 'sled tracks' }, token: '🛷',
+        problem: 'The sled started {a} centimeters up the hill. It slid down {b} centimeters. How high up is it now?',
+        cat: { e: '🛷', label: 'Sled stop (cm)' }, out: ['pip'] },
+    ],
+    alibis: {
+      bramble: `Hrrmph! Snow makes my nose cold. I was inside, by the fire.`,
+      marina: `La la... mermaids don't like snow. I was... um... in a warm bath.`,
+      pip: `Hee hee! I was building snow-elves! They look just like me!`,
+      stardust: `Snow makes my coat lose its sparkle. I stayed far, far away.`,
+    },
+    confession: [
+      { art: '🧜‍♀️❄️', line: `La la... it's me again. A warm note said that if I shook the Snow Globe, it would be summer forever.` },
+      { art: '🧜‍♀️☀️', line: `My lake freezes every winter, and I can't swim or sing! I just wanted to stay warm. So I took it.` },
+      { art: '🧜‍♀️💙', line: `But some creatures love the snow. Everybody's season matters. I'm sorry. I'll learn to ice skate!` },
+    ],
+    ending: `Marina gives back the Snow Globe of Seasons, and the seasons start turning again: winter, spring, summer, fall. Frosty Flake teaches her to ice skate, and she spins like a star. Then all four old friends gather around the last warm note. On the back is a drawing of a mountain with a cave at the top, and a little flame. "Dragon Peak," says Professor Remainder quietly. "That's where we're going next."`,
+    rNote: 'Come and find me, if you dare. — D', rClue: 'D lives in a cave on Dragon Peak.',
+  },
+
+  /* ---------------- CASE 30 ---------------- */
+  {
+    id: 'dragonpeak', season: 5, title: 'The Dream Star Showdown', icon: '🐲', theme: 'dragon',
+    treasure: 'the Dream Star', culprit: 'stardust', finale: true, mastermind: 'smolder', finaleBadge: 'd_unmasked',
+    intro: `High above the Dream Kingdom shines the Dream Star, the very first dream that ever came true. It keeps the whole kingdom glowing, and it keeps the portal to the Treehouse open. Tonight, the Dream Star went dark and vanished from the sky! The portal flickers. If we don't find the star soon, we might not be able to get home! A last warm note floats down: "The best treasure of all is MINE. — D". Felix looks at you, then up at Dragon Peak. "This is our biggest case ever, Detective. Every old friend is here. Let's crack it together."`,
+    scenes: [
+      { op: 'two', kind: 'mul-add', title: 'The Gem Piles', place: 'The Mountain Path',
+        witness: { e: '🌋', name: 'Rumbles the Volcano', voice: { pitch: 0.5, rate: 0.8 },
+          quote: `Rumble rumble. I am a sleepy volcano. I do not erupt. But I do notice.` },
+        story: `Rumbles the Volcano sits beside the mountain path. He saw the thief carry piles of gems up the path, with the same number of gems in each pile, to add to a giant treasure pile. Then the thief picked up a few extra gems they found along the way! Each suspect has carried gems up this mountain before. "The first lock is the piles," says Felix. "The second lock adds the gems they found."`,
+        evidence: { e: '💎', label: 'a trail of gems' }, token: '💎',
+        problem: 'The thief carried {a} piles with {b} gems in each pile. Then they found {c} more gems. How many gems did they carry up in all?',
+        cat: { e: '💎', label: 'Gems carried' }, out: ['marina'] },
+      { op: 'two', kind: 'add-sub', title: 'The Gold Coins', place: 'The Cave Entrance',
+        witness: { e: '🪺', name: 'Nestor the Nest', voice: { pitch: 1.0, rate: 0.95 },
+          quote: `The birds left me up here on the cliff. But I still keep a lookout. Someone's been very busy.` },
+        story: `Nestor the Nest sits on a cliff above the cave. He watched the thief bring two big bags of gold coins into the cave. Then some coins rolled down the cliff, clinking and clanking all the way down! The Whisker Twins counted every coin at the bottom. Each suspect has a coin bag, and each bag has a different number of coins in it. "First lock: add up both bags," says Felix. "Second lock: take away the coins that rolled away."`,
+        evidence: { e: '🪙', label: 'scattered gold coins' }, token: '🪙',
+        problem: 'The thief carried {a} gold coins and then {b} more into the cave. Then {c} coins rolled down the cliff. How many coins are in the cave?',
+        cat: { e: '🪙', label: 'Gold coins' }, out: ['bramble'] },
+      { op: 'div', title: 'The Warm Rocks', place: 'Inside the Cave',
+        witness: { e: '🌞', name: 'Sol the Sun', voice: { pitch: 1.2, rate: 1.0 },
+          quote: `I am the morning sun! I peeked into the cave and saw a big, warm, glowing pile of something!` },
+        story: `Sol the Sun shines into the cave every morning. Inside, the thief had shared warm, glowing rocks equally into nests, to keep their treasure cozy. Every suspect has visited the warm cave before, and each one always shares the rocks their own way. The Great Zero lifts one rock with a long arm. "Still warm!" he says. "Someone breathed on these." Felix nods. "Find out how many rocks went into each nest."`,
+        evidence: { e: '🔥', label: 'warm glowing rocks' }, token: '🔥',
+        problem: 'The thief shared {N} warm rocks equally into {d} nests. How many rocks went into each nest?',
+        cat: { e: '🔥', label: 'Rocks per nest' }, out: [] },
+      { op: 'two', kind: 'div-add', title: 'The Starlight Sparkles', place: 'The Treasure Pile',
+        witness: { e: '🎻', name: 'Fiddle the Violin', voice: { pitch: 1.1, rate: 1.0 },
+          quote: `I was part of the treasure pile! Someone plays me every night. Sadly. Very sadly.` },
+        story: `Fiddle the Violin sits on top of the treasure pile. Someone plays him every night, a sad, lonely song. Last night, they shared sparkle dust from the Dream Star equally into treasure chests, and then sprinkled a little extra sparkle onto their own wings! Wings? Each suspect has used sparkle dust before. "First lock: sparkle in each chest," says Felix. "Second lock: add the extra sparkle. Then we'll know who this really is."`,
+        evidence: { e: '✨', label: 'star sparkle dust' }, token: '🌟',
+        problem: 'The thief shared {N} spoonfuls of sparkle dust equally into {d} chests. Then they sprinkled {c} more spoonfuls on themselves. How many spoonfuls did the thief keep?',
+        cat: { e: '🌟', label: 'Sparkle spoonfuls' }, out: ['pip'] },
+    ],
+    alibis: {
+      bramble: `Hrrmph! Climbing mountains is NOT my thing. I was at my bridge.`,
+      marina: `La la! I was teaching Frosty Flake to sing. He's actually very good!`,
+      pip: `Hee hee! I was making a toy dragon. Uh oh. That sounds bad. It's just a toy!`,
+      stardust: `Excuse me? I was... flying. I mean, galloping! Unicorns gallop! Ahem. Puff.`,
+    },
+    unmask: {
+      art: '🦄➡️🐲',
+      line: `Felix notices a tiny puff of smoke coming out of Stardust's nose. He gives the unicorn horn a gentle tug... and the whole costume slides off! Out unfolds a long tail, two big wings, and a friendly green face. It's a DRAGON!`,
+      note: `The real Stardust was at the spa all night, getting her twelfth sparkle facial. She is VERY shocked, and a little bit sparkly.`,
+    },
+    confession: [
+      { art: '🐲💨', line: `Oh... you found me. I'm Smolder. I'm the last dragon in the Dream Kingdom, and I live alone on Dragon Peak.` },
+      { art: '🐲🌙', line: `Whenever I visit somebody's dream, they scream and run away. Nobody ever dreams of being friends with a dragon. So I collected treasures instead, to keep me company.` },
+      { art: '🐲🙏', line: `I sent the notes, and I tricked everybody into helping me. I'm really sorry. I didn't want treasure. I just didn't want to be lonely anymore.` },
+    ],
+    ending: `Smolder gives back the Dream Star, and it rises into the sky, brighter than ever. The portal glows strong again! Then the Dream Queen has an idea: Smolder becomes the Night-Light Keeper of the Dream Kingdom, warming the clouds so everyone has cozy dreams. Professor Remainder, Mister Mimic, the Great Zero, and the Whisker Twins all give Smolder a big hug. Then they throw a party for you. Every friend you've met, in every season, is there. And you, Detective, receive the Golden Star Crown, the highest honor in Starlight Town and the Dream Kingdom.`,
+    rNote: 'Thank you for being my friend. Puff, puff! — D', rClue: 'D is Smolder, a lonely dragon!',
+  },
+);
+
+SEASONS.push({ n: 5, title: 'The Dream Kingdom', who: 'D', suspects: ['bramble', 'marina', 'pip', 'stardust'], finale: 29,
+  boardIntro: 'A portal opened in the Treehouse! Warm, scorched notes signed <b>D</b> keep turning up, and old friends are back to help.',
+  boardSolved: '🐲 Mystery solved! D is <b>Smolder the Dragon</b>, now the Night-Light Keeper of the Dream Kingdom.',
+  award: 'Golden Star Crown', seal: '👑', villain: 'Smolder the Dragon' });
+
+['bramble', 'marina', 'pip', 'stardust'].forEach(id => { SUSPECTS[id].voice.role = id; });
+SMOLDER.voice.role = 'smolder';
+CASES.filter(c => c.season === 5).forEach(c => c.scenes.forEach(s => { s.witness.voice.role = 'w:' + s.witness.name; }));
+
+/* ============================================================
+   Seasons 4–5 rewards: new badges (with reward items), new ranks,
+   and a big Gadget Shop restock. Older items lose their "New" tag.
+   ============================================================ */
+Object.values(SHOP).flat().forEach(it => { delete it.isNew; });
+
+BADGES.push(
+  { id: 'w_unmasked', e: '🐭', name: 'Twin Catcher', desc: 'Reveal who W really is.' },
+  { id: 'd_unmasked', e: '🐲', name: 'Dragon Friend', desc: 'Reveal who D really is.' },
+  { id: 'double_lock', e: '🔐', name: 'Double Trouble', desc: 'Crack 10 Double Lock safes.' },
+  { id: 'perfect_case', e: '💯', name: 'Perfect Case', desc: 'Close a case with every safe cracked on the first try.' },
+  { id: 'speed_10', e: '⚡', name: 'Speedy Safecracker', desc: 'Crack 10 safes in one Speed Safe round.' },
+  { id: 'speed_20', e: '🏎️', name: 'Lightning Fingers', desc: 'Crack 20 safes in one Speed Safe round.' },
+  { id: 'daily_3', e: '📅', name: 'Three in a Row', desc: 'Solve the Daily Case File 3 days in a row.' },
+  { id: 'daily_7', e: '🗓️', name: 'Week of Wonders', desc: 'Solve the Daily Case File 7 days in a row.' },
+  { id: 'collector', e: '🧺', name: 'Super Collector', desc: 'Own 40 things from the Gadget Shop.' },
+);
+BADGES.find(b => b.id === 'all_cases').desc = 'Close every case in all five seasons.';
+RANKS.push({ min: 2400, name: 'Dream Detective', e: '🌙' }, { min: 3000, name: 'Legend of Starlight', e: '👑' });
+
+SHOP.hats.push(
+  { id: 'propeller', e: '🚁', name: 'Propeller Cap', price: 70, isNew: true },
+  { id: 'bow', e: '🎀', name: 'Big Bow', price: 60, isNew: true },
+  { id: 'antenna', e: '👽', name: 'Space Antennae', price: 90, isNew: true },
+  { id: 'knight', e: '🛡️', name: 'Knight Helmet', price: 150, isNew: true },
+  { id: 'thinking', e: '💡', name: 'Thinking Cap', price: 0, reward: 'double_lock', isNew: true },
+  { id: 'legend', e: '🌟', name: 'Legend Crown', price: 0, reward: 'all_cases', isNew: true },
+);
+SHOP.coats.push(
+  { id: 'checkers', name: 'Checkerboard', price: 60, css: 'repeating-conic-gradient(#e5484d 0 25%, #fff 0 50%) 0 0 / 16px 16px', isNew: true },
+  { id: 'ocean', name: 'Ocean Waves', price: 80, css: 'radial-gradient(circle at 50% 0, transparent 0 6px, #7fd0ff 7px 9px, transparent 10px) 0 0 / 18px 12px, linear-gradient(#2a8bd8, #135a9e)', isNew: true },
+  { id: 'leopard', name: 'Leopard Spots', price: 100, css: 'radial-gradient(circle, #5a3a1e 0 3px, transparent 4px) 0 0 / 15px 15px, radial-gradient(circle, #5a3a1e 0 2px, transparent 3px) 7px 8px / 15px 15px, #e8b45a', isNew: true },
+  { id: 'lightning', name: 'Lightning Bolt', price: 0, reward: 'speed_10', css: 'linear-gradient(115deg, transparent 0 40%, #ffd93d 40% 48%, transparent 48% 52%, #ffd93d 52% 60%, transparent 60%), #233a7a', isNew: true },
+);
+SHOP.glasses.push(
+  { id: 'aviator', e: '🕶️', name: 'Pilot Shades', price: 70, isNew: true },
+  { id: 'cateye', e: '😺', name: 'Cat-Eye Frames', price: 80, isNew: true },
+  { id: 'swirl', e: '🌀', name: 'Swirly Specs', price: 90, isNew: true },
+  { id: 'golden', e: '✨', name: 'Golden Specs', price: 0, reward: 'perfect_case', isNew: true },
+);
+SHOP.lenses.push(
+  { id: 'aurora', name: 'Aurora', price: 100, rim: ['#7affc9', '#9a5cff'], sparkle: true, isNew: true },
+  { id: 'magma', name: 'Magma', price: 110, rim: ['#ffd23d', '#c2181f'], isNew: true },
+  { id: 'bolt', name: 'Lightning', price: 0, reward: 'speed_20', rim: ['#fff6a8', '#f2a60c'], sparkle: true, isNew: true },
+);
+SHOP.pets.push(
+  { id: 'ladybug', e: '🐞', name: 'Dot the Ladybug', price: 60, isNew: true },
+  { id: 'squirrel', e: '🐿️', name: 'Nutmeg the Squirrel', price: 80, isNew: true },
+  { id: 'bunny', e: '🐇', name: 'Clover the Bunny', price: 90, isNew: true },
+  { id: 'otter', e: '🦦', name: 'Ripple the Otter', price: 120, isNew: true },
+  { id: 'butterfly', e: '🦋', name: 'Flutter the Butterfly', price: 0, reward: 'daily_7', isNew: true },
+  { id: 'minimice', e: '🐭', name: 'Mini Whiskers', price: 0, reward: 'w_unmasked', isNew: true },
+  { id: 'minidragon', e: '🐲', name: 'Mini Smolder', price: 0, reward: 'd_unmasked', isNew: true },
+);
+SHOP.decor.push(
+  { id: 'skateboard', e: '🛹', name: 'Skateboard', price: 45, isNew: true },
+  { id: 'bowling', e: '🎳', name: 'Bowling Set', price: 50, isNew: true },
+  { id: 'hoop', e: '🏀', name: 'Basketball Hoop', price: 60, isNew: true },
+  { id: 'rainbow', e: '🌈', name: 'Rainbow', price: 70, isNew: true },
+  { id: 'planets', e: '🪐', name: 'Planet Mobile', price: 90, isNew: true },
+  { id: 'tent', e: '⛺', name: 'Camping Tent', price: 120, isNew: true },
+  { id: 'carousel', e: '🎠', name: 'Toy Carousel', price: 140, isNew: true },
+  { id: 'slide', e: '🛝', name: 'Playground Slide', price: 180, isNew: true },
+  { id: 'calendar', e: '📅', name: 'Streak Calendar', price: 0, reward: 'daily_3', isNew: true },
+  { id: 'pinata', e: '🪅', name: 'Piñata', price: 0, reward: 'collector', isNew: true },
+);
+
+/* goals shown on the Challenges screen: [badge, label, current(), target] */
+const GOALS = [
+  ['double_lock', 'Crack Double Lock safes', () => S.stats.twoStep || 0, 10],
+  ['perfect_case', 'Close a case with no mistakes', () => S.badges.includes('perfect_case') ? 1 : 0, 1],
+  ['speed_10', 'Best Speed Safe round', () => S.speed.best, 10],
+  ['speed_20', 'Best Speed Safe round', () => S.speed.best, 20],
+  ['daily_3', 'Daily Case File streak', () => S.daily.best, 3],
+  ['daily_7', 'Daily Case File streak', () => S.daily.best, 7],
+  ['collector', 'Things from the shop', () => ownedCount(), 40],
+  ['equation_ace', 'Equations built first try', () => S.stats.eqFirst || 0, 10],
+  ['lab_20', 'Training Lab puzzles', () => S.stats.labSolved, 20],
+  ['all_cases', 'Cases closed', () => S.cases.filter(c => c.status === 'closed').length, CASES.length],
+];
+function ownedCount() {
+  const starter = new Set(['none', 'cap', 'trench', 'brass']);
+  return Object.values(S.owned).reduce((n, list) => n + list.filter(id => !starter.has(id)).length, 0);
+}
+
+/* ============================================================
    Problem generator, decoys, mistake diagnosis (pure functions)
    ============================================================ */
 
@@ -1955,9 +2813,10 @@ function makeDecoys(p) {
 }
 
 function fillText(tpl, p) {
-  return tpl.replace(/\{a\}/g, fmt(p.a)).replace(/\{b\}/g, fmt(p.b)).replace(/\{N\}/g, fmt(p.N)).replace(/\{d\}/g, fmt(p.d));
+  return tpl.replace(/\{a\}/g, fmt(p.a)).replace(/\{b\}/g, fmt(p.b)).replace(/\{N\}/g, fmt(p.N)).replace(/\{d\}/g, fmt(p.d)).replace(/\{c\}/g, fmt(p.c));
 }
 function equationText(p) {
+  if (p.op === 'two') return `${equationText(p.steps[0])} ${OP_SYMBOL[p.steps[1].op]} ${fmt(p.c)}`;
   const s = OP_SYMBOL[p.op];
   if (p.op === 'div') return `${fmt(p.N)} ${s} ${p.d}`;
   return `${fmt(p.a)} ${s} ${fmt(p.b)}`;
@@ -2054,6 +2913,53 @@ function suspectValue(caseData, problem, sceneIdx, sid) {
   return idx < 0 ? problem.ans : problem.decoys[idx];
 }
 
+/* ---------- two-step "Double Lock" problems ----------
+   kinds: add-sub (a + b − c), mul-add (a × b + c), mul-sub (a × b − c), div-add (N ÷ d + c)
+   steps[0] is a normal problem; steps[1] starts from steps[0].ans */
+function columnProblem(op, a, b, level) {
+  const p = { op, level, a, b, ans: op === 'add' ? a + b : a - b, mode: 'column' };
+  p.wheels = Math.max(String(a).length, String(p.ans).length);
+  p.decoys = makeDecoys(p);
+  return p;
+}
+function genTwoStep(kind, level, rng) {
+  level = Math.max(1, Math.min(3, Number(level) || 1));
+  const firstOp = { 'add-sub': 'add', 'mul-add': 'mul', 'mul-sub': 'mul', 'div-add': 'div' }[kind] || 'add';
+  let p1, c, p2, guard = 0;
+  do {
+    p1 = genProblem(firstOp, level, rng);
+    const x = p1.ans;
+    if (kind === 'add-sub') {
+      const floor = level === 1 ? 100 : 1000;
+      c = ri(rng, Math.min(101, x - floor), Math.max(101, x - floor));
+      if (x - c < floor || c < 11) continue;
+      p2 = columnProblem('sub', x, c, level);
+      if (countBorrows(x, c) < 1) continue;
+    } else if (kind === 'mul-add') {
+      const range = [[12, 89], [120, 900], [1200, 1899]][level - 1];
+      c = ri(rng, range[0], range[1]);
+      if (countCarries(x, c) < 1 || x + c > 9999) continue;
+      p2 = columnProblem('add', x, c, level);
+    } else if (kind === 'mul-sub') {
+      if (x < 20) continue;
+      c = ri(rng, Math.max(3, Math.floor(x / 6)), x - 2);
+      if (countBorrows(x, c) < 1 || x - c < 2) continue;
+      p2 = columnProblem('sub', x, c, level);
+    } else { // div-add
+      const range = [[12, 48], [15, 95], [150, 950]][level - 1];
+      c = ri(rng, range[0], range[1]);
+      if (countCarries(x, c) < 1) continue;
+      p2 = columnProblem('add', x, c, level);
+    }
+    break;
+  } while (++guard < 3000);
+  const ans = p2.ans;
+  const pool = [p1.ans, ...p2.decoys, ans + 10, ans - 10, ans + 100];
+  const decoys = [];
+  for (const v of pool) if (v > 0 && v !== ans && !decoys.includes(v)) { decoys.push(v); if (decoys.length === 3) break; }
+  return { op: 'two', kind, level, steps: [p1, p2], a: p1.a, b: p1.b, N: p1.N, d: p1.d, c, ans, decoys, mode: 'two' };
+}
+
 /* ============================================================
    The player's detective: a full-body SVG animal wearing the
    hat, coat and magnifier bought in the shop.
@@ -2082,6 +2988,10 @@ function coatPaint(coatId, uid) {
   if (coatId === 'candy') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="14" fill="#fff"/><rect width="7" height="14" fill="#ff7eb6"/></pattern>` };
   if (coatId === 'tiger') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="16" height="16" fill="#f39c32"/><rect width="4" height="16" fill="#2b2320"/></pattern>` };
   if (coatId === 'galaxy') return { fill: `url(#${uid}co)`, defs: `<linearGradient id="${uid}cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a5e"/><stop offset=".55" stop-color="#7a2f9a"/><stop offset="1" stop-color="#1f4fa0"/></linearGradient><pattern id="${uid}co" width="200" height="240" patternUnits="userSpaceOnUse"><rect width="200" height="240" fill="url(#${uid}cg)"/><g fill="#fff"><circle cx="70" cy="150" r="1.6"/><circle cx="120" cy="140" r="1.2"/><circle cx="95" cy="190" r="1.8"/><circle cx="130" cy="180" r="1.3"/><circle cx="62" cy="185" r="1.1"/><circle cx="110" cy="160" r="1"/></g><circle cx="80" cy="170" r="1.5" fill="#ffd0f0"/></pattern>` };
+  if (coatId === 'checkers') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#fff"/><rect width="8" height="8" fill="#e5484d"/><rect x="8" y="8" width="8" height="8" fill="#e5484d"/></pattern>` };
+  if (coatId === 'ocean') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="20" height="12" patternUnits="userSpaceOnUse"><rect width="20" height="12" fill="#2079c4"/><path d="M0 8 Q5 2 10 8 T20 8" stroke="#7fd0ff" stroke-width="2.2" fill="none"/></pattern>` };
+  if (coatId === 'leopard') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="18" height="18" fill="#e8b45a"/><circle cx="5" cy="5" r="3.2" fill="none" stroke="#5a3a1e" stroke-width="2"/><circle cx="14" cy="13" r="2.6" fill="none" stroke="#5a3a1e" stroke-width="2"/><circle cx="5" cy="5" r="1.2" fill="#b9782a"/></pattern>` };
+  if (coatId === 'lightning') return { fill: `url(#${uid}co)`, defs: `<pattern id="${uid}co" width="28" height="30" patternUnits="userSpaceOnUse"><rect width="28" height="30" fill="#233a7a"/><path d="M15 2 L7 16 L13 16 L10 28 L21 12 L15 12 L19 2 Z" fill="#ffd93d"/></pattern>` };
   return { fill: '#9a7148', defs: '' };
 }
 function lensPaint(lensId, uid) {
@@ -2110,6 +3020,12 @@ function hatSVG(id, uid) {
     case 'pirate': return `<path d="M36 50 Q40 18 100 10 Q160 18 164 50 Q130 40 100 46 Q70 40 36 50 Z" fill="#232329"/><path d="M36 50 Q70 40 100 46 Q130 40 164 50" stroke="#d9a441" stroke-width="4" fill="none"/><circle cx="100" cy="28" r="8" fill="#f4f4f4"/><circle cx="97" cy="27" r="1.8" fill="#232329"/><circle cx="103" cy="27" r="1.8" fill="#232329"/><path d="M88 38 L112 46 M112 38 L88 46" stroke="#f4f4f4" stroke-width="3" stroke-linecap="round"/>`;
     case 'viking': return `<path d="M54 34 Q28 30 24 0 Q40 18 62 22 Z" fill="#f3ead2" stroke="#c9b98f" stroke-width="2"/><path d="M146 34 Q172 30 176 0 Q160 18 138 22 Z" fill="#f3ead2" stroke="#c9b98f" stroke-width="2"/><path d="M52 50 Q54 4 100 4 Q146 4 148 50 Z" fill="#9aa4ae"/><path d="M100 4 L100 42" stroke="#7d8790" stroke-width="5"/><path d="M50 42 Q100 34 150 42 L150 53 Q100 45 50 53 Z" fill="#7a5532"/><circle cx="66" cy="45" r="2.5" fill="#d9a441"/><circle cx="100" cy="41" r="2.5" fill="#d9a441"/><circle cx="134" cy="45" r="2.5" fill="#d9a441"/>`;
     case 'wizard': return `<path d="M58 48 L106 -22 L142 48 Z" fill="#4b3aa8"/><ellipse cx="100" cy="48" rx="58" ry="9" fill="#3b2d88"/><path d="M88 22 l2.5 5 l5.5 .8 l-4 3.8 l1 5.4 l-5 -2.6 l-5 2.6 l1 -5.4 l-4 -3.8 l5.5 -.8 Z" fill="#ffd93d"/><path d="M114 30 l1.8 3.6 l4 .6 l-2.9 2.8 l.7 3.9 l-3.6 -1.9 l-3.6 1.9 l.7 -3.9 l-2.9 -2.8 l4 -.6 Z" fill="#ffd93d"/><path d="M108 4 a7 7 0 1 0 6 10 a5.5 5.5 0 1 1 -6 -10 Z" fill="#fff4b0"/>`;
+    case 'propeller': return `<path d="M52 52 Q54 8 100 8 Q146 8 148 52 Z" fill="#4d96ff"/><path d="M100 8 Q76 10 66 50 L52 52 Q54 10 100 8 Z" fill="#e5484d"/><path d="M100 8 Q124 10 134 50 L148 52 Q146 10 100 8 Z" fill="#ffd93d"/><path d="M48 46 Q100 38 152 46 L152 56 Q100 48 48 56 Z" fill="#2f6fd0"/><path d="M100 8 L100 -4" stroke="#555" stroke-width="4"/><g class="ch-prop"><ellipse cx="82" cy="-6" rx="19" ry="5" fill="#e5484d"/><ellipse cx="118" cy="-6" rx="19" ry="5" fill="#6bcb77"/></g><circle cx="100" cy="-6" r="5" fill="#ffd93d" stroke="#c99a1a" stroke-width="1.5"/>`;
+    case 'bow': return `<path d="M100 30 L66 8 Q52 30 66 50 Z" fill="#ff6bb5" stroke="#d64491" stroke-width="2.5" stroke-linejoin="round"/><path d="M100 30 L134 8 Q148 30 134 50 Z" fill="#ff6bb5" stroke="#d64491" stroke-width="2.5" stroke-linejoin="round"/><path d="M74 18 Q66 30 72 42 M126 18 Q134 30 128 42" stroke="#ffc2e0" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="100" cy="30" r="10" fill="#e0458f"/><circle cx="97" cy="27" r="3" fill="#ff9ccf"/>`;
+    case 'antenna': return `<path d="M48 52 Q100 26 152 52" stroke="#5fbf5f" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M78 36 Q72 10 58 -4" stroke="#5fbf5f" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M122 36 Q128 10 142 -4" stroke="#5fbf5f" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="57" cy="-6" r="9" fill="#b6ff6b" stroke="#5fbf5f" stroke-width="2"/><circle cx="143" cy="-6" r="9" fill="#b6ff6b" stroke="#5fbf5f" stroke-width="2"/><circle cx="54" cy="-9" r="3" fill="#fff"/><circle cx="140" cy="-9" r="3" fill="#fff"/>`;
+    case 'knight': return `<path d="M100 6 Q112 -28 146 -22 Q124 -14 114 8 Z" fill="#e5484d"/><path d="M50 58 Q50 4 100 4 Q150 4 150 58 Z" fill="#b8c2cc" stroke="#7d8790" stroke-width="3"/><path d="M100 4 L100 56" stroke="#9aa4ae" stroke-width="7"/><path d="M50 50 Q100 42 150 50 L150 58 Q100 50 50 58 Z" fill="#8a949e"/><circle cx="62" cy="40" r="2.5" fill="#6b747d"/><circle cx="138" cy="40" r="2.5" fill="#6b747d"/><path d="M70 18 Q80 12 88 14" stroke="#fff" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/>`;
+    case 'thinking': return `<path d="M52 52 Q54 8 100 8 Q146 8 148 52 Z" fill="#7a5cff"/><path d="M48 44 Q100 36 152 44 L152 56 Q100 48 48 56 Z" fill="#5b3fd9"/><path d="M70 30 l3 5 l5 .5 l-4 3.5 l1 5 l-5 -2.5 l-5 2.5 l1 -5 l-4 -3.5 l5 -.5 Z M128 26 l2.5 4 l4 .5 l-3 3 l.8 4 l-4 -2 l-4 2 l.8 -4 l-3 -3 l4 -.5 Z" fill="#ffd93d"/><rect x="92" y="0" width="16" height="10" rx="2" fill="#9aa4ae"/><circle cx="100" cy="-12" r="15" fill="#fff4a8" stroke="#e2a91f" stroke-width="2.5"/><path d="M95 -6 Q100 -16 105 -6" stroke="#e2a91f" stroke-width="2" fill="none"/><path d="M100 -34 v-6 M80 -26 l-5 -4 M120 -26 l5 -4 M76 -10 h-7 M124 -10 h7" stroke="#ffd93d" stroke-width="3" stroke-linecap="round"/>`;
+    case 'legend': return `<defs><linearGradient id="${uid}lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1a8"/><stop offset=".5" stop-color="#f1c232"/><stop offset="1" stop-color="#b9800f"/></linearGradient></defs><path d="M56 50 L48 10 L76 28 L100 -10 L124 28 L152 10 L144 50 Z" fill="url(#${uid}lg)" stroke="#9a6a0c" stroke-width="3" stroke-linejoin="round"/><polygon points="${starPts(48, 6, 9, 4)}" fill="#fff4b0" stroke="#d9a441" stroke-width="1.5"/><polygon points="${starPts(100, -14, 11, 5)}" fill="#fff4b0" stroke="#d9a441" stroke-width="1.5"/><polygon points="${starPts(152, 6, 9, 4)}" fill="#fff4b0" stroke="#d9a441" stroke-width="1.5"/><path d="M58 42 Q100 34 142 42" stroke="#7a2f9a" stroke-width="6" fill="none"/><circle cx="100" cy="30" r="6" fill="#7a5cff"/><circle cx="78" cy="38" r="4" fill="#d6303a"/><circle cx="122" cy="38" r="4" fill="#3ddc84"/>`;
     default: return '';
   }
 }
@@ -2123,8 +3039,12 @@ function glassesSVG(id) {
     case 'hearts': return `<g fill="rgba(255,70,110,.85)" stroke="#c81d4d" stroke-width="2.5"><path d="M80 98 C62 86 64 72 74 72 C78 72 80 75 80 77 C80 75 82 72 86 72 C96 72 98 86 80 98 Z"/><path d="M120 98 C102 86 104 72 114 72 C118 72 120 75 120 77 C120 75 122 72 126 72 C136 72 138 86 120 98 Z"/></g><path d="M94 82 L106 82 M64 80 L44 77 M136 80 L156 77" stroke="#c81d4d" stroke-width="3" stroke-linecap="round"/>`;
     case 'stars': return `<g fill="rgba(40,40,55,.8)" stroke="#ffcf3d" stroke-width="3" stroke-linejoin="round"><polygon points="${starPts(80, 86, 17, 8)}"/><polygon points="${starPts(120, 86, 17, 8)}"/></g><path d="M95 84 L105 84 M64 82 L44 78 M136 82 L156 78" stroke="#ffcf3d" stroke-width="3" stroke-linecap="round"/>`;
     case 'monocle': return `<circle cx="120" cy="85" r="13" fill="rgba(255,255,255,.2)" stroke="#d9a441" stroke-width="3.5"/><path d="M131 92 Q140 112 128 130" stroke="#d9a441" stroke-width="1.8" fill="none" stroke-dasharray="3 2"/>`;
+    case 'aviator': return `<g fill="rgba(55,65,90,.7)" stroke="#d9a441" stroke-width="2.5"><path d="M63 77 Q80 73 94 77 Q95 98 79 99 Q63 97 63 77 Z"/><path d="M106 77 Q120 73 137 77 Q137 97 121 99 Q105 98 106 77 Z"/></g><path d="M94 78 Q100 74 106 78 M63 78 L44 76 M137 78 L156 76" stroke="#d9a441" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M69 82 L76 80 M111 82 L118 80" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>`;
+    case 'cateye': return `<g fill="rgba(255,255,255,.15)" stroke="#9b3fc4" stroke-width="4" stroke-linejoin="round"><path d="M62 74 Q80 78 94 80 Q94 96 80 96 Q66 96 64 84 Z"/><path d="M138 74 Q120 78 106 80 Q106 96 120 96 Q134 96 136 84 Z"/></g><path d="M94 84 L106 84 M62 76 L44 76 M138 76 L156 76" stroke="#9b3fc4" stroke-width="3.5" stroke-linecap="round"/><circle cx="62" cy="73" r="2.5" fill="#ffd93d"/><circle cx="138" cy="73" r="2.5" fill="#ffd93d"/>`;
+    case 'swirl': return `<g fill="#fff" stroke="#2b2b33" stroke-width="3"><circle cx="80" cy="85" r="14"/><circle cx="120" cy="85" r="14"/></g><g stroke="#e0458f" stroke-width="2.2" fill="none" stroke-linecap="round"><path d="M80 85 m0 -2 a2 2 0 1 1 -2 2 a4 4 0 1 1 4 4 a6 6 0 1 1 -6 -6 a8 8 0 1 1 8 8 a10 10 0 1 1 -10 -10"/><path d="M120 85 m0 -2 a2 2 0 1 1 -2 2 a4 4 0 1 1 4 4 a6 6 0 1 1 -6 -6 a8 8 0 1 1 8 8 a10 10 0 1 1 -10 -10"/></g><path d="M94 84 Q100 79 106 84 M66 83 L44 78 M134 83 L156 78" stroke="#2b2b33" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    case 'golden': return `<g fill="rgba(255,236,150,.25)" stroke="#e2a91f" stroke-width="4"><circle cx="80" cy="85" r="14"/><circle cx="120" cy="85" r="14"/></g><path d="M94 84 Q100 78 106 84 M66 83 L44 78 M134 83 L156 78" stroke="#e2a91f" stroke-width="3.5" fill="none" stroke-linecap="round"/><g class="ch-spark" fill="#fff8c8"><polygon points="${starPts(62, 68, 5, 2)}"/><polygon points="${starPts(140, 100, 4, 1.6)}"/></g>`;
     default: return '';
-  }
+    }
 }
 
 function earsBehind(A) {
@@ -2252,7 +3172,9 @@ function defaultState() {
     decorPos: {},
     cases: CASES.map((_, i) => newCaseState(i)),
     rNotes: [],
-    stats: { ciphersSolved: 0, firstTryStreak: 0, bestFirstTryStreak: 0, carries: 0, borrows: 0, arrays: 0, deals: 0, tokensFound: 0, labSolved: 0, purchases: 0, interrogated: 0, casesClosed: 0 },
+    stats: { ciphersSolved: 0, firstTryStreak: 0, bestFirstTryStreak: 0, carries: 0, borrows: 0, arrays: 0, deals: 0, tokensFound: 0, labSolved: 0, purchases: 0, interrogated: 0, casesClosed: 0, twoStep: 0 },
+    daily: { last: '', streak: 0, best: 0, total: 0 },
+    speed: { best: 0, rounds: 0, total: 0 },
     badges: [], finished: false,
     lab: { op: 'mix', level: 1 },
     screen: 'map', caseIdx: null,
@@ -2266,7 +3188,7 @@ function loadState() {
     const s = JSON.parse(raw);
     if (!s || s.v !== 2) return base;
     const merged = Object.assign(base, s);
-    for (const k of ['profile', 'settings', 'owned', 'equipped', 'stats', 'lab']) merged[k] = Object.assign(defaultState()[k], s[k] || {});
+    for (const k of ['profile', 'settings', 'owned', 'equipped', 'stats', 'lab', 'daily', 'speed']) merged[k] = Object.assign(defaultState()[k], s[k] || {});
     if (merged.settings.voiceRate === 0.95) merged.settings.voiceRate = 1; // old default was a little slow
     merged.cases = CASES.map((_, i) => Object.assign(newCaseState(i), (s.cases || [])[i] || {}));
     if (merged.screen === 'case' && merged.caseIdx == null) merged.screen = 'map';
@@ -2355,7 +3277,9 @@ function englishVoices() {
 }
 const CAST_ROLES = [['felix', 'm', null], ['barnaby', 'm', null], ['penelope', 'f', /GB|IE|AU|NZ|ZA/i], ['viktor', 'm', null], ['maxima', 'f', /GB|IE|AU|NZ|ZA/i], ['remainder', 'm', /GB|AU|IE/i],
   ['florence', 'f', /GB|IE|AU|NZ|ZA/i], ['gus', 'm', /AU|US/i], ['bertie', 'm', null], ['sasha', 'f', null], ['mimic', 'm', /GB|AU|IE/i],
-  ['gloria', 'f', null], ['humphrey', 'm', /GB|AU|IE/i], ['wolfgang', 'm', null], ['clementine', 'f', /US|IE/i], ['zero', 'f', /GB|AU|IE/i]];
+  ['gloria', 'f', null], ['humphrey', 'm', /GB|AU|IE/i], ['wolfgang', 'm', null], ['clementine', 'f', /US|IE/i], ['zero', 'f', /GB|AU|IE/i],
+  ['maxwell', 'm', /GB|AU|IE/i], ['gertie', 'f', null], ['pickles', 'm', /US/i], ['horace', 'm', null], ['twins', 'f', null],
+  ['bramble', 'm', null], ['marina', 'f', /GB|IE|AU|NZ|ZA/i], ['pip', 'm', null], ['stardust', 'f', /US/i], ['smolder', 'm', /GB|AU|IE/i]];
 let CAST = null;
 function castVoices(list) {
   const ranked = list || englishVoices();
@@ -2405,6 +3329,9 @@ function nameVoices() {
   const m = [['Felix', FELIX.voice], ['Remainder', REMAINDER.voice]];
   if (typeof MIMIC !== 'undefined') m.push(['Mimic', MIMIC.voice]);
   if (typeof ZERO !== 'undefined') m.push(['Zero', ZERO.voice]);
+  if (typeof TWINS !== 'undefined') m.push(['Nib', TWINS.voice], ['Nub', TWINS.voice]);
+  if (typeof SMOLDER !== 'undefined') m.push(['Smolder', SMOLDER.voice]);
+  m.push(['Professor', REMAINDER.voice]);
   Object.values(SUSPECTS).forEach(x => m.push([x.short, x.voice]));
   CASES.forEach(c => c.scenes.forEach(sc => m.push([sc.witness.name.split(' ')[0], sc.witness.voice])));
   return (NAME_VOICES = m);
@@ -2436,8 +3363,8 @@ function storySegments(text) {
     const q = mt[1];
     if (q.length < 25 && !/[.!?,]/.test(q)) continue; // a name in quotes ("Best Fizz"), not dialogue
     if (mt.index > last) segs.push([text.slice(last, mt.index), null]);
-    const sig = q.match(/—\s*([A-Z])\s*$/);
-    const masters = { R: REMAINDER, M: typeof MIMIC !== 'undefined' ? MIMIC : null, Z: typeof ZERO !== 'undefined' ? ZERO : null };
+    const sig = q.match(/—\s*([A-Z])(?:,\s*[A-Z])?\s*$/);
+    const masters = { R: REMAINDER, M: typeof MIMIC !== 'undefined' ? MIMIC : null, Z: typeof ZERO !== 'undefined' ? ZERO : null, W: typeof TWINS !== 'undefined' ? TWINS : null, D: typeof SMOLDER !== 'undefined' ? SMOLDER : null };
     const between = prevEnd >= 0 ? text.slice(prevEnd, mt.index) : '';
     const gap = prevEnd >= 0 && between.length < 30 && new RegExp(SPEECH_VERB).test(between);
     const voice = sig && masters[sig[1]] ? masters[sig[1]].voice : speakerFor(text.slice(re.lastIndex, re.lastIndex + 60), text.slice(Math.max(0, mt.index - 200), mt.index), prev, gap);
@@ -2539,8 +3466,8 @@ function earnBadge(id) {
   const b = BADGES.find(x => x.id === id); if (!b) return;
   S.badges.push(id); save();
   setTimeout(() => { SFX.chime(); toast(`<span class="toast-badge">${b.e}</span> New badge: <b>${esc(b.name)}</b>`, 3600); }, 600);
-  const gift = Object.values(SHOP).flat().find(it => it.reward === id);
-  if (gift) setTimeout(() => toast(`🎁 You unlocked a reward: <b>${esc(gift.name)}</b>! Claim it in the Gadget Shop.`, 4200), 2200);
+  const gifts = Object.values(SHOP).flat().filter(it => it.reward === id);
+  if (gifts.length) setTimeout(() => toast(`🎁 You unlocked ${gifts.length > 1 ? 'rewards' : 'a reward'}: <b>${gifts.map(g => esc(g.name)).join('</b> and <b>')}</b>! Claim ${gifts.length > 1 ? 'them' : 'it'} in the Gadget Shop.`, 4200), 2200);
 }
 function checkStatBadges() {
   const st = S.stats;
@@ -2556,6 +3483,12 @@ function checkStatBadges() {
   if (S.cases.every(c => c.status === 'closed')) earnBadge('all_cases');
   if ((st.eqFirst || 0) >= 10) earnBadge('equation_ace');
   if (st.labSolved >= 20) earnBadge('lab_20');
+  if ((st.twoStep || 0) >= 10) earnBadge('double_lock');
+  if (S.speed.best >= 10) earnBadge('speed_10');
+  if (S.speed.best >= 20) earnBadge('speed_20');
+  if (S.daily.best >= 3) earnBadge('daily_3');
+  if (S.daily.best >= 7) earnBadge('daily_7');
+  if (ownedCount() >= 40) earnBadge('collector');
 }
 
 /* avatar: the player's drawn detective (see character.js) */
@@ -2708,15 +3641,15 @@ function createCipher(root, p, opts) {
   function render() {
     if (!root.isConnected) return;
     if (st.solved) {
-      root.innerHTML = `<div class="safe open"><div class="door" aria-hidden="true"></div>
-        <div class="safe-inside"><div class="stamp cracked">CRACKED!</div>
+      root.innerHTML = `<div class="safe open ${opts.partial ? 'partial' : ''}"><div class="door" aria-hidden="true"></div>
+        <div class="safe-inside"><div class="stamp cracked">${opts.partial ? esc(opts.partial) : 'CRACKED!'}</div>
         <div class="cracked-ans">${equationText(p)} = <b>${fmt(p.ans)}</b></div>
-        <div class="stars-pop">+${st.stars} ⭐</div></div></div>`;
+        ${opts.partial ? '<div class="lock-next">🔐 One more lock to go!</div>' : `<div class="stars-pop">+${st.stars} ⭐</div>`}</div></div>`;
       return;
     }
     const opName = OP_NAME[p.op];
     root.innerHTML = `<div class="safe">
-      <div class="safe-plate"><span class="safe-label">SAFE · ${opName.toUpperCase()} ${OP_SYMBOL[p.op]}</span><span class="safe-lock" aria-hidden="true">🔒</span></div>
+      <div class="safe-plate"><span class="safe-label">${opts.lockLabel ? esc(opts.lockLabel) + ' · ' : 'SAFE · '}${opName.toUpperCase()} ${OP_SYMBOL[p.op]}</span><span class="safe-lock" aria-hidden="true">${opts.lockLabel ? '🔐' : '🔒'}</span></div>
       <div class="safe-face">${p.mode === 'column' ? columnHTML() : freeHTML()}</div>
       ${coachHTML()}${choicesHTML()}${keypadHTML()}
       <div class="safe-tools">${hintBtnHTML()}${!lab && S.tokens < 1 ? '<span class="muted tiny">No 🔎 tokens. Find bonus clues to earn more!</span>' : ''}</div>
@@ -2953,30 +3886,33 @@ function clueHTML(text, markOp) {
 function eqNumbers(p) { return p.op === 'div' ? [p.N, p.d] : [p.a, p.b]; }
 
 function createEqBuilder(root, p, opts) {
-  const nums = eqNumbers(p);
-  const chips = shuffle(makeRng('eq', p.ans, nums.join('-')), [0, 1]); // which number shows first
+  // opts.numbers: the numbers to offer (default: the two in this step); opts.want: their indexes in order
+  const nums = opts.numbers || eqNumbers(p);
+  const want = opts.want || [0, 1];
+  const chips = shuffle(makeRng('eq', p.ans, nums.join('-')), nums.map((_, i) => i)); // shuffled chip order
   const st = { slots: [null, null], op: null, misses: 0, coach: null, done: false };
+  const title = opts.title || 'Step 1 · Build the equation';
   function coach(kind, msg) { st.coach = { kind, msg }; }
 
   function render() {
     if (!root.isConnected) return;
     if (st.done) {
-      root.innerHTML = `<div class="eq-builder done"><div class="eyebrow">Step 1 · Equation</div>
-        <div class="eq-row big"><span class="eq-box filled">${fmt(nums[0])}</span><span class="eq-op filled">${OP_SYMBOL[p.op]}</span><span class="eq-box filled">${fmt(nums[1])}</span><span class="eq-eq">=</span><span class="eq-box ans">?</span></div>
-        <p class="eq-yes">✅ That's the equation! Now crack the safe to find the answer.</p></div>`;
+      root.innerHTML = `<div class="eq-builder done"><div class="eyebrow">${esc(title)}</div>
+        <div class="eq-row big"><span class="eq-box filled">${fmt(nums[want[0]])}</span><span class="eq-op filled">${OP_SYMBOL[p.op]}</span><span class="eq-box filled">${fmt(nums[want[1]])}</span><span class="eq-eq">=</span><span class="eq-box ans">?</span></div>
+        <p class="eq-yes">✅ That's the equation! Now crack the ${opts.lockWord || 'safe'} to find the answer.</p></div>`;
       return;
     }
     const box = (k) => st.slots[k] == null
       ? `<button type="button" class="eq-box empty" data-e="slot" data-k="${k}" aria-label="Empty number box">?</button>`
       : `<button type="button" class="eq-box filled" data-e="slot" data-k="${k}" aria-label="${fmt(nums[st.slots[k]])}, tap to remove">${fmt(nums[st.slots[k]])}</button>`;
     const opBox = st.op ? `<span class="eq-op filled">${OP_SYMBOL[st.op]}</span>` : `<span class="eq-op empty">?</span>`;
-    const chipBtns = chips.map(i => `<button type="button" class="eq-chip" data-e="num" data-i="${i}" ${st.slots.includes(i) ? 'disabled' : ''}>${fmt(nums[i])}</button>`).join('');
+    const chipBtns = chips.map(i => `<button type="button" class="eq-chip ${opts.carried === i ? 'carried' : ''}" data-e="num" data-i="${i}" ${st.slots.includes(i) ? 'disabled' : ''}>${fmt(nums[i])}${opts.carried === i ? '<small>Lock 1 answer</small>' : ''}</button>`).join('');
     const glow = st.misses >= 2 ? p.op : null;
     const opBtns = ['add', 'sub', 'mul', 'div'].map(o => `<button type="button" class="eq-sign ${st.op === o ? 'on' : ''} ${glow === o ? 'glow' : ''}" data-e="op" data-o="${o}" aria-pressed="${st.op === o}" aria-label="${OP_NAME[o]}">${OP_SYMBOL[o]}</button>`).join('');
-    const instr = 'Step one: build the equation. Tap the numbers from the clue to put them in the boxes, and pick the sign.';
+    const instr = opts.intro || 'Build the equation. Tap the numbers from the clue to put them in the boxes, and pick the sign.';
     root.innerHTML = `<div class="eq-builder">
-      <div class="eyebrow">Step 1 · Build the equation</div>
-      <p class="eq-instr">Which sign does this clue need? Tap the numbers from the clue into the boxes, then pick the sign. ${sayBtn(instr, FELIX.voice, 'Read the instructions')}</p>
+      <div class="eyebrow">${esc(title)}</div>
+      <p class="eq-instr">${esc(instr)} ${sayBtn(instr, FELIX.voice, 'Read the instructions')}</p>
       <div class="eq-row">${box(0)}${opBox}${box(1)}<span class="eq-eq">=</span><span class="eq-box ans">?</span></div>
       <div class="eq-pick"><div class="eq-label">Numbers</div><div class="eq-chips">${chipBtns}</div></div>
       <div class="eq-pick"><div class="eq-label">Sign</div><div class="eq-signs">${opBtns}</div></div>
@@ -2990,9 +3926,15 @@ function createEqBuilder(root, p, opts) {
       coach('remind', st.op ? 'Put both numbers in the boxes first.' : 'Pick a sign: plus, minus, times or divided by.');
       return render();
     }
-    const order = st.slots.join('');
     const commutes = p.op === 'add' || p.op === 'mul';
-    if (st.op === p.op && (commutes || order === '01')) {
+    const sameSet = [...st.slots].sort().join() === [...want].sort().join();
+    const inOrder = st.slots[0] === want[0] && st.slots[1] === want[1];
+    if (!sameSet) {
+      st.misses++; SFX.boop();
+      coach('miss', opts.wrongNumbers || 'Not those two numbers. Which two numbers go together first in the story? The other number is for the second lock.');
+      return render();
+    }
+    if (st.op === p.op && (commutes || inOrder)) {
       st.done = true; SFX.chime();
       const firstTry = st.misses === 0;
       if (opts.onDone) opts.onDone({ firstTry, misses: st.misses });
@@ -3001,7 +3943,7 @@ function createEqBuilder(root, p, opts) {
     st.misses++; SFX.boop();
     if (st.op === p.op) {
       const start = p.op === 'div' ? 'the total that is being shared' : 'the amount we start with';
-      coach('miss', `The sign is right! But which number comes first? For ${OP_NAME[p.op].toLowerCase()}, start with ${start}: <b>${fmt(nums[0])}</b>.`);
+      coach('miss', `The sign is right! But which number comes first? For ${OP_NAME[p.op].toLowerCase()}, start with ${start}: <b>${fmt(nums[want[0]])}</b>.`);
     } else {
       coach('miss', `Hmm, not ${OP_SYMBOL[st.op]}. ${OP_MEANING[st.op]} Read the clue again: ${OP_CLUE_HINT[p.op]}`);
       if (opts.onMiss) opts.onMiss(p.op);
@@ -3019,6 +3961,55 @@ function createEqBuilder(root, p, opts) {
     st.coach = null; render();
   });
   render();
+}
+
+/* ============================================================
+   Solve flow: equation step(s) then safe(s).
+   One-step problem: build the equation, crack the safe.
+   Double Lock (two-step): Lock 1 equation (pick 2 of the 3 numbers),
+   Lock 1 safe, Lock 2 equation (Lock 1's answer and the last number), Lock 2 safe.
+   ============================================================ */
+function solveFlow(root, p, o) {
+  // o: { lab, seedKey, tokenEmoji, skipEq, eqDone, onEqDone(r), onMiss(op), onSolved(agg) -> stars }
+  root.innerHTML = '';
+  const two = p.op === 'two';
+  const steps = two ? p.steps : [p];
+  const agg = { misses: 0, capped: false, firstTry: true, eqFirst: true };
+  const nums1 = two ? [p.steps[0].op === 'div' ? p.N : p.a, p.steps[0].op === 'div' ? p.d : p.b, p.c] : null;
+
+  function runStep(k) {
+    const sp = steps[k];
+    const eqEl = document.createElement('div'), safeEl = document.createElement('div');
+    eqEl.className = 'flow-eq'; safeEl.className = 'flow-safe';
+    root.append(eqEl, safeEl);
+    const startSafe = () => {
+      createCipher(safeEl, sp, {
+        lab: o.lab, seedKey: `${o.seedKey}-${k}`, tokenEmoji: o.tokenEmoji,
+        lockLabel: two ? `LOCK ${k + 1} OF 2` : null,
+        partial: two && k === 0 ? 'LOCK 1 OPEN!' : null,
+        onSolved(res) {
+          agg.misses += res.misses; agg.capped = agg.capped || res.capped; agg.firstTry = agg.firstTry && res.firstTry;
+          if (two && k === 0) { setTimeout(() => runStep(1), 900); return 0; }
+          return o.onSolved ? o.onSolved(agg) : 0;
+        },
+      });
+      setTimeout(() => { if (safeEl.isConnected && (two || !o.eqDone)) safeEl.scrollIntoView({ block: 'start', behavior: REDUCED() ? 'auto' : 'smooth' }); }, 60);
+    };
+    if (o.skipEq || (!two && o.eqDone)) { startSafe(); return; }
+    const eqOpts = {
+      onMiss: o.onMiss,
+      onDone(r) { agg.eqFirst = agg.eqFirst && r.firstTry; if (o.onEqDone) o.onEqDone(r, k); startSafe(); },
+    };
+    if (two && k === 0) Object.assign(eqOpts, { numbers: nums1, want: [0, 1], title: 'Lock 1 of 2 · Build the first equation', lockWord: 'first lock',
+      intro: 'This safe has two locks! The clue has three numbers. Pick the two numbers that go together first, and the sign.' });
+    if (two && k === 1) {
+      Object.assign(eqOpts, { numbers: [sp.a, sp.b], want: [0, 1], carried: 0, title: 'Lock 2 of 2 · Build the second equation', lockWord: 'second lock',
+        intro: 'Now use the Lock 1 answer and the last number from the clue. Which sign finishes the story?' });
+      setTimeout(() => { if (eqEl.isConnected) eqEl.scrollIntoView({ block: 'start', behavior: REDUCED() ? 'auto' : 'smooth' }); }, 60);
+    }
+    createEqBuilder(eqEl, sp, eqOpts);
+  }
+  runStep(0);
 }
 
 /* ============================================================
@@ -3194,24 +4185,28 @@ function newRun() {
     seed: Math.floor(Math.random() * 1e9), scene: 0, stage: 'story',
     found: [0, 1, 2, 3].map(() => ({ evidence: false, bonus: [false, false] })),
     problems: [null, null, null, null], solved: [false, false, false, false], sceneStars: [0, 0, 0, 0],
-    ruledOut: [], caseStars: 0,
+    ruledOut: [], caseStars: 0, firstTries: 0,
   };
 }
 function curCase() { return { i: S.caseIdx, c: CASES[S.caseIdx], cs: S.cases[S.caseIdx], run: S.cases[S.caseIdx].run }; }
 function ensureProblem(i, s) {
   const run = S.cases[i].run;
   if (!run.problems[s]) {
-    const level = caseLevel(i, S.settings);
-    run.problems[s] = genProblem(CASES[i].scenes[s].op, level, makeRng(run.seed, i, s, level));
+    const level = caseLevel(i, S.settings), sc = CASES[i].scenes[s];
+    run.problems[s] = sc.op === 'two'
+      ? genTwoStep(sc.kind, twoStepLevel(CASES[i], level), makeRng(run.seed, i, s, level, 'two'))
+      : genProblem(sc.op, level, makeRng(run.seed, i, s, level));
     save();
   }
   return run.problems[s];
 }
+/* Double Lock numbers stay a notch smaller than one-step safes: two steps is the challenge */
+function twoStepLevel(c, level) { return Math.max(1, Math.min(3, level - (c.season <= 4 ? 2 : 1))); }
 function distinctClosed() { return S.cases.filter(c => c.status === 'closed').length; }
 
 /* ---------------- top bar ---------------- */
 function topbarHTML() {
-  const nav = [['map', '🗂️', 'Cases'], ['lab', '🧪', 'Lab'], ['shop', '🛍️', 'Shop'], ['treehouse', '🌳', 'Treehouse']];
+  const nav = [['map', '🗂️', 'Cases'], ['lab', '🧪', 'Lab'], ['challenges', '🏆', 'Challenges'], ['shop', '🛍️', 'Shop'], ['treehouse', '🌳', 'Treehouse']];
   const active = S.screen === 'case' ? 'map' : S.screen;
   return `<header class="topbar"><div class="topbar-in">
     <button type="button" class="brand" data-action="go" data-arg="map" aria-label="Starlight Detective Agency: case map"><span class="brand-mark">🔦</span><span class="brand-text">Starlight<small>Detective Agency</small></span></button>
@@ -3238,14 +4233,17 @@ function render() {
     case 'lab': html = labHTML(); break;
     case 'shop': html = shopHTML(); break;
     case 'treehouse': html = treehouseHTML(); break;
+    case 'challenges': html = challengesHTML(); break;
     default: html = mapHTML();
   }
   app.innerHTML = topbarHTML() + `<main id="screen" class="screen screen-${S.screen}">${html}</main>`;
   if (S.screen === 'case' && S.caseIdx != null && S.cases[S.caseIdx].run) { renderStage(); renderBoard(); }
   if (S.screen === 'lab') mountLab();
+  if (S.screen === 'challenges' && ui.chal && ui.chal.mode === 'daily') mountDaily();
 }
 function navigate(screen) {
-  stopSpeech();
+  stopSpeech(); stopSpeed();
+  ui.chal = null;
   if (!$('#modal-root').hidden) closeModal();
   S.screen = screen; save(); render();
   window.scrollTo({ top: 0 });
@@ -3406,26 +4404,32 @@ function renderStage() {
     const p = ensureProblem(i, s);
     const text = fillText(sc.problem, p);
     st.innerHTML = `<div class="paper clue-card"><div class="eyebrow">The clue · ${sc.cat.e} ${esc(sc.cat.label)}</div><p class="problem" id="clueText">${clueHTML(text)}</p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the clue')}<span class="muted tiny">Read it to me</span></div></div>
-      <div id="eqRoot"></div><div id="cipherRoot"></div><div id="afterSolve"></div>`;
+      <div id="cipherRoot"></div><div id="afterSolve"></div>`;
     if (S.settings.autoRead) speak(text, NARRATOR);
     if (run.solved[s]) {
       $('#cipherRoot').innerHTML = `<div class="safe open"><div class="safe-inside"><div class="stamp cracked">CRACKED!</div><div class="cracked-ans">${equationText(p)} = <b>${fmt(p.ans)}</b></div><div class="stars-pop">+${run.sceneStars[s]} ⭐</div></div></div>`;
       $('#afterSolve').innerHTML = afterSolveHTML(0);
       return;
     }
-    if (!(run.eqDone && run.eqDone[s])) {
-      createEqBuilder($('#eqRoot'), p, {
-        onMiss(op) { const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text, op); },
-        onDone(r) {
-          run.eqDone = run.eqDone || [false, false, false, false]; run.eqDone[s] = true; equationStat(r); save();
-          const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text);
-          mountCaseSafe(i, s, p, sc, run);
-          setTimeout(() => { const c = $('#cipherRoot'); if (c) c.scrollIntoView({ block: 'start', behavior: REDUCED() ? 'auto' : 'smooth' }); }, 60);
-        },
-      });
-      return;
-    }
-    mountCaseSafe(i, s, p, sc, run);
+    solveFlow($('#cipherRoot'), p, {
+      seedKey: `${run.seed}-${s}`, tokenEmoji: sc.token, eqDone: run.eqDone && run.eqDone[s],
+      onMiss(op) { const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text, op); },
+      onEqDone(r) {
+        run.eqDone = run.eqDone || [false, false, false, false]; if (p.op !== 'two') run.eqDone[s] = true;
+        equationStat(r); save(); const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text);
+      },
+      onSolved(res) {
+        const stars = starsFor(res.misses, res.capped, false);
+        run.solved[s] = true; run.sceneStars[s] = stars; run.caseStars += stars;
+        run.firstTries = (run.firstTries || 0) + (res.firstTry ? 1 : 0);
+        S.stats.ciphersSolved++;
+        if (p.op === 'two') S.stats.twoStep = (S.stats.twoStep || 0) + 1;
+        if (res.firstTry) { S.stats.firstTryStreak++; S.stats.bestFirstTryStreak = Math.max(S.stats.bestFirstTryStreak, S.stats.firstTryStreak); } else S.stats.firstTryStreak = 0;
+        awardStars(stars); checkStatBadges(); save();
+        setTimeout(() => { const a = $('#afterSolve'); if (a) { a.innerHTML = afterSolveHTML(res.misses); a.scrollIntoView({ block: 'nearest', behavior: REDUCED() ? 'auto' : 'smooth' }); } renderBoard(); updateCaseHead(); }, 50);
+        return stars;
+      },
+    });
     return;
   }
   if (run.stage === 'check') { st.innerHTML = checkHTML(); return; }
@@ -3433,20 +4437,6 @@ function renderStage() {
   st.innerHTML = `<div class="paper"><p>This case is closed.</p><button type="button" class="btn primary" data-action="go" data-arg="map">Back to cases</button></div>`;
 }
 function equationStat(r) { S.stats.eqBuilt = (S.stats.eqBuilt || 0) + 1; if (r.firstTry) S.stats.eqFirst = (S.stats.eqFirst || 0) + 1; checkStatBadges(); }
-function mountCaseSafe(i, s, p, sc, run) {
-    createCipher($('#cipherRoot'), p, {
-      seedKey: `${run.seed}-${s}`, tokenEmoji: sc.token,
-      onSolved(res) {
-        const stars = starsFor(res.misses, res.capped, false);
-        run.solved[s] = true; run.sceneStars[s] = stars; run.caseStars += stars;
-        S.stats.ciphersSolved++;
-        if (res.firstTry) { S.stats.firstTryStreak++; S.stats.bestFirstTryStreak = Math.max(S.stats.bestFirstTryStreak, S.stats.firstTryStreak); } else S.stats.firstTryStreak = 0;
-        awardStars(stars); checkStatBadges(); save();
-        setTimeout(() => { const a = $('#afterSolve'); if (a) { a.innerHTML = afterSolveHTML(res.misses); a.scrollIntoView({ block: 'nearest', behavior: REDUCED() ? 'auto' : 'smooth' }); } renderBoard(); updateCaseHead(); }, 50);
-        return stars;
-      },
-    });
-}
 function updateCaseHead() {
   const { c, run } = curCase();
   const dots = document.querySelectorAll('.sdot');
@@ -3568,6 +4558,7 @@ function closeCaseFlow() {
   let unlocked = null;
   if (i + 1 < CASES.length && S.cases[i + 1].status === 'locked') { S.cases[i + 1].status = 'open'; unlocked = i + 1; }
   if (c.finale) { if (c.season === 1) S.finished = true; earnBadge(c.finaleBadge || 'r_unmasked'); }
+  if (run.firstTries >= 4) earnBadge('perfect_case');
   S.stats.casesClosed = distinctClosed(); checkStatBadges(); save();
   SFX.fanfare(); confetti();
   const se = SEASONS[c.season - 1];
@@ -3615,39 +4606,33 @@ function interview(id) {
 function newLabProblem() {
   const rng = makeRng('lab', Date.now(), Math.random());
   const op = S.lab.op === 'mix' ? pick(rng, ['add', 'sub', 'mul', 'div']) : S.lab.op;
-  const p = genProblem(op, S.lab.level, rng);
-  const tpl = pick(rng, LAB_TEMPLATES[op]);
+  let p, tpl;
+  if (op === 'two') {
+    const kind = pick(rng, ['add-sub', 'mul-add', 'mul-sub', 'div-add']);
+    p = genTwoStep(kind, S.lab.level, rng); tpl = pick(rng, LAB_TWO_TEMPLATES[kind]);
+  } else { p = genProblem(op, S.lab.level, rng); tpl = pick(rng, LAB_TEMPLATES[op]); }
   ui.lab = { p, tpl, text: fillText(tpl.text, p), solved: false };
 }
 function labHTML() {
   if (!ui.lab) newLabProblem();
-  const ops = [['mix', '🎲 Mix'], ['add', '+ Add'], ['sub', '− Subtract'], ['mul', '× Multiply'], ['div', '÷ Divide']];
+  const ops = [['mix', '🎲 Mix'], ['add', '+ Add'], ['sub', '− Subtract'], ['mul', '× Multiply'], ['div', '÷ Divide'], ['two', '🔐 Double Lock']];
   const { p, tpl, text } = ui.lab;
   return `<section class="lab-head"><div><div class="eyebrow on-desk">Agency training lab</div><h1 class="display">Training Lab 🧪</h1><p class="on-desk-muted">Practice any skill. Every safe you crack earns stars. Hints are free in the Lab.</p></div></section>
     <div class="chip-row" role="group" aria-label="Operation">${ops.map(([id, l]) => `<button type="button" class="chip ${S.lab.op === id ? 'on' : ''}" data-action="labOp" data-arg="${id}" aria-pressed="${S.lab.op === id}">${l}</button>`).join('')}</div>
     <div class="chip-row" role="group" aria-label="Level">${[1, 2, 3].map(l => `<button type="button" class="chip ${S.lab.level === l ? 'on' : ''}" data-action="labLevel" data-arg="${l}" aria-pressed="${S.lab.level === l}">Level ${l}</button>`).join('')}</div>
     <div class="lab-grid"><div><div class="paper clue-card"><div class="eyebrow">Training puzzle · Level ${p.level}</div><p class="problem">${tpl.e} <span id="clueText">${clueHTML(text)}</span></p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the puzzle')}<span class="muted tiny">Read it to me</span></div></div>
-    <div id="eqRoot"></div><div id="cipherRoot"></div><div id="afterSolve"></div></div></div>`;
+    <div id="cipherRoot"></div><div id="afterSolve"></div></div></div>`;
 }
 function mountLab() {
   const { p, text } = ui.lab;
-  if (!ui.lab.eqDone) {
-    createEqBuilder($('#eqRoot'), p, {
-      onMiss(op) { const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text, op); },
-      onDone(r) { ui.lab.eqDone = true; equationStat(r); save(); const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text); mountLabSafe();
-        setTimeout(() => { const c = $('#cipherRoot'); if (c) c.scrollIntoView({ block: 'start', behavior: REDUCED() ? 'auto' : 'smooth' }); }, 60); },
-    });
-    return;
-  }
-  mountLabSafe();
-}
-function mountLabSafe() {
-  const { p } = ui.lab;
-  createCipher($('#cipherRoot'), p, {
-    lab: true, seedKey: 'lab', tokenEmoji: LAB_TOKENS[p.op],
+  solveFlow($('#cipherRoot'), p, {
+    lab: true, seedKey: 'lab', tokenEmoji: LAB_TOKENS[p.op === 'two' ? p.steps[0].op : p.op], eqDone: ui.lab.eqDone,
+    onMiss(op) { const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text, op); },
+    onEqDone(r) { if (p.op !== 'two') ui.lab.eqDone = true; equationStat(r); save(); const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text); },
     onSolved(res) {
-      const stars = starsFor(res.misses, res.capped, true);
+      const stars = starsFor(res.misses, res.capped, true) * (p.op === 'two' ? 2 : 1);
       S.stats.labSolved++; S.stats.ciphersSolved++;
+      if (p.op === 'two') S.stats.twoStep = (S.stats.twoStep || 0) + 1;
       if (res.firstTry) { S.stats.firstTryStreak++; S.stats.bestFirstTryStreak = Math.max(S.stats.bestFirstTryStreak, S.stats.firstTryStreak); } else S.stats.firstTryStreak = 0;
       awardStars(stars); checkStatBadges(); save(); ui.lab.solved = true;
       setTimeout(() => { const a = $('#afterSolve'); if (a) { a.innerHTML = `<div class="after-solve"><p class="felix-line">🦊 “${res.misses === 0 ? 'Perfect crack!' : 'Cracked it! Practice makes detectives.'}” <span class="muted">Lab puzzles solved: ${S.stats.labSolved}</span></p><button type="button" class="btn primary big" data-action="labNext" data-focus>Next puzzle ▶</button></div>`; a.scrollIntoView({ block: 'nearest', behavior: REDUCED() ? 'auto' : 'smooth' }); } }, 50);
@@ -3725,6 +4710,9 @@ const DECOR_SLOTS = {
   teddy:   { x: 36, y: 0,  sz: 7 }, map: { x: 31, y: 56, sz: 9 }, clock: { x: 45, y: 52, sz: 6 }, kite: { x: 7, y: 78, sz: 8, cls: 'float' },
   easel:   { x: 33, y: 22, sz: 8 }, painting: { x: 90, y: 34, sz: 8 }, piano: { x: 21, y: 22, sz: 9 }, robot: { x: 13, y: 0, sz: 8 },
   castle:  { x: 87, y: 0,  sz: 8 }, rocket: { x: 83, y: 78, sz: 8, cls: 'hang float' }, medals: { x: 80, y: 46, sz: 6 }, microscope: { x: 21, y: 58, sz: 6 },
+  tent:    { x: 73, y: 14, sz: 12 }, slide: { x: 33, y: 14, sz: 10 }, carousel: { x: 40, y: 16, sz: 9 }, bowling: { x: 62, y: 0, sz: 6 },
+  skateboard: { x: 45, y: 0, sz: 6 }, calendar: { x: 60, y: 40, sz: 6 }, hoop: { x: 74, y: 52, sz: 8 }, rainbow: { x: 5, y: 44, sz: 9 },
+  pinata:  { x: 64, y: 74, sz: 8, cls: 'hang' }, planets: { x: 93, y: 74, sz: 8, cls: 'hang float' },
 };
 function decorPos(id) { const p = DECOR_SLOTS[id] || { x: 50, y: 30, sz: 9 }; const m = (S.decorPos || {})[id]; return m ? { ...p, x: m.x, y: m.y } : p; }
 function treehouseHTML() {
@@ -3849,7 +4837,7 @@ const ACTIONS = {
   resetCancel: () => { $('#resetConfirm').hidden = true; },
   resetDo: () => {
     try { localStorage.removeItem(STORE_KEY); } catch (e) {}
-    S = defaultState(); ui.lab = null; closeModal(); render(); toast('All progress erased. A fresh start!');
+    S = defaultState(); ui.lab = null; stopSpeed(); ui.chal = null; closeModal(); render(); toast('All progress erased. A fresh start!');
   },
 };
 
@@ -3924,6 +4912,201 @@ document.addEventListener('contextmenu', (e) => { if (e.target.closest && e.targ
 /* boot */
 try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch (e) {}
 render();
+
+/* ============================================================
+   Challenge Room: Daily Case File (one Double Lock puzzle a day,
+   with a streak), Speed Safe (3-minute quick-fact round), and goals
+   with progress bars toward reward badges.
+   ============================================================ */
+const SPEED_SECONDS = 180;
+ui.chal = null; // { mode: 'daily', p, tpl, text } | { mode: 'speed', ... }
+
+function dayKey(d = new Date()) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+function yesterdayKey() { const d = new Date(); d.setDate(d.getDate() - 1); return dayKey(d); }
+function dailyDoneToday() { return S.daily.last === dayKey(); }
+function liveStreak() { return S.daily.last === dayKey() || S.daily.last === yesterdayKey() ? S.daily.streak : 0; }
+function dailyLevel() { const n = distinctClosed(); return n >= 24 ? 3 : n >= 12 ? 2 : 1; }
+
+function newDailyPuzzle() {
+  const key = dayKey(), rng = makeRng('daily', key);
+  const kind = pick(rng, ['add-sub', 'mul-add', 'mul-sub', 'div-add']);
+  const p = genTwoStep(kind, dailyLevel(), rng), tpl = pick(rng, LAB_TWO_TEMPLATES[kind]);
+  return { mode: 'daily', key, p, tpl, text: fillText(tpl.text, p) };
+}
+
+/* ---------- speed safe: quick facts ---------- */
+function speedProblem(rng, n) {
+  const r = (lo, hi) => lo + Math.floor(rng() * (hi - lo + 1));
+  const op = pick(rng, ['add', 'sub', 'mul', 'div', 'mul', 'add']);
+  const big = n >= 10; // after 10 safes, the numbers grow
+  if (op === 'add') { const a = r(big ? 25 : 11, big ? 89 : 59), b = r(big ? 15 : 6, big ? 79 : 39); return { op, a, b, ans: a + b }; }
+  if (op === 'sub') { const a = r(big ? 40 : 20, big ? 99 : 80), b = r(big ? 12 : 4, a - (big ? 5 : 3)); return { op, a, b, ans: a - b }; }
+  const x = r(2, big ? 9 : 6), y = r(2, 9);
+  if (op === 'mul') return { op, a: x, b: y, ans: x * y };
+  return { op, a: x * y, b: x, ans: y };
+}
+function speedEq(q) { return `${q.a} ${OP_SYMBOL[q.op]} ${q.b}`; }
+
+function startSpeed() {
+  stopSpeed();
+  const rng = makeRng('speed', Date.now(), Math.random());
+  ui.chal = { mode: 'speed', rng, score: 0, entry: '', misses: 0, q: speedProblem(rng, 0), end: Date.now() + SPEED_SECONDS * 1000, over: false, skipped: 0 };
+  render();
+  ui.speedTimer = setInterval(speedTick, 250);
+}
+function stopSpeed() { if (ui.speedTimer) { clearInterval(ui.speedTimer); ui.speedTimer = null; } }
+function speedTick() {
+  const c = ui.chal; if (!c || c.mode !== 'speed' || S.screen !== 'challenges') { stopSpeed(); return; }
+  const left = Math.max(0, c.end - Date.now());
+  const bar = $('#speedBar'), t = $('#speedTime');
+  if (bar) bar.style.width = (left / (SPEED_SECONDS * 10)) + '%';
+  if (t) t.textContent = fmtClock(left);
+  if (left <= 10000 && bar) bar.classList.add('hurry');
+  if (left <= 0) finishSpeed();
+}
+function fmtClock(ms) { const s = Math.ceil(ms / 1000); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; }
+function finishSpeed() {
+  const c = ui.chal; stopSpeed(); if (!c || c.over) return;
+  c.over = true;
+  const newBest = c.score > S.speed.best;
+  c.wasBest = S.speed.best; c.newBest = newBest;
+  S.speed.best = Math.max(S.speed.best, c.score); S.speed.rounds++; S.speed.total += c.score;
+  c.stars = c.score * 2 + (newBest && c.score > 0 ? 10 : 0);
+  awardStars(c.stars); checkStatBadges(); save();
+  SFX.fanfare(); if (newBest && c.score > 0) confetti();
+  render();
+}
+function speedKey(v) {
+  const c = ui.chal; if (!c || c.mode !== 'speed' || c.over) return;
+  if (v === 'back') c.entry = c.entry.slice(0, -1);
+  else if (v === 'go') return speedTry();
+  else if (v === 'skip') { c.skipped++; c.q = speedProblem(c.rng, c.score); c.entry = ''; c.misses = 0; SFX.boop(); }
+  else if (c.entry.length < 3) { c.entry += v; SFX.click(); }
+  paintSpeed();
+}
+function speedTry() {
+  const c = ui.chal; if (!c.entry) return;
+  if (Number(c.entry) === c.q.ans) {
+    c.score++; S.stats.ciphersSolved++; SFX.coin();
+    flashSpeed('good');
+    c.q = speedProblem(c.rng, c.score); c.entry = ''; c.misses = 0;
+  } else {
+    c.misses++; SFX.boop(); flashSpeed('bad');
+    if (c.misses >= 2) { toast(`🦊 ${speedEq(c.q)} = <b>${c.q.ans}</b>. Next one!`, 1800); c.q = speedProblem(c.rng, c.score); c.misses = 0; }
+    c.entry = '';
+  }
+  paintSpeed();
+}
+function flashSpeed(kind) { const el = $('#speedCard'); if (!el) return; el.classList.remove('good', 'bad'); void el.offsetWidth; el.classList.add(kind); }
+function paintSpeed() {
+  const c = ui.chal; const eq = $('#speedEq'), ans = $('#speedAns'), sc = $('#speedScore');
+  if (eq) eq.textContent = speedEq(c.q) + ' =';
+  if (ans) { ans.textContent = c.entry || '?'; ans.classList.toggle('empty', !c.entry); }
+  if (sc) sc.textContent = c.score;
+}
+
+/* ---------- screens ---------- */
+function challengesHTML() {
+  const c = ui.chal;
+  if (c && c.mode === 'speed') return speedHTML();
+  if (c && c.mode === 'daily') return dailyHTML();
+  const done = dailyDoneToday(), streak = liveStreak();
+  const week = Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - 6 + i); return d; });
+  const dots = week.map((d, i) => {
+    const back = 6 - i; // days ago
+    const on = streak > 0 && (dailyDoneToday() ? back < streak : back >= 1 && back <= streak);
+    return `<span class="day-dot ${on ? 'on' : ''} ${back === 0 ? 'today' : ''}" title="${d.toDateString()}">${'SMTWTFS'[d.getDay()]}</span>`;
+  }).join('');
+  const goals = [...GOALS].sort((x, y) => S.badges.includes(x[0]) - S.badges.includes(y[0])).map(([id, label, cur, target]) => {
+    const b = BADGES.find(x => x.id === id); if (!b) return '';
+    const have = S.badges.includes(id), v = Math.min(target, cur());
+    const gifts = Object.entries(SHOP).flatMap(([cat, list]) => list.filter(it => it.reward === id).map(it => `${it.e || (cat === 'coats' ? '🧥' : '🔍')} ${esc(it.name)}`));
+    const gift = gifts.length ? `<span class="goal-gift">🎁 ${gifts.join(' + ')}</span>` : '';
+    return `<li class="goal ${have ? 'got' : ''}"><span class="goal-e">${b.e}</span><div class="goal-main"><b>${esc(b.name)}</b><small>${esc(label)}: ${have ? '✓ done!' : `${v} of ${target}`}</small>
+      <div class="goal-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${target}" aria-valuenow="${have ? target : v}"><i style="width:${have ? 100 : Math.round(v / target * 100)}%"></i></div>${gift}</div></li>`;
+  }).join('');
+  return `<section class="lab-head"><div><div class="eyebrow on-desk">Agency challenge room</div><h1 class="display">Challenges 🏆</h1><p class="on-desk-muted">New puzzles every day, a race against the clock, and goals that unlock reward gear.</p></div></section>
+    <div class="chal-grid">
+      <section class="paper chal-card daily ${done ? 'done' : ''}">
+        <div class="chal-top"><span class="chal-icon">📁</span><div><div class="eyebrow">Daily Case File</div><h2>${done ? 'Solved today! ✓' : "Today's Double Lock"}</h2></div></div>
+        <p>${done ? 'Great work, Detective. A new case file arrives tomorrow.' : 'One Double Lock puzzle every day. Solve days in a row to build your streak and earn bonus stars.'}</p>
+        <div class="week" aria-label="This week">${dots}</div>
+        <p class="chal-stats"><span>🔥 Streak <b>${streak}</b></span><span>🏅 Best <b>${S.daily.best}</b></span><span>📁 Solved <b>${S.daily.total}</b></span></p>
+        ${done ? '<button type="button" class="btn" disabled>Come back tomorrow 🌙</button>' : `<button type="button" class="btn primary big" data-action="dailyStart">Open today's file ▶</button>`}
+      </section>
+      <section class="paper chal-card speed">
+        <div class="chal-top"><span class="chal-icon">⚡</span><div><div class="eyebrow">Speed Safe</div><h2>Beat the clock</h2></div></div>
+        <p>How many quick safes can you crack in <b>3 minutes</b>? Every safe is worth 2 ⭐, plus 10 ⭐ for a new best.</p>
+        <p class="chal-stats"><span>🏁 Best <b>${S.speed.best}</b></span><span>🔁 Rounds <b>${S.speed.rounds}</b></span></p>
+        <button type="button" class="btn primary big" data-action="speedStart">Start the clock ⏱️</button>
+      </section>
+    </div>
+    <section class="paper goals-card"><h2>Goals <small class="muted">earn badges, unlock reward gear</small></h2><ul class="goals">${goals}</ul></section>`;
+}
+
+function dailyHTML() {
+  const { p, tpl, text } = ui.chal;
+  return `<section class="lab-head"><div><div class="eyebrow on-desk">Daily Case File · ${new Date().toDateString()}</div><h1 class="display">Today's Double Lock 📁</h1><p class="on-desk-muted">Two locks, one story. Find which two numbers go together first.</p></div>
+      <button type="button" class="btn small ghost on-desk-btn" data-action="chalBack">◀ Challenges</button></section>
+    <div class="lab-grid"><div><div class="paper clue-card"><div class="eyebrow">Case file · Level ${p.level}</div><p class="problem">${tpl.e} <span id="clueText">${clueHTML(text)}</span></p><div class="read-row">${sayBtn(text, NARRATOR, 'Read the case file')}<span class="muted tiny">Read it to me</span></div></div>
+    <div id="cipherRoot"></div><div id="afterSolve"></div></div></div>`;
+}
+function mountDaily() {
+  const { p, text } = ui.chal;
+  solveFlow($('#cipherRoot'), p, {
+    lab: true, seedKey: 'daily', tokenEmoji: LAB_TOKENS[p.steps[0].op],
+    onMiss(op) { const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text, op); },
+    onEqDone(r) { equationStat(r); save(); const el = $('#clueText'); if (el) el.innerHTML = clueHTML(text); },
+    onSolved(res) {
+      if (dailyDoneToday()) return 0; // solved in another tab
+      const streak = S.daily.last === yesterdayKey() ? S.daily.streak + 1 : 1;
+      S.daily = { last: dayKey(), streak, best: Math.max(S.daily.best, streak), total: S.daily.total + 1 };
+      const stars = 20 + 5 * Math.min(streak - 1, 6) + (res.misses === 0 ? 5 : 0);
+      S.stats.ciphersSolved++; S.stats.twoStep = (S.stats.twoStep || 0) + 1;
+      awardStars(stars); checkStatBadges(); save();
+      setTimeout(() => {
+        const a = $('#afterSolve'); if (!a) return;
+        a.innerHTML = `<div class="after-solve"><p class="felix-line">🦊 “Case file closed! ${streak > 1 ? `That's <b>${streak} days in a row</b>! 🔥` : 'Come back tomorrow to start a streak! 🔥'}”</p><button type="button" class="btn primary big" data-action="chalBack" data-focus>Back to Challenges ▶</button></div>`;
+        a.scrollIntoView({ block: 'nearest', behavior: REDUCED() ? 'auto' : 'smooth' });
+      }, 50);
+      return stars;
+    },
+  });
+}
+
+function speedHTML() {
+  const c = ui.chal;
+  if (c.over) {
+    const msg = c.score === 0 ? 'Every detective starts somewhere. Try again!' : c.newBest ? `A new best! Your old best was ${c.wasBest}.` : `Your best is still ${S.speed.best}. So close!`;
+    return `<section class="lab-head"><div><div class="eyebrow on-desk">Speed Safe</div><h1 class="display">Time's up! ⏱️</h1></div></section>
+      <div class="paper speed-result"><div class="big-art">${c.newBest && c.score ? '🏆' : '⚡'}</div><h2>You cracked <b>${c.score}</b> ${c.score === 1 ? 'safe' : 'safes'}!</h2><p>${msg}</p><p class="gold">+${c.stars} ⭐</p>
+      <div class="row-btns"><button type="button" class="btn primary big" data-action="speedStart" data-focus>Play again ⚡</button><button type="button" class="btn ghost" data-action="chalBack">Back to Challenges</button></div></div>`;
+  }
+  const keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(v => `<button type="button" class="key" data-action="speedKey" data-arg="${v}">${v}</button>`).join('');
+  return `<section class="lab-head"><div><div class="eyebrow on-desk">Speed Safe</div><h1 class="display">Crack it quick! ⚡</h1></div>
+      <button type="button" class="btn small ghost on-desk-btn" data-action="speedQuit">✕ Stop</button></section>
+    <div class="paper speed-run">
+      <div class="speed-top"><span class="speed-time">⏱️ <b id="speedTime">${fmtClock(c.end - Date.now())}</b></span><span class="speed-score">🔓 <b id="speedScore">${c.score}</b></span></div>
+      <div class="speed-track"><i id="speedBar"></i></div>
+      <div class="speed-card" id="speedCard"><span id="speedEq">${speedEq(c.q)} =</span><span id="speedAns" class="speed-ans ${c.entry ? '' : 'empty'}">${c.entry || '?'}</span></div>
+      <div class="keypad">${keys}</div>
+      <div class="key-actions"><button type="button" class="key wide ghost" data-action="speedKey" data-arg="skip">Skip ⏭</button><button type="button" class="key wide ghost" data-action="speedKey" data-arg="back" aria-label="Delete last digit">⌫</button><button type="button" class="btn go" data-action="speedKey" data-arg="go">Open 🔓</button></div>
+    </div>`;
+}
+
+Object.assign(ACTIONS, {
+  dailyStart: () => { if (dailyDoneToday()) return; ui.chal = newDailyPuzzle(); render(); window.scrollTo({ top: 0 }); },
+  chalBack: () => { stopSpeed(); ui.chal = null; render(); window.scrollTo({ top: 0 }); },
+  speedStart: () => startSpeed(),
+  speedQuit: () => { stopSpeed(); ui.chal = null; render(); },
+  speedKey: (a) => speedKey(a),
+});
+document.addEventListener('keydown', (e) => {
+  const c = ui.chal; if (!c || c.mode !== 'speed' || c.over || S.screen !== 'challenges' || !$('#modal-root').hidden) return;
+  if (/^[0-9]$/.test(e.key)) speedKey(e.key);
+  else if (e.key === 'Backspace') speedKey('back');
+  else if (e.key === 'Enter') { e.preventDefault(); speedKey('go'); }
+});
 
 </script>
 <script>
